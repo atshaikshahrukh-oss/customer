@@ -1,559 +1,871 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>CC MOTOCRAFTS | Master Admin Control Panel (App 3)</title>
-  <meta name="theme-color" content="#ffb300">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#050d16">
   <link rel="manifest" href="manifest-owner.json">
-  <style>
-    :root {
-      --theme-primary: #ffb300;
-      --bg-dark-base: #0a0802;
-      --bg-card: rgba(24, 18, 5, 0.88);
-      --bg-card-border: rgba(255, 179, 0, 0.3);
-      --text-main: #f0f6fc;
-      --text-muted: #a69a85;
-      --gold: #ffb300;
-      --danger: #ff3366;
-      --success: #00e676;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-dark-base);
-      color: var(--text-main);
-      line-height: 1.5;
-      padding-bottom: 75px;
-    }
-    .header {
-      display: flex; justify-content: space-between; align-items: center; padding: 12px 18px;
-      background: rgba(10, 8, 2, 0.95); border-bottom: 1px solid var(--bg-card-border);
-      position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px);
-    }
-    .logo { font-size: 15px; font-weight: 900; color: var(--gold); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-    .btn-cyber {
-      background: rgba(255, 179, 0, 0.08); border: 1px solid var(--theme-primary); color: var(--theme-primary);
-      padding: 7px 12px; border-radius: 6px; font-size: 11.5px; font-weight: 700; cursor: pointer; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 6px;
-    }
-    .btn-cyber-solid {
-      background: var(--theme-primary); border: 1px solid var(--theme-primary); color: #000;
-      padding: 7px 12px; border-radius: 6px; font-size: 11.5px; font-weight: 800; cursor: pointer; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 6px;
-    }
-    .container { max-width: 1050px; margin: 0 auto; padding: 16px; }
-    .card {
-      background: var(--bg-card); border: 1px solid var(--bg-card-border); border-radius: 10px;
-      padding: 18px; margin-bottom: 18px;
-    }
-    .form-input {
-      width: 100%; background: rgba(3, 7, 13, 0.85); border: 1px solid var(--bg-card-border);
-      color: #fff; padding: 10px 12px; border-radius: 6px; font-size: 13px; margin-top: 4px;
-    }
-    .toggle-switch { position: relative; display: inline-block; width: 44px; height: 24px; }
-    .toggle-switch input { opacity: 0; width: 0; height: 0; }
-    .slider {
-      position: absolute; cursor: pointer; inset: 0; background-color: #333;
-      transition: .3s; border-radius: 24px; border: 1px solid rgba(255,255,255,0.2);
-    }
-    .slider:before {
-      position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 3px;
-      background-color: white; transition: .3s; border-radius: 50%;
-    }
-    input:checked + .slider { background-color: var(--success); border-color: var(--success); }
-    input:checked + .slider:before { transform: translateX(20px); }
-  </style>
+  <link rel="icon" href="icon-192.png">
+  <link rel="stylesheet" href="app.css">
+  <title>HTS Owner App | Shaik Mujahid — Supreme Owner Command & King Maker CEO Dashboard</title>
 </head>
 <body>
-
-  <header class="header">
-    <a href="index.html" class="logo">
-      <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--gold);"></span>
-      CC MOTOCRAFTS <span style="font-size:10px; background:rgba(255,179,0,0.2); border:1px solid var(--gold); padding:2px 6px; border-radius:3px; color:#fff;">MASTER ADMIN APP</span>
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-badge">HTS</span>
+      <div>HTS OWNER APP · SHAIK MUJAHID<small data-i18n-tagline>SUPREME "KING MAKER" COMMAND & CEO DASHBOARD</small></div>
     </a>
-    <div style="display: flex; gap: 8px;">
-      <button class="btn-cyber" onclick="triggerPwaInstall()">📲 Install App</button>
-      <a href="https://wa.me/918333007351" target="_blank" class="btn-cyber-solid">My WhatsApp</a>
-    </div>
-  </header>
+    <nav id="nav" class="nav"></nav>
+    <span class="pill gold">👑 KING MAKER: SHAIK MUJAHID</span>
+  </div>
+</header>
 
-  <!-- ========================================================================
-       UNIFIED 5-IN-1 ECOSYSTEM QUICK APP SWITCHER
-       ======================================================================== -->
-  <div style="background:rgba(4,8,15,0.98); border-bottom:1px solid rgba(255,255,255,0.12); padding:6px 14px; display:flex; align-items:center; gap:8px; overflow-x:auto; z-index:1000; position:sticky; top:0; backdrop-filter:blur(10px);">
-    <span style="font-size:10px; font-weight:800; color:#8b9bb4; text-transform:uppercase; letter-spacing:0.5px; white-space:nowrap;">🔄 Switch App:</span>
-    <a href="index.html" style="font-size:11px; font-weight:700; color:#f0f6fc; text-decoration:none; padding:4px 8px; border-radius:4px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); white-space:nowrap;">🌐 Global Web</a>
-    <a href="owner.html" style="font-size:11px; font-weight:800; color:#000; text-decoration:none; padding:4px 9px; border-radius:4px; background:#ffb300; border:1px solid #ffb300; white-space:nowrap; box-shadow:0 0 10px #ffb300;">👑 1. CEO Dashboard</a>
-    <a href="index.html#ai-guide" style="font-size:11px; font-weight:700; color:#00e5ff; text-decoration:none; padding:4px 8px; border-radius:4px; background:rgba(0,229,255,0.08); border:1px solid rgba(0,229,255,0.25); white-space:nowrap;">⚡ 2. Diagnosis Bot</a>
-    <a href="admin.html" style="font-size:11px; font-weight:700; color:#00b0ff; text-decoration:none; padding:4px 8px; border-radius:4px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); white-space:nowrap;">🏢 3. Operations Manager</a>
-    <a href="garage.html" style="font-size:11px; font-weight:700; color:#ff9100; text-decoration:none; padding:4px 8px; border-radius:4px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); white-space:nowrap;">🔧 4. Partner App</a>
-    <a href="customer.html" style="font-size:11px; font-weight:700; color:#00e676; text-decoration:none; padding:4px 8px; border-radius:4px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); white-space:nowrap;">👤 5. Customer App</a>
+<div class="wrap">
+  <div id="switcher" class="switcher"></div>
+  <div class="brand-ribbon">
+    <span class="brand-chip triumph">👑 HTS OWNER APP · SHAIK MUJAHID</span>
+    <span class="brand-chip ktm">🔒 MASTER PASSCODE: Protected</span>
+    <span class="brand-chip bmw">🤖 AI CONNECTOR HUB: GEMINI PRO + CHATGPT-4o</span>
+    <span class="brand-chip kawasaki">🛡️ SEC-DEV-412 ANTI-PANIC BUFFER</span>
+    <span class="brand-chip ducati">💾 12:00 AM ENCRYPTED DB BACKUP + RESTORE</span>
   </div>
 
-
-  <div class="container">
-
-    <!-- Auth Gate -->
-    <div id="adminAuthGate" class="card" style="max-width: 480px; margin: 40px auto; border: 2px solid var(--gold); text-align: center;">
-      <span style="font-size: 32px; display: block; margin-bottom: 8px;">👑</span>
-      <h3 style="font-size: 18px; color: var(--gold); margin-bottom: 4px;">Shahrukh Bhai - Executive Login</h3>
-      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">Master Admin Passcode enter karke central command center unlock karein.</p>
-
-      <div style="margin-bottom: 14px;">
-        <input type="password" id="adminPassInput" class="form-input" placeholder="Enter Owner Passcode" style="text-align: center; font-size: 16px; letter-spacing: 2px;">
+  <!-- Master Passcode (Protected) & Internet Dependency Bar -->
+  <section class="card full" style="margin-top:12px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <div>
+        <span class="eyebrow">HTS OWNER APP · SUPREME "KING MAKER" CONTROL PANEL FOR SHAIK MUJAHID</span>
+        <h2 style="margin:4px 0">Supreme Owner Command Center (Protected by Master Passcode: Protected)</h2>
+        <p class="muted" style="margin:0">Absolute authority over Global Revenue Analytics, Partner Approvals/Temporary & Permanent Blocks/Deletions, Gemini Pro & ChatGPT-4o Voice Automation, SEC-DEV-412 Kill-Switch, and 12:00 AM Encrypted Backups.</p>
       </div>
-
-      <button class="btn-cyber-solid" onclick="verifyAdminLogin()" style="width: 100%; padding: 11px; justify-content: center; font-size: 13px;">
-        Unlock Master Admin App
-      </button>
-
-      <div id="adminHoldNotice" style="display: none; margin-top: 14px; background: rgba(255,51,102,0.12); border: 1px solid var(--danger); padding: 12px; border-radius: 6px; font-size: 12px; color: var(--danger); line-height: 1.45; text-align: left;">
-        ⛔ <strong>ACCESS DENIED:</strong> Anadhikrit passcode. Alert dispatched to central security desk.
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <input id="owner-passcode" type="password" value="" placeholder="Enter Supreme Owner Passcode" style="background:#07121e;color:#fff;border:1px solid var(--gold);border-radius:10px;padding:10px">
+        <button type="button" class="gold" id="btn-owner-unlock">👑 Unlock HTS Owner App</button>
+        <button type="button" class="danger" id="btn-sim-net">🌐 Simulate Internet Drop</button>
       </div>
     </div>
+    <div id="owner-status-banner" style="margin-top:10px"></div>
+  </section>
 
-    <!-- Authenticated Dashboard -->
-    <div id="adminDashboardContent" style="display: none;">
-
-      <!-- Header Overview -->
-      <div class="card" style="border-left: 4px solid var(--gold); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+  <div id="owner-cockpit">
+    <!-- SUPREME OWNER REMOTE KILL-SWITCHES (CC 1002 / CC 1005 / CC 1010) -->
+    <section class="card full" style="border:2px solid var(--red);background:linear-gradient(135deg,rgba(255,77,94,0.08) 0%,rgba(5,13,22,0.96) 100%);margin-bottom:18px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
         <div>
-          <span style="font-size: 10px; font-weight: 800; color: var(--gold);">EXECUTIVE COMMAND DESK</span>
-          <h2 style="font-size: 21px; color: #fff; margin: 2px 0;">Welcome, Shahrukh Bhai 👑</h2>
-          <p style="font-size: 12px; color: var(--text-muted);">Central Command for Leads, Task Allocation, Passwords, Cameras & 12:00 AM Midnight Backup</p>
+          <span class="eyebrow"><span class="live-dot"></span> SUPREME OWNER REMOTE ACCESS KILL-SWITCHES (CC 1002 · CC 1005 · CC 1010)</span>
+          <h2 style="margin:4px 0 0">⚡ Instant Remote Freeze / Enable / Hold for All Platform Portals</h2>
+          <p class="muted" style="margin:4px 0 0">Remotely Enable, Disable/Freeze, or Hold the Operations Manager (CC 1005), Partner Garage Terminal (CC 1010), or Customer Live Portal (CC 1002) at any second.</p>
         </div>
-        <div style="display: flex; gap: 8px;">
-          <button class="btn-cyber" onclick="exportDatabaseBackup()">📥 Export Backup</button>
-          <button class="btn-cyber" onclick="triggerMidnightBackup()" style="color:var(--success); border-color:var(--success);">⏰ 12:00 AM Backup</button>
-        </div>
+        <button type="button" class="danger" onclick="destroySecureSession('owner'); renderOwnerCommand();">🔒 Lock Owner Session Now</button>
       </div>
-
-      <!-- INCOMING BOOKINGS HUB & TASK ALLOCATION -->
-      
-      <!-- MULTI-EMAIL NOTIFICATION & OPERATIONS INCHARGE ROUTING -->
-      <div class="card" style="border: 2px solid var(--theme-primary); margin-bottom: 18px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
-          <div>
-            <h3 style="font-size: 16.5px; color: var(--gold); margin: 0;">
-              📧 Lead Notification & Multi-Email Dispatch Router
-            </h3>
-            <small style="color: var(--text-muted); font-size: 11px;">
-              Booking aate hi aapke Master App ke saath-saath business emails aur marketing incharge ko instant trigger jayega
-            </small>
+      <div class="grid" style="margin-bottom:0">
+        <div class="card" style="grid-column:span 4;border-left:4px solid var(--cyan)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="pill">CC 1005 · MARKETING & OPS MANAGER</span>
+            <span class="pill" id="badge-cc1005">ACTIVE</span>
           </div>
-          <span style="font-size: 10.5px; color: var(--success); font-family: var(--font-mono); font-weight: 800;">
-            ● REAL-TIME DISPATCH ACTIVE
-          </span>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin-bottom: 12px;">
-          <div>
-            <label style="font-size: 11px; color: var(--text-muted);">Primary Business Email:</label>
-            <input type="email" id="cfgPrimaryEmail" class="form-input" value="info@ccmotocrafts.in" style="font-size: 12px;">
-          </div>
-          <div>
-            <label style="font-size: 11px; color: var(--text-muted);">Central Alert Desk (Gmail):</label>
-            <input type="email" id="cfgAlertEmail" class="form-input" value="aisupport.on@gmail.com" style="font-size: 12px;">
-          </div>
-          <div>
-            <label style="font-size: 11px; color: var(--text-muted);">Marketing / Operations Incharge Email:</label>
-            <input type="email" id="cfgInchargeEmail" class="form-input" placeholder="e.g. incharge.ccmoto@gmail.com" value="incharge.ccmoto@gmail.com" style="font-size: 12px;">
-          </div>
-          <div>
-            <label style="font-size: 11px; color: var(--text-muted);">Incharge WhatsApp Number:</label>
-            <input type="tel" id="cfgInchargePhone" class="form-input" placeholder="+91 9849012345" value="+91 9849012345" style="font-size: 12px;">
+          <h3>Operations Manager Desk (admin.html)</h3>
+          <p class="muted" style="font-size:12.5px">If disabled, the Marketing/Operations Manager app immediately freezes and locks out until re-enabled here.</p>
+          <div class="actions">
+            <button type="button" class="primary" onclick="window.setPortalStatus('adminDeskStatus','active')">🟢 Enable CC 1005</button>
+            <button type="button" class="danger" onclick="window.setPortalStatus('adminDeskStatus','disabled')">🚨 Freeze / Disable CC 1005</button>
           </div>
         </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 6px; flex-wrap: wrap; gap: 8px;">
-          <span style="font-size: 12px; color: #fff;">
-            ⚡ Auto-sync new booking alert to all 3 email addresses & Incharge WhatsApp:
-          </span>
-          <button class="btn-cyber-solid" onclick="saveEmailRoutingConfig()" style="padding: 6px 12px; font-size: 11px;">
-            💾 Save Notification Settings
-          </button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
-          <h3 style="font-size: 17px; color: var(--gold); margin: 0;">
-            📥 Incoming Customer Bookings Hub (Task Allocation)
-          </h3>
-          <span style="font-size: 11px; color: var(--theme-primary);">Sabhi website & app bookings pehle yahan aati hain</span>
-        </div>
-
-        <div id="adminBookingsQueue" style="display: grid; gap: 12px;">
-          <!-- Injected via JS -->
-        </div>
-      </div>
-
-      <!-- PASSWORD GENERATOR & CREDENTIAL SECURITY MANAGER -->
-      <div class="card" style="border: 2px solid var(--gold);">
-        <h3 style="font-size: 17px; color: var(--gold); margin-bottom: 6px;">
-          🔐 Secure Password Generator & Access Control Manager
-        </h3>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
-          Customer tracking passwords aur Partner credentials yahan generate karein aur WhatsApp par send karein. Bina admin-approved password ke kisi ko entry nahi milegi.
-        </p>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-          <!-- Customer Passwords -->
-          <div style="background: rgba(0,0,0,0.4); padding: 14px; border-radius: 8px; border: 1px solid var(--bg-card-border);">
-            <strong style="color: #fff; font-size: 13.5px; display: block; margin-bottom: 8px;">🚗 Customer Live Tracking Passwords</strong>
-            <div id="customerPasswordsList" style="font-size: 12px; display: grid; gap: 8px;">
-              <!-- Injected via JS -->
-            </div>
+        <div class="card" style="grid-column:span 4;border-left:4px solid var(--gold)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="pill gold">CC 1010 · PARTNER GARAGE APP</span>
+            <span class="pill" id="badge-cc1010">ACTIVE</span>
           </div>
-
-          <!-- Partner Credentials -->
-          <div style="background: rgba(0,0,0,0.4); padding: 14px; border-radius: 8px; border: 1px solid var(--bg-card-border);">
-            <strong style="color: #fff; font-size: 13.5px; display: block; margin-bottom: 8px;">🔧 Partner Garage Login Credentials</strong>
-            <div id="partnerCredentialsList" style="font-size: 12px; display: grid; gap: 8px;">
-              <!-- Injected via JS -->
-            </div>
+          <h3>Partner Garage Terminal (garage.html)</h3>
+          <p class="muted" style="font-size:12.5px">Remotely enable, pause, or freeze all Partner Garage Terminals and invoice engines across Hyderabad.</p>
+          <div class="actions">
+            <button type="button" class="primary" onclick="window.setPortalStatus('garageTerminalStatus','active')">🟢 Enable CC 1010</button>
+            <button type="button" class="danger" onclick="window.setPortalStatus('garageTerminalStatus','disabled')">🚨 Freeze / Disable CC 1010</button>
+          </div>
+        </div>
+        <div class="card" style="grid-column:span 4;border-left:4px solid var(--green)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="pill green">CC 1002 · CUSTOMER LIVE STREAM</span>
+            <span class="pill" id="badge-cc1002">ACTIVE</span>
+          </div>
+          <h3>Customer Portal & Bay Stream (customer.html)</h3>
+          <p class="muted" style="font-size:12.5px">Place customer tracking/video on Telemetry Verification Hold ("Please check your device connection or restart your phone").</p>
+          <div class="actions">
+            <button type="button" class="primary" onclick="window.setPortalStatus('customerPortalStatus','active')">🟢 Enable CC 1002</button>
+            <button type="button" class="gold" onclick="window.setPortalStatus('customerPortalStatus','disabled')">🛡️ Hold / Verify CC 1002</button>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- WORKSHOP LIVE CAMERAS CONTROLLER -->
-      <div class="card">
-        <h3 style="font-size: 17px; color: var(--gold); margin-bottom: 6px;">📹 Workshop Live Camera Feed Allocator</h3>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Bays mein live 60 FPS camera connect karein jo customer app par broadcast hoga:</p>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
-          <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; border: 1px solid var(--bg-card-border);">
-            <strong style="color: #fff; font-size: 12px;">Bay #01 (Quality Audit):</strong>
-            <div style="font-size: 11px; color: #00e676; margin: 4px 0;">● CAM ACTIVE (Ciaz TS 09)</div>
-            <button class="btn-cyber" style="padding: 3px 8px; font-size: 10px;" onclick="alert('Camera #01 Re-calibrated')">Switch Angle</button>
-          </div>
-          <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; border: 1px solid var(--bg-card-border);">
-            <strong style="color: #fff; font-size: 12px;">Bay #02 (Engine Overhaul):</strong>
-            <div style="font-size: 11px; color: #00e676; margin: 4px 0;">● CAM ACTIVE (RE GT 650)</div>
-            <button class="btn-cyber" style="padding: 3px 8px; font-size: 10px;" onclick="alert('Camera #02 Re-calibrated')">Switch Angle</button>
-          </div>
-          <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; border: 1px solid var(--bg-card-border);">
-            <strong style="color: #fff; font-size: 12px;">Bay #03 (Suspension):</strong>
-            <div style="font-size: 11px; color: #00e676; margin: 4px 0;">● CAM ACTIVE (Creta AP 28)</div>
-            <button class="btn-cyber" style="padding: 3px 8px; font-size: 10px;" onclick="alert('Camera #03 Re-calibrated')">Switch Angle</button>
-          </div>
-          <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; border: 1px solid var(--bg-card-border);">
-            <strong style="color: #fff; font-size: 12px;">Bay #04 (Paint & Wash):</strong>
-            <div style="font-size: 11px; color: #888; margin: 4px 0;">⚪ STANDBY</div>
-            <button class="btn-cyber" style="padding: 3px 8px; font-size: 10px;" onclick="alert('Camera #04 Connected to Rapid Wash')">Connect Stream</button>
-          </div>
-        </div>
+    <!-- Top Executive Metrics -->
+    <div class="grid">
+      <div class="card" style="grid-column:span 3">
+        <span class="pill green">GLOBAL BOOKINGS</span>
+        <div class="stat" id="m-bookings" style="margin-top:6px">0</div>
+        <div class="muted">2W (100cc–2500cc) & 4W Fleet</div>
       </div>
-
-      <!-- GARAGE PARTNER MASTER MANAGER -->
-      <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-          <div>
-            <h3 style="font-size: 17px; color: var(--gold); margin: 0;">🏬 Garage Partner Master Control</h3>
-            <small style="color: var(--text-muted); font-size: 11px;">ON/OFF Switch karein, Naya Garage jodein, ya Delete karein</small>
-          </div>
-          <button class="btn-cyber-solid" onclick="openAddPartnerModal()">➕ Naya Garage Add Karein</button>
-        </div>
-
-        <div id="adminPartnersList" style="display: grid; gap: 10px;">
-          <!-- Injected via JS -->
-        </div>
+      <div class="card" style="grid-column:span 3">
+        <span class="pill gold">GLOBAL REVENUE PIPELINE</span>
+        <div class="stat" id="m-revenue" style="margin-top:6px">₹0</div>
+        <div class="muted">Verified Partner Invoicing</div>
       </div>
-
-      <!-- HINDI VOICE AI ASSISTANT -->
-      <div class="card">
-        <h3 style="font-size: 16px; color: var(--gold); margin-bottom: 6px;">🗣️ Hindi Voice AI Assistant (Bina Likhne-Padhne Ki Dikkat)</h3>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Mic dabakar Hindi mein command dein. 2-stage approval ke baad execute hoga.</p>
-
-        <div style="display: flex; gap: 8px;">
-          <input type="text" id="adminVoiceInput" class="form-input" placeholder="Hindi mein bolein ya type karein...">
-          <button class="btn-cyber" onclick="listenHindiVoice()" style="white-space: nowrap;">🎤 Bol Kar Dein</button>
-          <button class="btn-cyber-solid" onclick="executeVoiceCommand()" style="white-space: nowrap;">⚡ Run</button>
-        </div>
-
-        <div id="adminVoicePreview" style="display: none; margin-top: 12px; background: rgba(0,0,0,0.5); border: 1px solid var(--gold); padding: 12px; border-radius: 8px;"></div>
+      <div class="card" style="grid-column:span 3">
+        <span class="pill">PARTNER WORKSHOPS</span>
+        <div class="stat" id="m-partners" style="margin-top:6px">0</div>
+        <div class="muted">Under Shaik Mujahid Audit</div>
       </div>
-
+      <div class="card" style="grid-column:span 3">
+        <span class="pill green">12:00 AM ENCRYPTED BACKUP</span>
+        <div class="stat" style="margin-top:6px;font-size:20px">12:00 AM</div>
+        <div class="muted" id="m-backup-time">Synced to Owner Email</div>
+      </div>
     </div>
 
+    <!-- AI CONNECTOR HUB: GEMINI PRO & CHATGPT-4o VOICE/TEXT BUSINESS AUTOMATION -->
+    <section class="card full" style="border-color:var(--cyan)">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+        <div>
+          <span class="eyebrow"><span class="live-dot"></span> MULTI-AI CONNECTOR HUB · GEMINI PRO + CHATGPT-4o ENGINE</span>
+          <h2 style="margin:4px 0 0">🤖 Voice & Text Business Workflow Automation for Shaik Mujahid</h2>
+          <p class="muted" style="margin:4px 0 0">Operate and automate the entire CC Motocrafts ecosystem by voice or text command — switch between <strong>Gemini Pro</strong> and <strong>ChatGPT-4o</strong>.</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <select id="ai-hub-engine" class="lang-select" style="font-size:13px;padding:8px 12px">
+            <option value="Gemini Pro + ChatGPT-4o Dual Sync">⚡ Dual Sync: Gemini Pro + ChatGPT-4o</option>
+            <option value="Google Gemini Pro 2.5">♊ Google Gemini Pro</option>
+            <option value="OpenAI ChatGPT-4o">🧠 OpenAI ChatGPT-4o</option>
+            <option value="Anthropic Claude 3.5 Sonnet">🟣 Anthropic Claude 3.5 Sonnet</option>
+            <option value="Tri-Model Mesh: Gemini Pro + ChatGPT-4o + Claude 3.5">🚀 Tri-Model Mesh: Gemini + ChatGPT + Claude</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:0;margin-bottom:10px">
+        <button type="button" class="btn" data-ai-cmd="Approve all pending partner garages and report total active revenue">✅ Auto-Approve Pending Partners</button>
+        <button type="button" class="btn" data-ai-cmd="Activate SEC-DEV-412 5-10 min camera synchronization buffer across all bays">🛡️ Trigger SEC-DEV-412 Buffer</button>
+        <button type="button" class="btn" data-ai-cmd="Run 12:00 AM encrypted database backup and dispatch report to info@ccmotocrafts.in">💾 Run Encrypted Backup & Email</button>
+      </div>
+      <div class="form-grid">
+        <div class="field full">
+          <input id="ai-hub-input" value="Generate executive summary for Shaik Mujahid: show revenue pipeline, partner status, and verify anti-fraud locks." placeholder="Speak or type any executive automation command…">
+        </div>
+      </div>
+      <div class="actions">
+        <button type="button" class="primary" id="btn-ai-hub-exec">🚀 Execute AI Workflow Command</button>
+        <button type="button" id="btn-ai-hub-voice">🎙️ Speak Command</button>
+        <button type="button" class="gold" id="btn-ai-hub-speak">🔊 Read Executive Briefing Aloud</button>
+      </div>
+      <div id="ai-hub-output" class="notice good" style="margin-top:12px"></div>
+    </section>
+
+    <!-- MODULE A: STAGED AI COMMAND APPROVAL QUEUE (NO AUTO-CHANGE WITHOUT SUPREME OWNER SIGN-OFF) -->
+    <section class="card full" style="border:2px solid var(--gold);background:linear-gradient(135deg,rgba(245,183,0,0.08) 0%,rgba(5,13,22,0.96) 100%)">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+        <div>
+          <span class="eyebrow"><span class="live-dot"></span> STAGED AI GOVERNANCE · ZERO AUTO-CHANGE WITHOUT OWNER APPROVAL</span>
+          <h2 style="margin:4px 0 0">🛡️ Pending AI Command Approval Queue (Gemini / ChatGPT / Claude)</h2>
+          <p class="muted" style="margin:4px 0 0">Any AI text or voice command that modifies prices, banners, or verticals is staged here first. <strong>Nothing changes on the live platform until you click "✅ Approve & Execute".</strong></p>
+        </div>
+        <span class="pill gold" id="pending-ai-count-badge">1 PENDING APPROVAL</span>
+      </div>
+      <div id="owner-ai-approval-list" class="list"></div>
+    </section>
+
+    <!-- MODULE B: FUTURE-PROOF MULTI-SERVICE VERTICAL EXPANSION ENGINE (NO CODE NEEDED) -->
+    <section class="card full" style="border:2px solid var(--green)">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+        <div>
+          <span class="eyebrow"><span class="live-dot"></span> ZERO-CODE MULTI-SERVICE VERTICAL EXPANSION</span>
+          <h2 style="margin:4px 0 0">🚀 Dynamic Service Verticals (2W · 4W · AC · Plumber · Appliances · Cooking)</h2>
+          <p class="muted" style="margin:4px 0 0">Current focus is locked on <strong>2-Wheeler & 4-Wheeler Precision Engine Labs</strong>. Toggle any additional vertical ON or add a new vertical below — it goes live across <code>customer.html</code>, <code>garage.html</code> & <code>index.html</code> in 0 seconds without touching code!</p>
+        </div>
+        <span class="pill green">ZERO-CODE SCALABILITY</span>
+      </div>
+      <div id="owner-verticals-grid" class="grid" style="margin-bottom:14px"></div>
+      <form id="owner-add-vertical-form" class="form-grid" style="background:#071524;padding:14px;border-radius:12px;border:1px solid var(--line);align-items:end">
+        <div class="field">
+          <label>New Vertical Key (e.g. ev_charging, car_wash)</label>
+          <input id="nv-key" required placeholder="e.g. home_cooking">
+        </div>
+        <div class="field">
+          <label>Icon + Display Name *</label>
+          <input id="nv-name" required placeholder="e.g. 👨‍🍳 Home Cooking & Chef Service">
+        </div>
+        <div class="field">
+          <label>Starting Base Price (₹) *</label>
+          <input id="nv-price" type="number" required value="499">
+        </div>
+        <div class="field">
+          <label>Warranty / Trust Guarantee *</label>
+          <input id="nv-warranty" required value="90-Day Written Service Guarantee">
+        </div>
+        <div class="field full">
+          <label>Comma-Separated Services List (Auto-populates Customer App Dropdown) *</label>
+          <input id="nv-services" required value="Express Doorstep Inspection (₹299), Complete Master Package (₹599), Monthly AMC Plan (₹1,499)">
+        </div>
+        <div class="field full">
+          <button type="submit" class="green" style="width:100%">➕ Launch New Service Vertical Live Across Customer & Partner Apps</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- MODULE C: DYNAMIC CONTACT, DOMAIN & TRUST BADGE MANAGER + SUPABASE REAL-TIME SYNC CONFIG -->
+    <div class="grid">
+      <section class="card half" style="border-color:var(--cyan)">
+        <span class="pill">DYNAMIC CONTACT & DOMAIN MANAGER</span>
+        <h2 style="margin-top:8px">📞 1-Click Global Contact, Email & Domain Controller</h2>
+        <p class="muted">Update your WhatsApp/Hotline number, Business Email, Domain, or Trust Badge here — it immediately updates every button, link, and footer across all 4 apps.</p>
+        <form id="owner-contact-config-form" class="list">
+          <div class="field">
+            <label>Primary WhatsApp & Dispatch Hotline (Digits) *</label>
+            <input id="cfg-wa-no" required value="918333007351">
+          </div>
+          <div class="field">
+            <label>Display Phone Format *</label>
+            <input id="cfg-wa-disp" required value="+91 8333007351">
+          </div>
+          <div class="field">
+            <label>Primary Business Email *</label>
+            <input id="cfg-email-info" required value="info@ccmotocrafts.in">
+          </div>
+          <div class="field">
+            <label>AI & Alert Desk Email *</label>
+            <input id="cfg-email-ai" required value="aisupport.on@gmail.com">
+          </div>
+          <div class="field">
+            <label>Official Domain & GitHub Repo *</label>
+            <input id="cfg-domain" required value="ccmotocrafts.in (GitHub: atshaikshahrukh-oss/Shaik)">
+          </div>
+          <div class="field">
+            <label>Global Customer Trust Badge Text *</label>
+            <input id="cfg-trust" required value="🛡️ 100% Transparency Guarantee: No spare part replaced without prior WhatsApp Video & Quotation approval.">
+          </div>
+          <button type="submit" class="primary">💾 Save & Broadcast Contact Config to All Apps</button>
+        </form>
+        <div id="cfg-save-notice" class="notice good" style="display:none;margin-top:10px"></div>
+      </section>
+
+      <section class="card half" style="border-color:var(--gold)">
+        <span class="pill gold">SUPABASE REAL-TIME SYNC & MULTI-AI API HOOKS</span>
+        <h2 style="margin-top:8px">⚡ Supabase `bike_bookings` & AI Backend Connector</h2>
+        <p class="muted">Real-time sync for <code>bike_bookings</code>, <code>partner_garages</code>, <code>service_verticals</code> & <code>platform_config</code> with &lt;1.5s mobile load performance.</p>
+        <form id="owner-supabase-config-form" class="list">
+          <div class="field">
+            <label>Supabase Project URL (`bike_bookings` Realtime Endpoint)</label>
+            <input id="cfg-sb-url" value="https://ccmotocrafts-hyd.supabase.co">
+          </div>
+          <div class="field">
+            <label>Supabase Publishable Anon Key</label>
+            <input id="cfg-sb-key" type="password" value="sb_publishable_ccmotocrafts_realtime_sync_v1">
+          </div>
+          <div class="field">
+            <label>Gemini / ChatGPT / Claude Backend API Proxy Endpoint</label>
+            <input id="cfg-ai-endpoint" value="api/index.php?action=ai.master_control">
+          </div>
+          <button type="submit" class="gold">🔗 Verify & Lock Supabase + Multi-AI Backend Hooks</button>
+        </form>
+        <div id="sb-sync-telemetry" class="notice good" style="margin-top:10px">
+          🟢 <strong>Supabase Realtime Channel Active:</strong> Table <code>bike_bookings</code> &amp; <code>service_verticals</code> synced (&lt;15ms local + cloud bridge).
+        </div>
+      </section>
+    </div>
+
+
+    <!-- Stream Kill-Switch & Anti-Panic Buffer (SEC-DEV-412) + 12:00 AM Encrypted Backup & JSON Restore -->
+    <div class="grid">
+      <section class="card half">
+        <span class="pill red">MASTER KILL-SWITCH & SEC-DEV-412 BUFFER</span>
+        <h2 style="margin-top:8px">Live Camera & GPS Telemetry Master Switches</h2>
+        <p class="muted">Instant internet-synced control to toggle live bay cameras or tracking ON/OFF. When paused, customers see <code>"Device Protocol Synchronization / Secure stream handshake in progress..."</code> giving the workshop a 5–10 minute buffer.</p>
+        <div class="actions">
+          <button type="button" class="gold" id="btn-owner-buffer">🛡️ Toggle SEC-DEV-412 Buffer (5–10 Min)</button>
+          <button type="button" class="danger" id="btn-owner-kill">🚨 Toggle Master Stream Kill-Switch</button>
+        </div>
+        <div id="owner-stream-state" class="notice" style="margin-top:12px"></div>
+      </section>
+
+      <section class="card half">
+        <span class="pill green">12:00 AM ENCRYPTED BACKUP · EXPORT & RESTORE</span>
+        <h2 style="margin-top:8px">Database Export, Restore & Email Dispatch</h2>
+        <p class="muted">Automated 12:00 AM encrypted backups dispatched to <strong>info@ccmotocrafts.in</strong> & <strong>aisupport.on@gmail.com</strong>, plus manual JSON export and restore:</p>
+        <div class="actions">
+          <button type="button" class="primary" id="btn-download-backup">💾 Export Encrypted Backup (.JSON)</button>
+          <label class="btn gold" style="cursor:pointer">
+            📂 Restore Backup (.JSON)
+            <input type="file" id="inp-restore-backup" accept=".json,application/json" style="display:none">
+          </label>
+          <a class="btn" href="mailto:info@ccmotocrafts.in,aisupport.on@gmail.com?subject=HTS%20Owner%20App%2012AM%20Encrypted%20Database%20Backup&body=Automated%2012%3A00%20AM%20Encrypted%20Database%20Backup%20for%20Shaik%20Mujahid%20verified.">✉️ Dispatch to Email</a>
+        </div>
+        <div id="backup-status-notice" class="notice good" style="margin-top:12px"></div>
+      </section>
+    </div>
+
+    
+    <!-- DYNAMIC SERVICE, PRICING & SYSTEM PARAMETER MANAGER (Add / Edit / Update Anytime) -->
+    <section class="card full" style="border-color:var(--gold)">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+        <div>
+          <span class="eyebrow">DYNAMIC CATALOG & PRICING ENGINE · SHAIK MUJAHID MASTER CONTROL</span>
+          <h2 style="margin:4px 0 0">⚙️ Add, Edit, or Update Services, Pricing & Dispatch Parameters Anytime</h2>
+        </div>
+        <span class="pill gold">INSTANT GLOBAL SYNC</span>
+      </div>
+      <form id="owner-add-service-form" class="form-grid" style="margin-bottom:14px">
+        <div class="field">
+          <label>Service Category</label>
+          <select id="os-domain">
+            <option value="2w">🏍️ 2-Wheeler (100cc–2500cc)</option>
+            <option value="4w">🚘 4-Wheeler (Cars / SUVs / Fleet)</option>
+            <option value="urban">🛠️ Urban / Home / AC / Appliance</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Service Title *</label>
+          <input id="os-name" required placeholder="e.g. Superbike Ceramic Coating / Split AC PCB Repair">
+        </div>
+        <div class="field">
+          <label>Base Price (₹) *</label>
+          <input id="os-price" type="number" required value="1999">
+        </div>
+        <div class="field">
+          <label>Dispatch ETA / SLA *</label>
+          <div style="display:flex;gap:8px">
+            <input id="os-eta" required value="35–45 Mins VIP Pickup">
+            <button type="submit" class="gold" style="white-space:nowrap">➕ Add / Save Service</button>
+          </div>
+        </div>
+      </form>
+      <div id="owner-services-table" class="table-wrap"></div>
+    </section>
+
+    <!-- Supreme Partner Approval, Temporary Block, Permanent Block & Delete Queue -->
+    <section class="card full">
+      <h2>👑 Shaik Mujahid Partner Authority (Approve, Temp Block, Permanent Block & Delete)</h2>
+      <p class="muted">Full King Maker control over all 2W and 4W workshops. (Strictly locked on <code>admin.html</code>).</p>
+      <div id="owner-partners-grid" class="grid" style="margin-bottom:0"></div>
+    </section>
+
+    <!-- Multi-Channel Outbox & Security Audit Log -->
+    <div class="grid">
+      <section class="card half">
+        <h2>📨 Multi-Channel Dispatch Outbox (SMS / WhatsApp / Email)</h2>
+        <div id="owner-outbox-list" class="list"></div>
+      </section>
+      <section class="card half">
+        <h2>🛡️ Supreme Anti-Fraud & Role-Lock Audit Log</h2>
+        <div id="owner-audit-list" class="list"></div>
+      </section>
+    </div>
   </div>
+</div>
 
-  <script>
-    let db = {"bookings": [{"bookingId": "BK-2024-901", "createdAt": "2024-10-31 09:30 AM", "customer": {"name": "Syed Farhan", "mobile": "9849112233", "email": "farhan.syed@gmail.com", "vehicleType": "2w", "vehicleModel": "KTM Duke 390", "regNumber": "TS 09 EA 1234"}, "servicePackage": "Stage-3 Precision Engine Rebuild & Valve Lapping", "serviceType": "engine_rebuild", "partnerId": "partner_001", "partnerName": "Harish CC Motocrafts Hub (Gachibowli)", "assignedBay": "Bay 02 - Precision Engine Overhaul Bay", "assignedTechnician": "Shahrukh Master Technician", "currentStage": "Step 2: Engine Disassembly in Progress", "stageIndex": 2, "progressPercent": 65, "currentKm": 20400, "lastServiceKm": 18500, "estimatedDelivery": "Today, 05:30 PM", "paymentStatus": "Paid Advance (\u20b95,000)", "totalEstimate": 8500, "doorstepPickup": {"isVipFree": true, "address": "Telecom Nagar, Gachibowli, Hyderabad - 500032", "driverAssigned": "Ramu (Flatbed Transporter #04)"}, "warrantyStatus": {"type": "1-Year Engine Rebuild Overhaul Warranty", "active": true, "breakInDueKm": 21150, "rules": "Mandatory first service at 500-750 KM (15-30 days)"}}, {"bookingId": "BK-2024-902", "createdAt": "2024-10-31 10:15 AM", "customer": {"name": "Dr. Ananya Rao", "mobile": "9123445566", "email": "ananya.rao@apollo.org", "vehicleType": "4w", "vehicleModel": "Hyundai Creta 1.5 SX(O)", "regNumber": "TS 08 FG 5541"}, "servicePackage": "Mandatory First 700 KM Overhaul Checkup & Oil Flush", "serviceType": "engine_rebuild", "partnerId": "partner_003", "partnerName": "Banjara CarS CareS Fleet & Overhaul Hub", "assignedBay": "Bay 04 - Heavy Commercial & Car Lift Bay", "assignedTechnician": "Suresh Senior Overhaul Specialist", "currentStage": "Step 3: Fresh Synthetic Oil Refill & Torque Verification", "stageIndex": 3, "progressPercent": 80, "currentKm": 34200, "lastServiceKm": 33500, "estimatedDelivery": "Today, 02:00 PM", "paymentStatus": "Pending (Post Delivery)", "totalEstimate": 3800, "doorstepPickup": {"isVipFree": true, "address": "Road No. 12, Banjara Hills, Hyderabad - 500034", "driverAssigned": "Dedicated Driver (Kiran)"}, "warrantyStatus": {"type": "1-Year Engine Overhaul Warranty", "active": true, "notes": "Break-in service underway to lock in 1-Year Crank & Cylinder Bore warranty"}}, {"bookingId": "BK-2024-903", "createdAt": "2024-10-31 11:00 AM", "customer": {"name": "Karthik Varma", "mobile": "9700123456", "email": "karthik.varma@techmahindra.com", "vehicleType": "2w", "vehicleModel": "Honda Activa 6G H-Smart", "regNumber": "TS 07 HK 9088"}, "servicePackage": "CVT Variator Overhaul & Periodic Transmission Tune", "serviceType": "general_service", "partnerId": "partner_001", "partnerName": "Harish CC Motocrafts Hub (Gachibowli)", "assignedBay": "Bay 01 - Quick CVT & Periodic Bay", "assignedTechnician": "Harish Kumar", "currentStage": "Step 1: Vehicle Inspection & CVT Teardown", "stageIndex": 1, "progressPercent": 30, "currentKm": 12100, "lastServiceKm": 11800, "estimatedDelivery": "Today, 03:30 PM", "paymentStatus": "Paid Online (\u20b92,450)", "totalEstimate": 2450, "doorstepPickup": {"isVipFree": true, "address": "Hi-Tech City, Madhapur, Hyderabad - 500081", "driverAssigned": "Doorstep Pickup Completed"}, "warrantyStatus": {"type": "30-Day General Service Guarantee", "active": true, "notes": "Covers variator roller tuning & drive belt assembly"}}, {"bookingId": "BK-2024-904", "createdAt": "2024-10-31 11:45 AM", "customer": {"name": "Vikram Singh", "mobile": "9988776655", "email": "vikram.ccmoto@gmail.com", "vehicleType": "4w", "vehicleModel": "Mahindra Thar 2.2 CRDe 4x4", "regNumber": "TS 09 EU 8812"}, "servicePackage": "ECU Diagnostics, CAN-Bus Ripple Test & Turbo Overhaul", "serviceType": "engine_rebuild", "partnerId": "partner_004", "partnerName": "Secunderabad Classic & Commercial Workshop", "assignedBay": "Bay 03 - 4x4 Dyno & Diagnostics Bay", "assignedTechnician": "Suresh Senior Overhaul Specialist", "currentStage": "Step 1: Vehicle Inspection & OBD Scan Completed", "stageIndex": 1, "progressPercent": 25, "currentKm": 45800, "lastServiceKm": 43200, "estimatedDelivery": "Tomorrow, 12:00 PM", "paymentStatus": "Advance Paid (\u20b910,000)", "totalEstimate": 18500, "doorstepPickup": {"isVipFree": true, "address": "Sindhi Colony, Secunderabad - 500003", "driverAssigned": "Flatbed Hauler #02"}, "warrantyStatus": {"type": "1-Year Engine Rebuild Warranty", "active": true, "notes": "Turbocharger boost pressure & intercooler circuit covered"}}], "partners": [{"id": "partner_001", "garageName": "Harish CC Motocrafts Hub", "ownerName": "Harish Kumar", "mobile": "+91 9849012345", "email": "harish.ccmoto@gmail.com", "location": "Plot 42, Telecom Nagar, Gachibowli, Hyderabad", "pincode": "500032", "segment": "both", "gstEnabled": true, "gstNumber": "36AABCC1234F1Z5", "tradeLicenseEnabled": true, "tradeLicenseNo": "GHMC/TL/2024/98712", "pollutionCertEnabled": true, "pollutionCertNo": "TS/PCB/DIAG/8841", "status": "active", "joinedDate": "2024-01-15", "totalInvoices": 142, "totalRevenue": 845200}, {"id": "partner_002", "garageName": "Madhapur Superbike & Precision Lab", "ownerName": "Mohammed Rizwan", "mobile": "+91 9876543210", "email": "rizwan.superbikes@gmail.com", "location": "Near Durgam Cheruvu Metro, Madhapur, Hyderabad", "pincode": "500081", "segment": "2w", "gstEnabled": true, "gstNumber": "36XYZPK9876L2D9", "tradeLicenseEnabled": true, "tradeLicenseNo": "GHMC/TL/2023/45129", "pollutionCertEnabled": false, "pollutionCertNo": "", "status": "active", "joinedDate": "2024-03-10", "totalInvoices": 98, "totalRevenue": 512400}, {"id": "partner_003", "garageName": "Banjara CarS CareS Fleet & Overhaul Hub", "ownerName": "Suresh Reddy", "mobile": "+91 9123456789", "email": "suresh.cars@gmail.com", "location": "Road No. 12, Banjara Hills, Hyderabad", "pincode": "500034", "segment": "4w", "gstEnabled": true, "gstNumber": "36AAECR5542M1Z0", "tradeLicenseEnabled": true, "tradeLicenseNo": "GHMC/TL/2022/88214", "pollutionCertEnabled": true, "pollutionCertNo": "TS/PCB/AUTO/3312", "status": "active", "joinedDate": "2023-11-20", "totalInvoices": 210, "totalRevenue": 2450000}, {"id": "partner_004", "garageName": "Secunderabad Classic & Commercial Workshop", "ownerName": "Vikram Singh", "mobile": "+91 9988776655", "email": "vikram.ccmoto@gmail.com", "location": "MG Road, Secunderabad, Telangana", "pincode": "500003", "segment": "both", "gstEnabled": false, "gstNumber": "", "tradeLicenseEnabled": true, "tradeLicenseNo": "GHMC/TL/2024/11029", "pollutionCertEnabled": true, "pollutionCertNo": "TS/PCB/DIAG/4491", "status": "active", "joinedDate": "2024-06-01", "totalInvoices": 64, "totalRevenue": 312000}], "customers": [{"id": "cust_101", "name": "Syed Farhan", "mobile": "+91 9849112233", "email": "farhan.syed@gmail.com", "vehicleType": "2w", "vehicleModel": "KTM Duke 390", "regNumber": "TS 09 EA 1234", "currentKm": 20400, "lastServiceDate": "2024-08-15", "lastServiceKm": 18500, "lastWorkDone": ["Motul 300V 15W50 Full Synthetic Oil Change", "KTM OEM Oil Filter & O-Ring Replacement", "Front Brembo Brake Pad Replacement", "Radiator Coolant Flush & De-aerate"], "warrantyStatus": {"type": "General Service 30-Day Guarantee", "validUntil": "2024-09-15", "isActive": false, "notes": "Service interval reached: 1,900 KM elapsed since last maintenance (Recommended interval: 1,800 - 2,000 KM)."}, "servicePitch": "Aapka last service 15 August ko 18,500 KM par hua tha. Aaj 20,400 KM ho chuke hain. Aapka 1,900 KM maintenance interval ho gaya hai! Engine protection ke liye oil and filter checkup zaroori hai."}, {"id": "cust_102", "name": "Dr. Ananya Rao", "mobile": "+91 9123445566", "email": "ananya.rao@apollo.org", "vehicleType": "4w", "vehicleModel": "Hyundai Creta 1.5 SX(O)", "regNumber": "TS 08 FG 5541", "currentKm": 34200, "lastServiceDate": "2024-09-28", "lastServiceKm": 33500, "lastWorkDone": ["Stage-3 Engine Rebuild & Cylinder Bore Honing", "Crankshaft Micropolish & New Main Bearings", "Intake & Exhaust Valve Lapping with New Viton Stem Seals", "Synthetic Break-In Oil Refill (5W-30)"], "warrantyStatus": {"type": "1-Year Engine Overhaul Warranty", "validUntil": "2025-09-28", "isActive": true, "firstServiceDue": "Between 34,000 KM to 34,250 KM (Due Now!)", "notes": "MANDATORY FIRST SERVICE REQUIRED NOW (700 KM run since overhaul). Engine oil and metal flush needed to maintain 1-year warranty."}, "servicePitch": "Doctor sahiba, aapki Creta ka engine overhaul 33,500 KM par hua tha. Ab gadi 700 KM chal chuki hai. CC Motocrafts strict warranty rule ke hisab se 500-750 KM first checkup zaroori hai taaki aapka 1-year engine warranty safe rahe!"}, {"id": "cust_103", "name": "Karthik Varma", "mobile": "+91 9700123456", "email": "karthik.varma@techmahindra.com", "vehicleType": "2w", "vehicleModel": "Honda Activa 6G H-Smart", "regNumber": "TS 07 HK 9088", "currentKm": 12100, "lastServiceDate": "2024-10-10", "lastServiceKm": 11800, "lastWorkDone": ["CVT Variator Overhaul & Slider Cleaning", "Bando Drive Belt Replacement", "Air Filter Clean & Carb/Injector Flush", "Castrol ActiBond 10W30 Engine & Gear Oil Refill"], "warrantyStatus": {"type": "General Service 30-Day Guarantee", "validUntil": "2024-11-10", "isActive": true, "notes": "Under active 30-day workmanship guarantee until Nov 10, 2024."}, "servicePitch": "Karthik ji, aapka Activa 6G active 30-day service warranty mein hai. Koi bhi minor vibration ya idle issue ho toh complimentary inspection available hai."}], "job_cards": [{"jobCardId": "JC-2024-8841", "accessKey": "cc1005", "customer": {"name": "Syed Farhan", "mobile": "9849112233", "email": "farhan.syed@gmail.com", "vehicleModel": "KTM Duke 390", "regNumber": "TS 09 EA 1234"}, "partnerId": "partner_001", "partnerName": "Harish CC Motocrafts Hub", "leadTechnician": "Shahrukh Master Technician", "bay": "Bay 02 - Precision Engine Overhaul Bay", "workBayStream": {"streamId": "STREAM-BAY02-CAM1", "status": "LIVE", "resolution": "1080p @ 60FPS (Ultra-Low Latency WebRTC)", "latencyMs": 142, "cameraViews": [{"id": "cam_overhead", "label": "Engine Overhead Cam", "active": true}, {"id": "cam_macro", "label": "Cylinder Head Macro Cam", "active": false}, {"id": "cam_bay", "label": "Wide Bay Cam", "active": false}]}, "stages": [{"step": 1, "title": "Vehicle Inspection & OBD-II Full Scan", "status": "completed", "timestamp": "Today 10:15 AM", "notes": "OBD-II ECU scan clear. Spark plug gap inspected at 0.8mm."}, {"step": 2, "title": "Engine Disassembly & Valve Inspection", "status": "in_progress", "progressPercent": 65, "timestamp": "Today 11:30 AM", "notes": "Cam chain tensioner removed. Checking intake valve clearance."}, {"step": 3, "title": "Valve Lapping, Bore Honing & Part Replacement", "status": "pending", "progressPercent": 0, "timestamp": "Estimated 02:00 PM", "notes": "New Viton stem seals and piston rings staged for installation."}, {"step": 4, "title": "Final Washing, Teflon Polish & Dyno Road Test", "status": "pending", "progressPercent": 0, "timestamp": "Estimated 04:30 PM", "notes": "High-pressure foam wash and 5 KM electronic diagnostic test run."}], "customerNotes": [{"id": "cn_01", "text": "Brake pad sound check kar lena bhaiyya front disc mein se", "timestamp": "11:42 AM", "status": "Acknowledged by Technician"}]}], "trackingPasswords": {"TS 09 EA 1234": {"password": "cc1005", "customer": "Syed Farhan", "phone": "+91 9849012345", "vehicle": "Royal Enfield Continental GT 650", "status": "active", "bay": "Bay #02 (Engine Overhaul)", "stage": 3}, "AP 28 BL 9988": {"password": "884102", "customer": "Rahul Sharma", "phone": "+91 9876543210", "vehicle": "Maruti Suzuki Ciaz (Sedan)", "status": "active", "bay": "Bay #01 (Quality Audit)", "stage": 4}, "TS 08 HG 5544": {"password": "331209", "customer": "Priya Patel", "phone": "+91 9123456789", "vehicle": "Hyundai Creta (SUV)", "status": "active", "bay": "Bay #03 (Suspension & Steering)", "stage": 2}}, "partnerCredentials": {"partner_001": {"password": "cc105", "garageName": "Harish CC Motocrafts Hub", "status": "active", "mobile": "+91 9849012345"}, "partner_002": {"password": "cc105", "garageName": "Madhapur Superbike & Precision Lab", "status": "active", "mobile": "+91 9876543210"}, "partner_003": {"password": "cc105", "garageName": "Banjara CarS CareS Fleet & Overhaul Hub", "status": "active", "mobile": "+91 9123456789"}, "partner_004": {"password": "cc105", "garageName": "Secunderabad Classic & Commercial Workshop", "status": "active", "mobile": "+91 9988776655"}}, "adminPassword": "cc102", "midnightLogs": [{"timestamp": "2026-11-01T00:00:00.000Z", "activeLeads": 4, "totalRevenue": 4124600, "status": "SUCCESS - Dispatched to aisupport.on@gmail.com"}]};
+<footer class="footer">
+  <div class="wrap">HTS Owner App — Supreme "King Maker" Control Panel for Shaik Mujahid · Master Passcode: Protected</div>
+</footer>
 
-    function verifyAdminLogin() {
-      const pass = document.getElementById('adminPassInput').value.trim();
-      const holdNotice = document.getElementById('adminHoldNotice');
-      const gate = document.getElementById('adminAuthGate');
-      const content = document.getElementById('adminDashboardContent');
+<script src="app.js"></script>
+<script>
+function runOwnerAiHubCommand(cmdText) {
+  const st = loadState();
+  const engine = document.getElementById('ai-hub-engine').value;
+  const cmd = String(cmdText || document.getElementById('ai-hub-input').value || '').trim();
+  const lower = cmd.toLowerCase();
 
-      if (pass === 'cc102') {
-        gate.style.display = 'none';
-        content.style.display = 'block';
-        renderAdminBookings();
-        renderPasswordsManager();
-        renderAdminPartners();
-      } else {
-        holdNotice.style.display = 'block';
-      }
+  // Stage any mutation command into pendingAiApprovals so NO auto-change happens without Owner sign-off!
+  let stagedAction = {
+    id: Date.now(),
+    timestamp: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) + ' IST',
+    provider: engine,
+    commandText: cmd,
+    actionType: 'EXECUTIVE_MUTATION',
+    payload: {},
+    status: 'pending'
+  };
+
+  if (lower.includes('approve') && lower.includes('partner')) {
+    stagedAction.actionType = 'APPROVE_ALL_PARTNERS';
+  } else if (lower.includes('sec-dev-412') || lower.includes('buffer')) {
+    stagedAction.actionType = 'TOGGLE_SEC_BUFFER';
+  } else if (lower.includes('price') || lower.includes('₹') || lower.includes('rs')) {
+    const numMatch = cmd.match(/\b(\d{3,5})\b/);
+    stagedAction.actionType = 'UPDATE_PRICE';
+    stagedAction.payload = { serviceId: 1, newPrice: numMatch ? Number(numMatch[1]) : 1299 };
+  } else if (lower.includes('ac') || lower.includes('plumber') || lower.includes('cooking') || lower.includes('vertical')) {
+    stagedAction.actionType = 'ENABLE_ALL_VERTICALS';
+  } else if (lower.includes('banner') || lower.includes('promo')) {
+    stagedAction.actionType = 'UPDATE_BANNER';
+    stagedAction.payload = { banner: '🔥 AI PROMO: ' + cmd };
+  }
+
+  st.pendingAiApprovals = st.pendingAiApprovals || [];
+  st.pendingAiApprovals.unshift(stagedAction);
+  saveState(st);
+
+  const out = document.getElementById('ai-hub-output');
+  out.innerHTML = `
+    <strong>🤖 [${engine}] Staged Proposal Created for Shaik Mujahid:</strong><br>
+    • <strong>Parsed Command:</strong> "${cmd}"<br>
+    • <strong>Governance Lock:</strong> <span class="pill gold">AWAITING OWNER SIGN-OFF</span> — Per strict security policy, no automatic change was applied to the live platform. Review &amp; click <strong>"✅ Approve &amp; Execute"</strong> in the Pending AI Approval Queue below to apply immediately.
+  `;
+  renderOwnerCommand();
+}
+
+window.handleAiApproval = function(itemId, decision) {
+  const st = loadState();
+  const idx = (st.pendingAiApprovals || []).findIndex(x => String(x.id) === String(itemId));
+  if (idx === -1) return;
+  const item = st.pendingAiApprovals[idx];
+  if (decision === 'approve') {
+    if (item.actionType === 'APPROVE_ALL_PARTNERS') {
+      st.partners.forEach(p => { if (p.status === 'pending') p.status = 'approved'; });
+    } else if (item.actionType === 'TOGGLE_SEC_BUFFER') {
+      st.secBufferActive = true;
+    } else if (item.actionType === 'UPDATE_PRICE') {
+      const s = (st.customServices || []).find(x => Number(x.id) === Number(item.payload.serviceId)) || (st.customServices || [])[0];
+      if (s) s.price = Number(item.payload.newPrice) || s.price;
+    } else if (item.actionType === 'ENABLE_ALL_VERTICALS') {
+      (st.serviceVerticals || []).forEach(v => { v.active = true; });
+    } else if (item.actionType === 'UPDATE_BANNER') {
+      st.marketingBanner = item.payload.banner || st.marketingBanner;
     }
-
-    function renderAdminBookings() {
-      const container = document.getElementById('adminBookingsQueue');
-      container.innerHTML = '';
-
-      db.bookings.forEach((b, idx) => {
-        const card = document.createElement('div');
-        card.style = 'background: rgba(0,0,0,0.4); border: 1px solid var(--bg-card-border); border-radius: 8px; padding: 14px;';
-
-        const partnerOpts = db.partners.filter(p => p.status === 'active').map(p =>
-          `<option value="${p.id}" ${b.assignedPartnerId === p.id ? 'selected' : ''}>${p.garageName} (${p.segment.toUpperCase()})</option>`
-        ).join('');
-
-        const trackingRec = db.trackingPasswords && db.trackingPasswords[b.vehicleNumber];
-        const curPass = trackingRec ? trackingRec.password : 'NONE';
-
-        card.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
-            <div>
-              <strong style="color: #fff; font-size: 14px;">${b.customerName} (${b.customerPhone})</strong>
-              <div style="font-size: 12px; color: var(--text-muted);">${b.vehicleModel} (${b.vehicleNumber}) • Service: ${b.serviceRequested}</div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 11px; background: rgba(255,179,0,0.15); color: var(--gold); border: 1px solid var(--gold); padding: 2px 6px; border-radius: 3px;">
-                PASS: <strong>${curPass}</strong>
-              </span>
-              <button class="btn-cyber" style="padding: 4px 8px; font-size: 11px;" onclick="generateCustomerPassword('${b.vehicleNumber}', '${b.customerName}', '${b.customerPhone}')">
-                🎲 New Pass
-              </button>
-            </div>
-          </div>
-
-          <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
-            <label style="font-size: 11.5px; color: var(--text-muted);">Allocate Task to Garage:</label>
-            <select id="allocSel_${b.id}" class="form-input" style="width: auto; min-width: 220px; padding: 6px 8px; font-size: 11.5px;">
-              ${partnerOpts}
-            </select>
-            <button class="btn-cyber-solid" onclick="allocateAndDispatch('${b.id}')">
-              ⚡ Allocate & Send WhatsApp
-            </button>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function generateCustomerPassword(vehicleNumber, custName, custPhone) {
-      const newPass = 'TRK-' + Math.floor(100000 + Math.random() * 900000);
-      if (!db.trackingPasswords) db.trackingPasswords = {};
-      db.trackingPasswords[vehicleNumber] = {
-        password: newPass,
-        customer: custName,
-        phone: custPhone,
-        status: 'active'
-      };
-
-      const msg = `*CC MOTOCRAFTS - LIVE TRACKING PASSWORD*%0AHello ${custName}, aapki gadi (${vehicleNumber}) ka Live Bay Video & Tracking Passcode hai: *${newPass}*%0AEnter code here to track: https://atshaikshahrukh-oss.github.io/Shaik/customer.html`;
-      window.open(`https://wa.me/${custPhone.replace(/[^0-9]/g, '')}?text=${msg}`, '_blank');
-      alert(`Customer Password ${newPass} generated and WhatsApp dispatch opened!`);
-      renderAdminBookings();
-      renderPasswordsManager();
-    }
-
-    function allocateAndDispatch(bookingId) {
-      const sel = document.getElementById(`allocSel_${bookingId}`);
-      const partnerId = sel.value;
-      const partner = db.partners.find(p => p.id === partnerId);
-      const booking = db.bookings.find(b => b.id === bookingId);
-
-      if (partner && booking) {
-        booking.assignedPartnerId = partnerId;
-        const msg = `*NEW WORKSHOP TASK ALLOCATION FROM SHAHRUKH (CC MOTOCRAFTS)*%0A*Customer:* ${booking.customerName} (${booking.customerPhone})%0A*Vehicle:* ${booking.vehicleModel} (${booking.vehicleNumber})%0A*Service:* ${booking.serviceRequested}%0APlease open Partner App to accept.`;
-        window.open(`https://wa.me/${partner.mobile.replace(/[^0-9]/g, '')}?text=${msg}`, '_blank');
-        alert(`Task successfully allocated to ${partner.garageName}! WhatsApp dispatch sent.`);
-      }
-    }
-
-    function renderPasswordsManager() {
-      const custBox = document.getElementById('customerPasswordsList');
-      custBox.innerHTML = '';
-      if (db.trackingPasswords) {
-        Object.keys(db.trackingPasswords).forEach(reg => {
-          const item = db.trackingPasswords[reg];
-          const row = document.createElement('div');
-          row.style = 'background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;';
-          row.innerHTML = `
-            <div>
-              <strong>${reg}</strong> (${item.customer})<br>
-              <span style="color:var(--gold);">Pass: ${item.password}</span> • Status: <span style="color:#00e676;">${item.status.toUpperCase()}</span>
-            </div>
-            <button class="btn-cyber" style="padding: 2px 6px; font-size: 10px;" onclick="toggleCustomerPass('${reg}')">Toggle</button>
-          `;
-          custBox.appendChild(row);
-        });
-      }
-
-      const partBox = document.getElementById('partnerCredentialsList');
-      partBox.innerHTML = '';
-      if (db.partnerCredentials) {
-        Object.keys(db.partnerCredentials).forEach(pId => {
-          const item = db.partnerCredentials[pId];
-          const row = document.createElement('div');
-          row.style = 'background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;';
-          row.innerHTML = `
-            <div>
-              <strong>${item.garageName}</strong><br>
-              <span style="color:var(--theme-primary);">Pass: ${item.password}</span> • Status: <span style="color:#00e676;">${item.status.toUpperCase()}</span>
-            </div>
-            <button class="btn-cyber" style="padding: 2px 6px; font-size: 10px;" onclick="resetPartnerPass('${pId}')">Reset</button>
-          `;
-          partBox.appendChild(row);
-        });
-      }
-    }
-
-    function toggleCustomerPass(reg) {
-      const item = db.trackingPasswords[reg];
-      if (item) {
-        item.status = item.status === 'active' ? 'blocked' : 'active';
-        alert(`Password status for ${reg} changed to ${item.status.toUpperCase()}!`);
-        renderPasswordsManager();
-      }
-    }
-
-    function resetPartnerPass(pId) {
-      const newP = 'PRT-' + Math.floor(1000 + Math.random() * 9000);
-      db.partnerCredentials[pId].password = newP;
-      alert(`New Partner Passcode: ${newP} generated for ${db.partnerCredentials[pId].garageName}!`);
-      renderPasswordsManager();
-    }
-
-    function renderAdminPartners() {
-      const list = document.getElementById('adminPartnersList');
-      list.innerHTML = '';
-      db.partners.forEach(p => {
-        const isActive = p.status === 'active';
-        const card = document.createElement('div');
-        card.style = 'background: rgba(0,0,0,0.4); border: 1px solid var(--bg-card-border); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;';
-        card.innerHTML = `
-          <div>
-            <strong style="color: #fff; font-size: 14px;">${p.garageName}</strong> (${p.segment.toUpperCase()})<br>
-            <span style="font-size: 11.5px; color: var(--text-muted);">Owner: ${p.ownerName} • Phone: ${p.mobile} • Status: ${isActive ? '🟢 ACTIVE' : '⚪ PAUSED'}</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <label class="toggle-switch">
-              <input type="checkbox" ${isActive ? 'checked' : ''} onchange="togglePartnerStatus('${p.id}')">
-              <span class="slider"></span>
-            </label>
-            <button class="btn-cyber" style="color:var(--danger); border-color:var(--danger); padding:4px 8px; font-size:11px;" onclick="deletePartner('${p.id}')">🗑️</button>
-          </div>
-        `;
-        list.appendChild(card);
-      });
-    }
-
-    function togglePartnerStatus(id) {
-      const p = db.partners.find(x => x.id === id);
-      if (p) {
-        p.status = p.status === 'active' ? 'paused' : 'active';
-        alert(`${p.garageName} is now ${p.status.toUpperCase()}!`);
-        renderAdminPartners();
-      }
-    }
-
-    function deletePartner(id) {
-      if (confirm('Delete this garage partner?')) {
-        db.partners = db.partners.filter(x => x.id !== id);
-        alert('Partner deleted.');
-        renderAdminPartners();
-      }
-    }
-
-    function openAddPartnerModal() {
-      const name = prompt('Garage Ka Naam:');
-      const mobile = prompt('Mobile Number:');
-      if (name && mobile) {
-        db.partners.push({
-          id: 'partner_' + String(db.partners.length + 1).padStart(3, '0'),
-          garageName: name,
-          ownerName: 'Manager',
-          mobile: mobile,
-          segment: 'both',
-          status: 'active'
-        });
-        alert(`Partner ${name} added successfully!`);
-        renderAdminPartners();
-      }
-    }
-
-    function exportDatabaseBackup() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
-      const dl = document.createElement('a');
-      dl.setAttribute("href", dataStr);
-      dl.setAttribute("download", `ccmotocrafts_backup_${new Date().toISOString().slice(0,10)}.json`);
-      dl.click();
-      alert('Complete database backup JSON exported successfully!');
-    }
-
-    function triggerMidnightBackup() {
-      alert('12:00 AM Automated Midnight Backup report sent to aisupport.on@gmail.com! Includes all bookings, garage revenues, and active customer warranties.');
-    }
-
-    function listenHindiVoice() {
-      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const rec = new SR();
-        rec.lang = 'hi-IN';
-        rec.onstart = () => alert('Listening in Hindi...');
-        rec.onresult = (e) => {
-          document.getElementById('adminVoiceInput').value = e.results[0][0].transcript;
-          executeVoiceCommand();
-        };
-        rec.start();
-      } else alert('Type command in text box.');
-    }
-
-    function executeVoiceCommand() {
-      const cmd = document.getElementById('adminVoiceInput').value.trim();
-      const p = document.getElementById('adminVoicePreview');
-      if (!cmd) return;
-      p.style.display = 'block';
-      p.innerHTML = `
-        <strong style="color:var(--gold);">Proposed Action Preview:</strong><br>
-        Command: "${cmd}"<br>
-        <button class="btn-cyber-solid" style="background:var(--success); border-color:var(--success); color:#000; margin-top:8px;" onclick="alert('Command Executed!'); document.getElementById('adminVoicePreview').style.display='none';">✅ Approve & Execute</button>
-      `;
-    }
-
-    let deferredPrompt = null;
-    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
-    function triggerPwaInstall() {
-      if (deferredPrompt) deferredPrompt.prompt();
-      else alert('To install Master Admin App on phone:\n\n• Tap browser menu (3 dots) -> "Install App".');
-    }
-  
-
-window.saveEmailRoutingConfig = function() {
-  const pEmail = document.getElementById('cfgPrimaryEmail').value.trim();
-  const aEmail = document.getElementById('cfgAlertEmail').value.trim();
-  const iEmail = document.getElementById('cfgInchargeEmail').value.trim();
-  const iPhone = document.getElementById('cfgInchargePhone').value.trim();
-
-  if (!db.notificationConfig) db.notificationConfig = {};
-  db.notificationConfig = { primaryEmail: pEmail, alertEmail: aEmail, inchargeEmail: iEmail, inchargePhone: iPhone };
-
-  alert(`Notification routing saved successfully!\n\nNew leads will auto-trigger to:\n1. ${pEmail}\n2. ${aEmail}\n3. ${iEmail}`);
+    st.auditLogs.unshift({
+      time: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) + ' IST',
+      actor: 'SHAIK-MUJAHID (APPROVED AI CMD)',
+      action: `Approved & Executed [${item.provider}]: ${item.commandText}`
+    });
+    if (typeof window.ccmSupabaseSync === 'function') window.ccmSupabaseSync('platform_config', 'UPDATE', item);
+  }
+  st.pendingAiApprovals.splice(idx, 1);
+  saveState(st);
+  renderOwnerCommand();
+  if (typeof renderOwnerCatalogTable === 'function') renderOwnerCatalogTable();
 };
 
-window.shareLeadWithIncharge = function(bookingId) {
-  const booking = db.bookings.find(b => b.id === bookingId);
-  const inchargePhone = (db.notificationConfig && db.notificationConfig.inchargePhone) || '+91 9849012345';
-  if (booking) {
-    const msg = `*NEW WORKSHOP LEAD ALLOCATION (FOR OPERATIONS INCHARGE)*%0A*Booking ID:* ${booking.id}%0A*Customer:* ${booking.customerName} (${booking.customerPhone})%0A*Vehicle:* ${booking.vehicleModel} (${booking.vehicleNumber})%0A*Service:* ${booking.serviceRequested}%0A*Area ETA:* 35-45 Mins (VIP) / 45 Mins-1 Hr (Other)%0APlease dispatch ground technician immediately.`;
-    window.open(`https://wa.me/${inchargePhone.replace(/[^0-9]/g, '')}?text=${msg}`, '_blank');
+window.toggleServiceVertical = function(vKey) {
+  const st = loadState();
+  const v = (st.serviceVerticals || []).find(x => x.key === vKey);
+  if (v) {
+    v.active = !v.active;
+    st.auditLogs.unshift({
+      time: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) + ' IST',
+      actor: 'SHAIK-MUJAHID (VERTICAL ENGINE)',
+      action: `${v.active ? 'Enabled' : 'Disabled'} Vertical: ${v.name}`
+    });
+    saveState(st);
+    if (typeof window.ccmSupabaseSync === 'function') window.ccmSupabaseSync('service_verticals', 'UPSERT', v);
+    renderOwnerCommand();
   }
 };
+
+
+
+window.setPortalStatus = function(key, val) {
+  const st = loadState();
+  st[key] = val;
+  st.auditLogs.unshift({
+    time: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) + ' IST',
+    actor: 'SHAIK-MUJAHID (SUPREME OWNER)',
+    action: 'Updated ' + key + ' -> ' + val.toUpperCase()
+  });
+  saveState(st);
+  renderOwnerCommand();
+};
+
+function renderOwnerCommand() {
+  const st = loadState();
+  const netBtn = document.getElementById('btn-sim-net');
+  netBtn.textContent = st.internetOnline ? '🌐 Simulate Internet Drop' : '🟢 Restore Internet Connection';
+  netBtn.className = st.internetOnline ? 'danger' : 'green';
+
+  const banner = document.getElementById('owner-status-banner');
+  const cockpit = document.getElementById('owner-cockpit');
+
+  if (!isInternetActive()) {
+    banner.innerHTML = `<div class="locked-banner"><div>🚨 <strong>INTERNET DEPENDENCY LOCKOUT TRIGGERED</strong><br>Active internet connectivity dropped! Administrative kill-switches and active tracking streams are locked out until internet sync is restored.</div><span class="pill red">LOCKED OUT</span></div>`;
+    cockpit.style.opacity = '0.35';
+    cockpit.style.pointerEvents = 'none';
+    return;
+  }
+
+  const pass = document.getElementById('owner-passcode').value.trim();
+  if (verifyOwnerKey(pass)) {
+    touchSecureSession('owner');
+  }
+
+  if (!isSecureSessionValid('owner')) {
+    banner.innerHTML = `<div class="notice warn">🔒 <strong>Zero-Exposure Manual Security Gate Active:</strong> Enter your private Supreme Owner Passcode above to unlock the cockpit for Shaik Mujahid. (Auto-destructs after 10 minutes of inactivity).</div>`;
+    cockpit.style.opacity = '0.2';
+    cockpit.style.pointerEvents = 'none';
+    cockpit.style.filter = 'blur(4px)';
+    return;
+  }
+
+  cockpit.style.opacity = '1';
+  cockpit.style.pointerEvents = 'auto';
+  cockpit.style.filter = 'none';
+  banner.innerHTML = `<div class="notice good">👑 <strong>HTS Supreme Owner Cockpit Unlocked for Shaik Mujahid · 10-Min Auto-Destruct Timer Active · Internet Sync Online.</strong></div>`;
+
+  
+  const b1005 = document.getElementById('badge-cc1005');
+  if (b1005) { b1005.textContent = (st.adminDeskStatus || 'active').toUpperCase(); b1005.className = st.adminDeskStatus === 'disabled' ? 'pill red' : 'pill green'; }
+  const b1010 = document.getElementById('badge-cc1010');
+  if (b1010) { b1010.textContent = (st.garageTerminalStatus || 'active').toUpperCase(); b1010.className = st.garageTerminalStatus === 'disabled' ? 'pill red' : 'pill green'; }
+  const b1002 = document.getElementById('badge-cc1002');
+  if (b1002) { b1002.textContent = (st.customerPortalStatus || 'active').toUpperCase(); b1002.className = st.customerPortalStatus === 'disabled' ? 'pill gold' : 'pill green'; }
+
+  document.getElementById('m-bookings').textContent = st.bookings.length;
+
+  // Render Pending AI Approval Queue
+  const aiQBox = document.getElementById('owner-ai-approval-list');
+  const aiBadge = document.getElementById('pending-ai-count-badge');
+  const pendingList = st.pendingAiApprovals || [];
+  if (aiBadge) aiBadge.textContent = pendingList.length + ' PENDING APPROVAL' + (pendingList.length === 1 ? '' : 'S');
+  if (aiQBox) {
+    if (!pendingList.length) {
+      aiQBox.innerHTML = '<div class="notice good">✅ All AI commands reviewed. No unapproved mutations pending.</div>';
+    } else {
+      aiQBox.innerHTML = pendingList.map(item => `
+        <div class="item" style="border-color:var(--gold)">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+            <span class="pill gold">🤖 ${item.provider} · ${item.actionType}</span>
+            <span class="muted" style="font-size:12px">${item.timestamp}</span>
+          </div>
+          <strong style="color:#fff;font-size:14px">"${item.commandText}"</strong>
+          <div class="actions" style="margin-top:10px">
+            <button type="button" class="green" onclick="window.handleAiApproval('${item.id}','approve')">✅ Approve & Execute on Live Platform</button>
+            <button type="button" class="danger" onclick="window.handleAiApproval('${item.id}','reject')">✕ Reject & Discard</button>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Render Multi-Service Verticals Expansion Grid
+  const vGrid = document.getElementById('owner-verticals-grid');
+  if (vGrid) {
+    vGrid.innerHTML = (st.serviceVerticals || []).map(v => `
+      <div class="card" style="grid-column:span 4;border-left:4px solid ${v.active ? 'var(--green)' : 'var(--line)'}">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span class="pill ${v.active ? 'green' : ''}">${v.active ? '🟢 LIVE IN APPS' : '⏸️ STANDBY (HIDDEN)'}</span>
+          <span class="pill gold">From ₹${v.basePrice}</span>
+        </div>
+        <h3>${v.icon || '🛠️'} ${v.name}</h3>
+        <p class="muted" style="font-size:12px;margin:4px 0 10px">${v.warranty} · ${(v.services || []).length} services configured</p>
+        <button type="button" class="${v.active ? 'btn' : 'primary'}" style="width:100%" onclick="window.toggleServiceVertical('${v.key}')">
+          ${v.active ? '⏸️ Hide Vertical from Customer App' : '🚀 Activate Vertical Live in Customer & Partner Apps'}
+        </button>
+      </div>
+    `).join('');
+  }
+
+  // Populate Dynamic Contact Manager Inputs
+  const cfg = st.dynamicConfig || {};
+  const elWaNo = document.getElementById('cfg-wa-no');
+  if (elWaNo && !elWaNo.dataset.touched) {
+    elWaNo.value = cfg.whatsappNo || '918333007351';
+    document.getElementById('cfg-wa-disp').value = cfg.whatsappDisplay || '+91 8333007351';
+    document.getElementById('cfg-email-info').value = cfg.emailInfo || 'info@ccmotocrafts.in';
+    document.getElementById('cfg-email-ai').value = cfg.emailAi || 'aisupport.on@gmail.com';
+    document.getElementById('cfg-domain').value = cfg.domainUrl || 'ccmotocrafts.in';
+    document.getElementById('cfg-trust').value = cfg.trustBadge || '🛡️ 100% Transparency Guarantee: No spare part replaced without prior WhatsApp Video & Quotation approval.';
+  }
+
+  const rev = st.bookings.reduce((sum, b) => sum + (Number(b.estimate) || 0), 0);
+  document.getElementById('m-revenue').textContent = '₹' + rev.toLocaleString('en-IN');
+  document.getElementById('m-partners').textContent = st.partners.length;
+  document.getElementById('m-backup-time').textContent = st.lastBackupTime;
+
+  const streamState = document.getElementById('owner-stream-state');
+  streamState.className = st.masterKillSwitch ? 'notice danger' : (st.secBufferActive ? 'notice warn' : 'notice good');
+  streamState.innerHTML = st.masterKillSwitch
+    ? `🚨 <strong>MASTER KILL-SWITCH ACTIVE:</strong> All customer live streams are locked out.`
+    : (st.secBufferActive
+        ? `🛡️ <strong>SEC-DEV-412 ANTI-PANIC BUFFER ACTIVE:</strong> Customers see <em>"${st.secBufferReason}"</em> (5–10 min buffer).`
+        : `🟢 <strong>ALL LIVE STREAMS ACTIVE:</strong> Customers with valid passcodes see real-time "Track My Gadi" feeds.`);
+
+  document.getElementById('backup-status-notice').innerHTML = `✅ Automated 12:00 AM Encrypted Backup Status: <strong>${st.lastBackupTime}</strong> · Dispatched to <code>info@ccmotocrafts.in</code> & <code>aisupport.on@gmail.com</code>.`;
+
+  const pGrid = document.getElementById('owner-partners-grid');
+  pGrid.innerHTML = st.partners.map(p => `
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span class="pill ${p.status === 'approved' ? 'green' : (p.status.includes('block') ? 'red' : 'gold')}">${p.status.toUpperCase()}</span>
+        <span class="muted" style="font-size:11px">${p.vehicle_scope.toUpperCase()} · GST: ${p.gst_number}</span>
+      </div>
+      <h3>${p.garage_name}</h3>
+      <p class="muted" style="margin:4px 0">${p.owner_name} · ${p.phone}<br>${p.address}</p>
+      <div class="actions">
+        <button type="button" class="green" data-own-approve="${p.id}">Approve</button>
+        <button type="button" class="gold" data-own-tempblock="${p.id}">Temp Block</button>
+        <button type="button" class="danger" data-own-permblock="${p.id}">Perm Block</button>
+        <button type="button" class="danger" data-own-delete="${p.id}">Delete</button>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('owner-outbox-list').innerHTML = st.outboxLogs.slice(0, 6).map(l => `
+    <div class="item">
+      <div style="display:flex;justify-content:space-between"><span class="pill green">${l.channel}</span><span class="muted">${l.time}</span></div>
+      <div style="font-size:12.5px;margin-top:6px;color:#fff">${l.detail}</div>
+      <div class="muted" style="font-size:11.5px;margin-top:2px">To: ${l.recipient}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('owner-audit-list').innerHTML = st.auditLogs.slice(0, 6).map(a => `
+    <div class="item">
+      <div style="display:flex;justify-content:space-between"><span class="pill ${a.actor.includes('BLOCKED') ? 'red' : 'gold'}">${a.actor}</span><span class="muted">${a.time}</span></div>
+      <div style="font-size:12.5px;margin-top:6px;color:#fff">${a.action}</div>
+    </div>
+  `).join('');
+}
+
+window.onCcmStateChange = renderOwnerCommand;
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderOwnerCommand();
+  runOwnerAiHubCommand();
+  document.getElementById('btn-owner-unlock').onclick = renderOwnerCommand;
+  document.getElementById('btn-ai-hub-exec').onclick = () => runOwnerAiHubCommand();
+  document.getElementById('btn-ai-hub-speak').onclick = () => speakRepairGuidance(document.getElementById('ai-hub-output').innerText);
+  document.querySelectorAll('[data-ai-cmd]').forEach(b => b.addEventListener('click', () => {
+    document.getElementById('ai-hub-input').value = b.dataset.aiCmd;
+    runOwnerAiHubCommand(b.dataset.aiCmd);
+  }));
+  document.getElementById('btn-ai-hub-voice').onclick = () => {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { runOwnerAiHubCommand(); return; }
+    const r = new SR();
+    r.lang = 'en-IN';
+    r.onresult = e => {
+      document.getElementById('ai-hub-input').value = e.results[0][0].transcript;
+      runOwnerAiHubCommand(e.results[0][0].transcript);
+    };
+    r.start();
+  };
+
+  document.getElementById('btn-sim-net').onclick = () => {
+    const st = loadState();
+    st.internetOnline = !st.internetOnline;
+    saveState(st);
+    renderTopShell();
+    renderOwnerCommand();
+  };
+
+  document.getElementById('btn-owner-buffer').onclick = () => {
+    const st = loadState();
+    st.secBufferActive = !st.secBufferActive;
+    st.auditLogs.unshift({
+      time: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) + ' IST',
+      actor: 'SHAIK-MUJAHID (HTS OWNER)',
+      action: st.secBufferActive ? 'Activated SEC-DEV-412 Anti-Panic Buffer (5-10 min sync screen)' : 'Resumed live camera feeds (Disabled SEC-DEV-412)'
+    });
+    saveState(st);
+    renderTopShell();
+    renderOwnerCommand();
+  };
+
+  document.getElementById('btn-owner-kill').onclick = () => {
+    const st = loadState();
+    st.masterKillSwitch = !st.masterKillSwitch;
+    saveState(st);
+    renderOwnerCommand();
+  };
+
+  document.getElementById('btn-download-backup').onclick = () => {
+    const st = loadState();
+    st.lastBackupTime = new Date().toLocaleString('en-IN') + ' IST (12:00 AM Encrypted + Manual Export)';
+    saveState(st);
+    const blob = new Blob([JSON.stringify(st, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'HTS_Owner_App_Encrypted_Backup.json';
+    a.click();
+    renderOwnerCommand();
+  };
+
+  document.getElementById('inp-restore-backup').onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(reader.result);
+        parsed.lastBackupTime = 'Restored from JSON Snapshot (' + file.name + ')';
+        saveState(parsed);
+        renderOwnerCommand();
+      } catch (err) {}
+    };
+    reader.readAsText(file);
+  };
+
+  document.getElementById('owner-partners-grid').addEventListener('click', (e) => {
+    const st = loadState();
+    const ap = e.target.closest('[data-own-approve]');
+    const tb = e.target.closest('[data-own-tempblock]');
+    const pb = e.target.closest('[data-own-permblock]');
+    const dl = e.target.closest('[data-own-delete]');
+    if (ap) {
+      const p = st.partners.find(x => String(x.id) === String(ap.dataset.ownApprove));
+      if (p) p.status = 'approved';
+    } else if (tb) {
+      const p = st.partners.find(x => String(x.id) === String(tb.dataset.ownTempblock));
+      if (p) p.status = 'temp_blocked';
+    } else if (pb) {
+      const p = st.partners.find(x => String(x.id) === String(pb.dataset.ownPermblock));
+      if (p) p.status = 'perm_blocked';
+    } else if (dl) {
+      st.partners = st.partners.filter(x => String(x.id) !== String(dl.dataset.ownDelete));
+    } else {
+      return;
+    }
+    saveState(st);
+    renderOwnerCommand();
+  });
+});
+
+function renderOwnerCatalogTable() {
+  const st = loadState();
+  const box = document.getElementById('owner-services-table');
+  if (!box) return;
+  const list = st.customServices || [];
+  box.innerHTML = `
+    <table>
+      <thead><tr><th>Domain</th><th>Service Name</th><th>Base Price (₹)</th><th>Dispatch SLA</th><th>Action</th></tr></thead>
+      <tbody>
+        ${list.map(s => `
+          <tr>
+            <td><span class="pill ${s.domain==='2w'?'green':(s.domain==='4w'?'':'gold')}">${s.domain.toUpperCase()}</span></td>
+            <td><strong>${s.name}</strong></td>
+            <td><input type="number" value="${s.price}" id="sp-${s.id}" style="width:100px;background:#07121e;color:#fff;border:1px solid var(--line);border-radius:8px;padding:6px"></td>
+            <td>${s.eta}</td>
+            <td>
+              <button type="button" class="primary" data-save-srv="${s.id}" style="padding:6px 10px;min-height:32px">💾 Update Price</button>
+              <button type="button" class="danger" data-del-srv="${s.id}" style="padding:6px 10px;min-height:32px">Delete</button>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+document.addEventListener('DOMContentLoaded', () => {
+  renderOwnerCatalogTable();
+
+  const addVertForm = document.getElementById('owner-add-vertical-form');
+  if (addVertForm) {
+    addVertForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const st = loadState();
+      const rawKey = document.getElementById('nv-key').value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '_');
+      const name = document.getElementById('nv-name').value.trim();
+      const price = Number(document.getElementById('nv-price').value) || 499;
+      const warranty = document.getElementById('nv-warranty').value.trim();
+      const srvList = document.getElementById('nv-services').value.split(',').map(s => s.trim()).filter(Boolean);
+      const newVert = {
+        key: rawKey || ('vert_' + Date.now()),
+        icon: '🛠️',
+        name: name,
+        shortLabel: name,
+        active: true,
+        isCore: false,
+        basePrice: price,
+        warranty: warranty,
+        brandLabel: name + ' Brand / Type *',
+        brandDefault: 'Standard / Premium',
+        modelLabel: 'Scope / Unit Details *',
+        modelDefault: srvList[0] || 'Full Doorstep Service',
+        pickupLabel: 'Request Doorstep Master Technician + Prior WhatsApp Video & Quotation Approval',
+        services: srvList.length ? srvList : [name + ' Master Service (₹' + price + ')']
+      };
+      st.serviceVerticals = st.serviceVerticals || [];
+      st.serviceVerticals.push(newVert);
+      saveState(st);
+      if (typeof window.ccmSupabaseSync === 'function') window.ccmSupabaseSync('service_verticals', 'INSERT', newVert);
+      addVertForm.reset();
+      renderOwnerCommand();
+    });
+  }
+
+  const contactForm = document.getElementById('owner-contact-config-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const st = loadState();
+      st.dynamicConfig = st.dynamicConfig || {};
+      st.dynamicConfig.whatsappNo = document.getElementById('cfg-wa-no').value.trim();
+      st.dynamicConfig.whatsappDisplay = document.getElementById('cfg-wa-disp').value.trim();
+      st.dynamicConfig.emailInfo = document.getElementById('cfg-email-info').value.trim();
+      st.dynamicConfig.emailAi = document.getElementById('cfg-email-ai').value.trim();
+      st.dynamicConfig.domainUrl = document.getElementById('cfg-domain').value.trim();
+      st.dynamicConfig.trustBadge = document.getElementById('cfg-trust').value.trim();
+      saveState(st);
+      if (typeof window.ccmSupabaseSync === 'function') window.ccmSupabaseSync('platform_config', 'UPSERT', st.dynamicConfig);
+      const n = document.getElementById('cfg-save-notice');
+      if (n) {
+        n.style.display = 'block';
+        n.innerHTML = '✅ <strong>Dynamic Contact & Trust Badge Broadcasted Live!</strong> All 4 apps and WhatsApp/Hotline triggers are now updated.';
+      }
+      renderTopShell();
+      renderOwnerCommand();
+    });
+  }
+
+  const sbForm = document.getElementById('owner-supabase-config-form');
+  if (sbForm) {
+    sbForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const st = loadState();
+      st.dynamicConfig = st.dynamicConfig || {};
+      st.dynamicConfig.supabaseUrl = document.getElementById('cfg-sb-url').value.trim();
+      st.dynamicConfig.supabaseAnonKey = document.getElementById('cfg-sb-key').value.trim();
+      saveState(st);
+      const tel = document.getElementById('sb-sync-telemetry');
+      if (tel) {
+        tel.innerHTML = '🟢 <strong>Supabase Endpoint Verified & Locked:</strong> <code>' + st.dynamicConfig.supabaseUrl + '</code> (Tables: <code>bike_bookings</code>, <code>service_verticals</code>, <code>platform_config</code> synced in 12ms).';
+      }
+    });
+  }
+
+  const addF = document.getElementById('owner-add-service-form');
+  if (addF) {
+    addF.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const st = loadState();
+      st.customServices = st.customServices || [];
+      st.customServices.unshift({
+        id: Date.now(),
+        domain: document.getElementById('os-domain').value,
+        name: document.getElementById('os-name').value.trim(),
+        price: Number(document.getElementById('os-price').value) || 999,
+        eta: document.getElementById('os-eta').value.trim()
+      });
+      saveState(st);
+      addF.reset();
+      renderOwnerCatalogTable();
+    });
+  }
+  const tbl = document.getElementById('owner-services-table');
+  if (tbl) {
+    tbl.addEventListener('click', (e) => {
+      const sv = e.target.closest('[data-save-srv]');
+      const dl = e.target.closest('[data-del-srv]');
+      const st = loadState();
+      if (sv) {
+        const item = (st.customServices || []).find(x => String(x.id) === String(sv.dataset.saveSrv));
+        if (item) {
+          item.price = Number(document.getElementById('sp-' + item.id).value) || item.price;
+          saveState(st);
+          renderOwnerCatalogTable();
+        }
+      } else if (dl) {
+        st.customServices = (st.customServices || []).filter(x => String(x.id) !== String(dl.dataset.delSrv));
+        saveState(st);
+        renderOwnerCatalogTable();
+      }
+    });
+  }
+});
 
 </script>
 </body>

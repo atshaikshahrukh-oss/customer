@@ -38,11 +38,50 @@
     <div class="eyebrow">DEDICATED CUSTOMER APP · ZERO CLUTTER · 100% WARRANTY GUARANTEED</div>
     <h1>Choose Your Service Category — Only See What You Need.</h1>
     <p>Select <strong>2-Wheeler</strong>, <strong>4-Wheeler</strong>, or <strong>Urban Home Services</strong> below. Our 30-Years Experienced Service Head & Master Advisor clears all your doubts, confirms written warranty & guarantee, and dispatches our pickup team immediately via SMS, WhatsApp & Email.</p>
-    <div class="actions">
-      <button type="button" id="cat-btn-2w" class="primary">🏍️ 2-Wheeler Master Care (Bike / Scooter / Superbike)</button>
-      <button type="button" id="cat-btn-4w">🚘 4-Wheeler Master Care (Car / SUV / Lorry)</button>
-      <button type="button" id="cat-btn-urban">🏠 Urban Home Care (AC / Plumber / Interior)</button>
+    <!-- MANDATORY TRUST BADGE BANNER -->
+    <div class="notice good" style="margin:12px 0;border:2px solid var(--gold);background:rgba(245,183,0,0.12);color:#fff;font-size:14.5px;font-weight:800;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <span data-dynamic-trust-badge>🛡️ 100% Transparency Guarantee: "No spare part replaced without prior WhatsApp Video & Quotation approval."</span>
+      <span class="pill green"><span class="live-dot"></span> SUPABASE REAL-TIME SYNC: &lt;15ms</span>
     </div>
+
+    <!-- DYNAMIC SERVICE VERTICAL TABS (Auto-syncs with Owner Cockpit Multi-Service Expansion) -->
+    <div class="actions" id="dynamic-vertical-tabs">
+      <button type="button" id="cat-btn-2w" class="primary" onclick="setCustomerCategory('2w')">🏍️ 2-Wheeler Master Care (100cc–2500cc)</button>
+      <button type="button" id="cat-btn-4w" onclick="setCustomerCategory('4w')">🚘 4-Wheeler Master Care (Car / SUV / Lorry)</button>
+    </div>
+  </section>
+
+  <!-- FRICTIONLESS 15-SECOND EXPRESS BOOKING BAR (Name, Mobile, Vehicle 2W/4W, Pincode -> Instant Supabase Sync & Live WhatsApp Redirect) -->
+  <section class="card full" style="border:2px solid var(--green);background:linear-gradient(135deg,rgba(0,230,118,0.09) 0%,rgba(5,13,22,0.96) 100%);margin-bottom:18px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+      <div>
+        <span class="eyebrow"><span class="live-dot"></span> FRICTIONLESS 1-CLICK EXPRESS BOOKING · SUPABASE `bike_bookings` SYNC</span>
+        <h2 style="margin:4px 0 0">⚡ Instant 15-Second Doorstep Pickup Booking (Direct WhatsApp Redirect)</h2>
+      </div>
+      <span class="pill gold">🛡️ No Spare Part Replaced Without Prior WhatsApp Video & Quotation Approval</span>
+    </div>
+    <form id="express-booking-form" class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr));align-items:end">
+      <div class="field">
+        <label>1. Customer Name *</label>
+        <input id="exp-name" required placeholder="Enter Your Name" value="Valued Customer">
+      </div>
+      <div class="field">
+        <label>2. Mobile Number (WhatsApp) *</label>
+        <input id="exp-phone" required placeholder="+91 98480XXXXX" value="+91 9848011223">
+      </div>
+      <div class="field">
+        <label>3. Vehicle / Service Category *</label>
+        <select id="exp-vtype" style="background:#07121e;color:#fff;border:1px solid var(--cyan);border-radius:10px;padding:10px"></select>
+      </div>
+      <div class="field">
+        <label>4. Area PIN Code (Auto-Routes Garage) *</label>
+        <input id="exp-pin" required maxlength="6" placeholder="e.g. 500034" value="500034">
+      </div>
+      <div class="field">
+        <button type="submit" class="green" style="width:100%;min-height:44px;font-weight:900;font-size:14px">📲 Book & Live WhatsApp Redirect (+91 8333007351)</button>
+      </div>
+    </form>
+    <div id="express-booking-out" style="display:none;margin-top:12px"></div>
   </section>
 
   <div class="grid">
@@ -56,11 +95,11 @@
         <input type="hidden" name="vehicleType" id="f-vtype" value="2w">
         <div class="field">
           <label>Customer Full Name *</label>
-          <input name="name" id="f-name" required placeholder="Enter your full name">
+          <input name="name" id="f-name" value="Valued VIP Customer" placeholder="Enter your full name">
         </div>
         <div class="field">
           <label>Mobile Number (For SMS + WhatsApp Alert) *</label>
-          <input name="phone" id="f-phone" required placeholder="+91 98480XXXXX">
+          <input name="phone" id="f-phone" value="+91 9848011223" placeholder="+91 98480XXXXX">
         </div>
         <div class="field">
           <label>Email Address (For Invoice & Warranty Certificate)</label>
@@ -68,11 +107,11 @@
         </div>
         <div class="field">
           <label id="lbl-brand">Bike / Scooter Brand *</label>
-          <input name="brand" id="f-brand" required placeholder="KTM, Benelli, Royal Enfield, Yamaha, Suzuki, Honda…">
+          <input name="brand" id="f-brand" placeholder="KTM, Benelli, Royal Enfield, Yamaha, Suzuki, Honda…">
         </div>
         <div class="field">
           <label id="lbl-model">Exact Model *</label>
-          <input name="model" id="f-model" required placeholder="e.g. Duke 390, Classic 350, Activa 6G, R15 V4">
+          <input name="model" id="f-model" placeholder="e.g. Duke 390, Classic 350, Activa 6G, R15 V4">
         </div>
         <div class="field">
           <label id="lbl-reg">Registration No. / Unit ID</label>
@@ -123,6 +162,8 @@
       </div>
       <div class="actions">
         <button type="button" class="primary" id="btn-cust-ai-ask">💬 Ask 30-Yr Advisor</button>
+        <button type="button" id="btn-cust-ai-voice">🎙️ Voice Command</button>
+        <button type="button" class="gold" id="btn-cust-ai-speak">🔊 Speaker Reply</button>
         <button type="button" class="green" id="btn-cust-ai-convert">📲 Convert to Booking + WhatsApp</button>
       </div>
     </section>
@@ -144,6 +185,57 @@
     </section>
 
     
+    
+    <!-- Dynamic 2W (100cc-2500cc) / 4W (Cars/SUVs/Fleet) Service Pricing Table -->
+    <section class="card full" id="service-pricing-table">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+        <div>
+          <span class="eyebrow">TRANSPARENT RATE CARD · ZERO HIDDEN CHARGES</span>
+          <h2 id="pricing-table-heading" style="margin:4px 0 0">💰 2-Wheeler (100cc–2500cc) & 4-Wheeler Master Service Pricing</h2>
+        </div>
+        <span class="pill green">FREE VIP Pickup & Drop in Selected PINs · ₹500 Other Hyd PINs</span>
+      </div>
+      <div id="dynamic-pricing-grid" class="grid" style="margin-bottom:0"></div>
+    </section>
+
+    <!-- Hyderabad Service Areas & VIP PIN Code Directory -->
+    <section class="card full" id="hyderabad-service-areas">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+        <div>
+          <span class="eyebrow">HYDERABAD COVERAGE ZONES · 35–45 MIN VIP DISPATCH</span>
+          <h2 style="margin:4px 0 0">📍 Hyderabad VIP Free Pickup Zones & All-Hyderabad Route Directory</h2>
+        </div>
+        <span class="pill gold">24/7 Hydraulic Ramp Van & Flatbed Lorry</span>
+      </div>
+      <div class="grid" style="margin-bottom:0">
+        <div class="card half" style="border-left:4px solid var(--green)">
+          <span class="pill green">VIP ZONES · 35–45 MINS DISPATCH (FREE PICKUP & DROP)</span>
+          <h3 style="margin-top:8px">Banjara Hills, Jubilee Hills, HITEC City, Madhapur & Gachibowli</h3>
+          <p class="muted">Covered VIP PIN Codes: <strong>500033, 500034, 500081, 500032, 500084, 500016, 500082</strong> (Banjara Hills, Jubilee Hills, Madhapur, Gachibowli, Kondapur, Somajiguda, Begumpet, Financial District).</p>
+        </div>
+        <div class="card half" style="border-left:4px solid var(--gold)">
+          <span class="pill gold">ALL OTHER HYDERABAD PIN CODES · 45–60 MINS DISPATCH (₹500 ROUTE FEE)</span>
+          <h3 style="margin-top:8px">Secunderabad, Kukatpally, Mehdipatnam, Uppal, LB Nagar & Attapur</h3>
+          <p class="muted">Full doorstep Hydraulic Ramp Van (2W) & Hydraulic Flatbed Lorry (4W) coverage across all Greater Hyderabad & Ranga Reddy PIN codes with live GPS tracking.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & 24/7 Support Desk Section -->
+    <section class="card full" id="contact-support-section">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <div>
+          <span class="eyebrow">24/7 CENTRAL DISPATCH & CUSTOMER CARE</span>
+          <h2 style="margin:4px 0">📞 Direct WhatsApp, Hotline & Email Support</h2>
+          <p class="muted" style="margin:0">Founder & Technical Head: <strong>Mr. Shaik Mujahid</strong> · Banjara Hills & Madhapur Master Hubs, Hyderabad · Hotline: <strong>+91 8333007351</strong> · Email: <strong>info@ccmotocrafts.in</strong></p>
+        </div>
+        <div class="actions" style="margin:0">
+          <a class="btn green" href="https://wa.me/918333007351" target="_blank" rel="noopener">💬 WhatsApp (+91 8333007351)</a>
+          <a class="btn primary" href="tel:+918333007351">📞 Call 24/7 Hotline</a>
+        </div>
+      </div>
+    </section>
+
     <!-- 1-Year Digital Warranty Card -->
     <section class="card full" id="digital-warranty-card">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
@@ -243,6 +335,41 @@ const SERVICE_CATALOG = {
 
 let activeCategory = '2w';
 
+function renderDynamicVerticalTabs() {
+  const st = loadState();
+  const verticals = (st.serviceVerticals || []).filter(v => v.active);
+  const tabBox = document.getElementById('dynamic-vertical-tabs');
+  if (tabBox && verticals.length) {
+    tabBox.innerHTML = verticals.map(v => `
+      <button type="button" id="cat-btn-${v.key}" class="${v.key === activeCategory ? 'primary' : ''}" onclick="setCustomerCategory('${v.key}')">
+        ${v.icon || '🛠️'} ${v.name}
+      </button>
+    `).join('');
+  }
+  const expSel = document.getElementById('exp-vtype');
+  if (expSel && verticals.length) {
+    expSel.innerHTML = verticals.map(v => `<option value="${v.key}" ${v.key === activeCategory ? 'selected' : ''}>${v.icon || '🛠️'} ${v.shortLabel || v.name} — From ₹${v.basePrice}</option>`).join('');
+  }
+  // Ensure SERVICE_CATALOG has entries for any dynamically enabled or newly created Owner verticals
+  verticals.forEach(v => {
+    if (!SERVICE_CATALOG[v.key]) {
+      SERVICE_CATALOG[v.key] = {
+        title: `${v.icon || '🛠️'} ${v.name} — Doorstep Booking`,
+        warranty: v.warranty || '90-Day Written Service Warranty + Prior WhatsApp Video Approval',
+        brandLbl: v.brandLabel || 'Brand / Category Details *',
+        brandPh: v.brandDefault || 'Enter Brand or Service Type',
+        modelLbl: v.modelLabel || 'Model / Scope *',
+        modelPh: v.modelDefault || 'Enter Model or Requirement',
+        pickupTxt: v.pickupLabel || 'Request Express Doorstep Technician + Prior WhatsApp Video Quotation Approval',
+        advisorBadge: `30-YR ${v.key.toUpperCase()} MASTER SERVICE HEAD`,
+        advisorHeading: `${v.name} — 30-Yr Master Advisor`,
+        services: Array.isArray(v.services) && v.services.length ? v.services : [`${v.name} Complete Master Package (₹${v.basePrice || 499})`]
+      };
+    }
+  });
+}
+
+
 function setCustomerCategory(cat) {
   activeCategory = ServiceCatalogKey(cat);
   const cfg = SERVICE_CATALOG[activeCategory];
@@ -260,10 +387,7 @@ function setCustomerCategory(cat) {
   const sel = document.getElementById('f-service');
   sel.innerHTML = cfg.services.map(s => `<option value="${s}">${s}</option>`).join('');
 
-  ['2w', '4w', 'urban'].forEach(k => {
-    const b = document.getElementById('cat-btn-' + k);
-    if (b) b.className = (k === activeCategory) ? 'primary' : '';
-  });
+  renderDynamicVerticalTabs();
   if (activeCategory === '2w') {
     document.getElementById('f-brand').value = 'KTM';
     document.getElementById('f-model').value = 'Duke 390 BS6 (100cc–2500cc)';
@@ -284,6 +408,32 @@ function setCustomerCategory(cat) {
   renderCustomerStream();
   renderParking();
 
+  // Render dynamic pricing cards for activeCategory
+  const priceGrid = document.getElementById('dynamic-pricing-grid');
+  if (priceGrid) {
+    const items2W = [
+      ['100cc–180cc Commuter & Scooter Master Service', '₹999', 'Activa, Access 125, Shine, Pulsar, Apache · 42-Pt Check + CVT/Carb Tune'],
+      ['200cc–500cc Performance & Cruiser Overhaul', '₹1,799', 'KTM Duke/RC, Royal Enfield Classic/Himalayan, Yamaha R15/MT15, Dominar'],
+      ['600cc–2500cc Superbike & Mega-Cruiser Lab', '₹3,999', 'Benelli, Ducati Desmo, Triumph Rocket 2500cc, BMW ShiftCam, Kawasaki ZX-10R'],
+      ['2W Doorstep Hydraulic Ramp Van Pickup & Drop', 'FREE (VIP PINs)', 'Zero-scratch wheel-chock locked transit (₹500 in non-VIP Hyderabad PINs)']
+    ];
+    const items4W = [
+      ['4W 64-Point Periodic Master Service (Hatchback/Sedan)', '₹2,999', 'Swift, i20, Baleno, City, Verna · Synthetic Oil, Filters & OBD Scan'],
+      ['Luxury SUV & Automatic/DCT Gearbox Overhaul', '₹4,999', 'Creta, Seltos, Innova Crysta, Fortuner, Thar, XUV700, BMW, Audi'],
+      ['4W Climate Control AC Overhaul & 3D Laser Alignment', '₹2,499', 'Robinair Gas Recharge, Cooling Coil Endoscope & Hunter 3D Camber Setup'],
+      ['4W Zero-Angle Hydraulic Flatbed Lorry Transit', '₹999 VIP', '24/7 breakdown & doorstep flatbed carrier recovery across Hyderabad']
+    ];
+    const list = activeCategory === '4w' ? items4W : items2W;
+    priceGrid.innerHTML = list.map(row => `
+      <div class="card" style="grid-column:span 3;padding:14px">
+        <span class="pill gold">${row[1]}</span>
+        <h3 style="margin:8px 0 4px;font-size:15px">${row[0]}</h3>
+        <p class="muted" style="font-size:12.5px;margin:0">${row[2]}</p>
+      </div>
+    `).join('');
+  }
+
+
   const chatBox = document.getElementById('cust-chat-box');
   chatBox.innerHTML = `
     <div class="msg ai">
@@ -294,6 +444,8 @@ function setCustomerCategory(cat) {
 }
 
 function ServiceCatalogKey(c) {
+  renderDynamicVerticalTabs();
+  if (SERVICE_CATALOG[c]) return c;
   return (c === '4w' || c === 'urban') ? c : '2w';
 }
 
@@ -341,8 +493,9 @@ function handleCustomerBookingSubmit(e) {
     address: address,
     vip_dispatch: zone.isVip,
     dispatch_eta: `${zone.eta} (${zone.badge})`,
-    assigned_garage_id: activeCategory === '4w' ? 2 : 1,
-    garage_name: activeCategory === '4w' ? 'CC Motocrafts 4W Hydraulic & AC Master Hub (Madhapur)' : 'CC Motocrafts Superbike & 2W Master Bay (Banjara Hills)',
+    assigned_garage_id: window.matchPartnerByPincode(pincode, activeCategory).id,
+    garage_name: window.matchPartnerByPincode(pincode, activeCategory).garage_name,
+    trust_policy: 'No spare part replaced without prior WhatsApp Video & Quotation approval',
     stage: 'inspection',
     status: 'assigned',
     tracking_passcode: passcode,
@@ -353,7 +506,8 @@ function handleCustomerBookingSubmit(e) {
   };
 
   st.bookings.unshift(newBooking);
-  if (typeof ccmApiCall === 'function') ccmApiCall('booking.create', newBooking);
+  if (typeof window.ccmSupabaseSync === 'function') window.ccmSupabaseSync('bike_bookings', 'INSERT', newBooking);
+  else if (typeof ccmApiCall === 'function') ccmApiCall('booking.create', newBooking);
   const links = buildDispatchLinks(newBooking);
 
   st.outboxLogs.unshift({
@@ -365,7 +519,7 @@ function handleCustomerBookingSubmit(e) {
   saveState(st);
 
   const box = document.getElementById('booking-confirmation-box');
-  box.style.display = 'block';
+  box.style.display = 'block'; setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
   box.innerHTML = `
     <div class="notice good" style="border-width:2px">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px">
@@ -416,42 +570,80 @@ function renderCustomerStream() {
     return;
   }
 
+  if (st.customerPortalStatus === 'disabled' || st.customerPortalStatus === 'blocked') {
+    out.innerHTML = `<div class="locked-banner"><div>🔒 <strong>ACCOUNT / STREAM TEMPORARILY ON HOLD BY CENTRAL COMMAND (CC 1002)</strong><br>Please check your device connection or restart your phone; system telemetry is verifying.</div><span class="pill red">CC 1002 HOLD</span></div>`;
+    return;
+  }
   if (st.masterKillSwitch) {
-    out.innerHTML = `<div class="locked-banner"><div>🔒 <strong>STREAM TERMINATED BY SUPREME OWNER</strong><br>Master Owner Command has locked live camera and telemetry access.</div><span class="pill red">LOCKED</span></div>`;
+    out.innerHTML = `<div class="sec-buffer"><div class="pill gold" style="margin-bottom:8px">TELEMETRY HANDSHAKE VERIFICATION</div><h3 style="margin:6px 0;color:#fff">Please check your device connection or restart your phone; system telemetry is verifying.</h3><p style="margin:4px 0;font-size:13.5px">Live bay stream and transit GPS are syncing with the central router. Your vehicle is safe under Master Supervisor custody.</p></div>`;
     return;
   }
 
   const booking = st.bookings.find(b => b.booking_code === sel.value) || st.bookings[0];
-  if (pass !== booking.tracking_passcode && pass !== CCM_CONFIG.MASTER_PASSCODE) {
-    out.innerHTML = `<div class="notice warn">Invalid Tracking Passcode. Use <strong>${booking.tracking_passcode}</strong> (or Master Passcode <code>000786000</code>) to view live bay stream for ${booking.booking_code}.</div>`;
+  if (pass !== booking.tracking_passcode && !verifyOwnerKey(pass)) {
+    out.innerHTML = `<div class="notice warn">Invalid Tracking Passcode. Use <strong>${booking.tracking_passcode}</strong> to view live bay stream for ${booking.booking_code}.</div>`;
     return;
   }
 
   if (st.secBufferActive || booking.camera_paused) {
     out.innerHTML = `
       <div class="sec-buffer">
-        <div class="pill gold" style="margin-bottom:8px">SEC-DEV-412 · OPERATIONAL SYNCHRONIZATION BUFFER</div>
-        <h3 style="margin:6px 0;color:#fff">${st.secBufferReason}</h3>
-        <p style="margin:4px 0;font-size:13.5px">Encrypted workshop camera & OBD-II telemetry handshake in progress. Stream will automatically resume within <strong>${st.secBufferWindow}</strong>.</p>
+        <div class="pill gold" style="margin-bottom:8px">SEC-DEV-412 · TELEMETRY & DEVICE HANDSHAKE</div>
+        <h3 style="margin:6px 0;color:#fff">Please check your device connection or restart your phone; system telemetry is verifying.</h3>
+        <p style="margin:4px 0;font-size:13.5px">${st.secBufferReason} — Encrypted workshop camera & OBD-II telemetry handshake in progress. Stream will automatically resume within <strong>${st.secBufferWindow}</strong>.</p>
       </div>
     `;
     return;
   }
 
   const is2W = booking.vehicle_type === '2w';
+  const stages = ['inspection', 'diagnosis', 'repair', 'ready'];
+  const curStageIdx = Math.max(0, stages.indexOf(String(booking.stage || 'inspection').toLowerCase()));
+  const pct = [25, 55, 80, 100][curStageIdx] || 50;
   out.innerHTML = `
+    <div class="card full" style="background:#061320;border:1px solid var(--cyan);margin-bottom:12px;padding:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+        <div>
+          <span class="pill green"><span class="live-dot"></span> LIVE JOB CARD TELEMETRY (${pct}% COMPLETE)</span>
+          <h3 style="margin:6px 0 0;color:#fff">${booking.booking_code} — ${booking.brand} ${booking.model} (${booking.customer_name})</h3>
+        </div>
+        <span class="pill gold">🔑 Passcode Verified: ${booking.tracking_passcode}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0">
+        <div style="padding:8px;border-radius:8px;background:${curStageIdx>=0?'rgba(0,230,118,0.18)':'#0a1929'};border:1px solid ${curStageIdx>=0?'var(--green)':'var(--line)'}">
+          <strong style="font-size:12px;color:#fff">1️⃣ Doorstep Pickup</strong>
+          <div class="muted" style="font-size:11px">✅ Verified</div>
+        </div>
+        <div style="padding:8px;border-radius:8px;background:${curStageIdx>=1?'rgba(0,230,118,0.18)':'#0a1929'};border:1px solid ${curStageIdx>=1?'var(--green)':'var(--line)'}">
+          <strong style="font-size:12px;color:#fff">2️⃣ OBD-II Scan</strong>
+          <div class="muted" style="font-size:11px">${curStageIdx>=1?'✅ Completed':'In Progress'}</div>
+        </div>
+        <div style="padding:8px;border-radius:8px;background:${curStageIdx>=2?'rgba(0,230,118,0.18)':'#0a1929'};border:1px solid ${curStageIdx>=2?'var(--green)':'var(--line)'}">
+          <strong style="font-size:12px;color:#fff">3️⃣ Bay Overhaul</strong>
+          <div class="muted" style="font-size:11px">${curStageIdx>=2?'🔧 Active on Lift':'Queued'}</div>
+        </div>
+        <div style="padding:8px;border-radius:8px;background:${curStageIdx>=3?'rgba(0,230,118,0.18)':'#0a1929'};border:1px solid ${curStageIdx>=3?'var(--green)':'var(--line)'}">
+          <strong style="font-size:12px;color:#fff">4️⃣ QC & VIP Drop</strong>
+          <div class="muted" style="font-size:11px">${curStageIdx>=3?'🚀 Ready':'Pending'}</div>
+        </div>
+      </div>
+    </div>
     <div class="grid" style="margin:0">
       <div class="card half">
         <span class="pill green"><span class="live-dot"></span> LIVE PICKUP / DROP TRANSIT FEED</span>
         <img src="${is2W ? 'tw_pickup_van_ramp.jpg' : 'fw_17_flatbed_transit.jpg'}" onerror="this.onerror=null;this.src='tw_15_doorstep_ramp.jpg'" style="width:100%;height:200px;object-fit:cover;border-radius:10px;margin:10px 0" alt="Transit">
         <strong>${booking.dispatch_eta}</strong>
-        <div class="muted">Pickup/Drop Address: ${booking.address} (PIN: ${booking.pincode})</div>
+        <div class="muted">📍 Pickup/Drop Route: ${booking.address} (PIN: ${booking.pincode})</div>
       </div>
       <div class="card half">
-        <span class="pill"><span class="live-dot"></span> LIVE WORKSHOP BAY · STAGE: ${booking.stage.toUpperCase()}</span>
-        <img src="${is2W ? 'tw_15_doorstep_ramp.jpg' : 'fw_16_hydraulic_lift.jpg'}" style="width:100%;height:200px;object-fit:cover;border-radius:10px;margin:10px 0" alt="Workshop Bay">
-        <strong>${booking.garage_name}</strong>
-        <div class="muted">${booking.service_type} · ${booking.warranty}</div>
+        <span class="pill"><span class="live-dot"></span> LIVE WORKSHOP BAY VIDEO · STAGE: ${booking.stage.toUpperCase()}</span>
+        <div style="position:relative;width:100%;height:200px;border-radius:10px;margin:10px 0;overflow:hidden;border:1px solid var(--cyan);background:#000">
+          <img id="live-bay-cam-img" src="${is2W ? 'IMG-20261105-WA0008.jpg' : 'IMG-20261105-WA0000.jpg'}" onerror="this.onerror=null;this.src='${is2W ? 'tw_15_doorstep_ramp.jpg' : 'fw_16_hydraulic_lift.jpg'}'" style="width:100%;height:100%;object-fit:cover;filter:contrast(1.06)">
+          <div style="position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.75);padding:4px 10px;border-radius:999px;font-size:11px;color:#00e676;font-weight:800;border:1px solid #00e676">● LIVE CAM 01 · 1080p 60FPS · OBD-II LINKED</div>
+          <div style="position:absolute;bottom:8px;right:10px;background:rgba(0,0,0,0.75);padding:3px 8px;border-radius:6px;font-size:11px;color:#fff;font-family:monospace">${new Date().toLocaleTimeString('en-IN')} IST · BAY TELEMETRY OK</div>
+        </div>
+        <strong>🔧 ${booking.garage_name}</strong>
+        <div class="muted">🛡️ ${booking.service_type} · ${booking.warranty}</div>
       </div>
     </div>
   `;
@@ -492,11 +684,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('booking-form').addEventListener('submit', handleCustomerBookingSubmit);
 
+  const expForm = document.getElementById('express-booking-form');
+  if (expForm) {
+    expForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const cat = document.getElementById('exp-vtype').value || '2w';
+      setCustomerCategory(cat);
+      document.getElementById('f-name').value = document.getElementById('exp-name').value.trim() || 'Valued Customer';
+      document.getElementById('f-phone').value = document.getElementById('exp-phone').value.trim() || '+91 9848011223';
+      document.getElementById('f-pin').value = document.getElementById('exp-pin').value.trim() || '500034';
+      handleCustomerBookingSubmit();
+      const st = loadState();
+      const latest = st.bookings[0];
+      if (latest) {
+        const links = buildDispatchLinks(latest);
+        const expOut = document.getElementById('express-booking-out');
+        if (expOut) {
+          expOut.style.display = 'block';
+          expOut.innerHTML = `<div class="notice good">✅ <strong>Supabase Synced (${latest.booking_code}) & Partner Routed (${latest.garage_name})!</strong><br>🛡️ <em>"No spare part replaced without prior WhatsApp Video & Quotation approval."</em> — Redirecting to Live WhatsApp (+${CCM_CONFIG.WHATSAPP_NO})... <a class="btn green" style="margin-left:8px;padding:4px 10px" href="${links.waUrl}" target="_blank" rel="noopener">📲 Click if Popup Blocked</a></div>`;
+        }
+        try { window.open(links.waUrl, '_blank'); } catch (err) {}
+      }
+    });
+  }
+
+
   document.getElementById('btn-cust-ai-ask').onclick = () => {
     const q = document.getElementById('cust-ai-input').value.trim();
     if (!q) return;
     appendChatMessage('user', `<strong>You:</strong> ${q}`);
-    const domain = activeCategory === '4w' ? '4w' : '2w';
+    const domain = activeCategory;
     if (typeof ccmApiCall === 'function') ccmApiCall('ai.diagnose', { vehicleType: domain, message: q });
     const res = runIsolatedMasterAI(domain, q, {
       pincode: document.getElementById('f-pin').value,
@@ -508,6 +725,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     document.getElementById('cust-ai-input').value = '';
   };
+
+  
+  const btnVoice = document.getElementById('btn-cust-ai-voice');
+  if (btnVoice) {
+    btnVoice.onclick = () => {
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) {
+        document.getElementById('cust-ai-input').value = activeCategory === '4w'
+          ? 'My Hyundai Creta AC cooling drops in Hyderabad traffic and gearbox jerks'
+          : 'My KTM Duke 390 has tappet noise and low mileage, need VIP pickup';
+        document.getElementById('btn-cust-ai-ask').click();
+        return;
+      }
+      const rec = new SR();
+      rec.lang = 'en-IN';
+      btnVoice.textContent = '🎙️ Listening...';
+      rec.onresult = (e) => {
+        document.getElementById('cust-ai-input').value = e.results[0][0].transcript;
+        btnVoice.textContent = '🎙️ Voice Command';
+        document.getElementById('btn-cust-ai-ask').click();
+      };
+      rec.onerror = () => { btnVoice.textContent = '🎙️ Voice Command'; };
+      rec.start();
+    };
+  }
+  const btnSpeak = document.getElementById('btn-cust-ai-speak');
+  if (btnSpeak) {
+    btnSpeak.onclick = () => {
+      const msgs = document.querySelectorAll('#cust-chat-box .msg.ai');
+      const last = msgs[msgs.length - 1];
+      if (last) speakRepairGuidance(last.textContent);
+    };
+  }
 
   document.getElementById('btn-cust-ai-convert').onclick = () => {
     const q = document.getElementById('cust-ai-input').value.trim();

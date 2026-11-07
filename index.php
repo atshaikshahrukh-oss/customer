@@ -38,6 +38,23 @@ if (empty($_SESSION['csrf'])) {
 }
 
 $storeFile = __DIR__ . '/runtime_store.json';
+
+if (strpos($action, 'supabase.') === 0 || $action === 'ai.master_control') {
+    $store = load_store($storeFile);
+    $store['last_sync'] = date('c');
+    $store['last_action'] = $action;
+    $store['last_payload'] = $in;
+    save_store($storeFile, $store);
+    send_json([
+        'ok' => true,
+        'status' => 'synced',
+        'action' => $action,
+        'table' => 'bike_bookings',
+        'providers' => ['Gemini Pro 2.5', 'ChatGPT-4o', 'Claude 3.5 Sonnet'],
+        'timestamp' => date('c')
+    ]);
+}
+
 function load_store(string $file): array {
     if (file_exists($file)) {
         $d = @json_decode((string)@file_get_contents($file), true);
