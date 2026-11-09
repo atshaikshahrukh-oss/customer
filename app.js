@@ -155,7 +155,7 @@ const DEFAULT_STATE = {
   activePlatformMode: '2w',
   masterKillSwitch: false,
   secBufferActive: false,
-  secBufferReason: 'Device Protocol Synchronization / Secure stream handshake in progress...',
+  secBufferReason: 'Please check your device connection or restart your phone; system telemetry is verifying.',
   secBufferWindow: '5–10 minutes',
   lastBackupTime: '2026-11-04 00:00:00 IST (Automated Midnight Snapshot)',
   marketingBanner: '⚡ INSTANT HYDERABAD DISPATCH: VIP Areas 35–45 Mins Pickup · All Hyderabad 45–60 Mins Pickup · 100% OEM Warranty',
@@ -642,21 +642,21 @@ function runIsolatedMasterAI(domain, rawQuestion, customerDetails = {}) {
 
 function renderTopShell() {
   const file = (location.pathname.split('/').pop() || 'index.html').split('?')[0];
+  const isCustomerPage = (file === 'index.html' || file === 'customer.html' || file === 'diagnosis.html' || file === '');
   const st = loadState();
   const curMode = st.activePlatformMode || '2w';
   const bookingCount = (st.bookings || []).length;
 
-  // Make brand-ribbon chips interactive 2W / 4W / Urban switches!
-  document.querySelectorAll('.brand-ribbon .brand-chip').forEach((chip, idx) => {
+  // Make brand-ribbon chips interactive 2W / 4W switches
+  document.querySelectorAll('.brand-ribbon .brand-chip').forEach((chip) => {
     chip.style.cursor = 'pointer';
     const txt = chip.textContent.toLowerCase();
     const targetMode = (txt.includes('4w') || txt.includes('ac overhaul') || txt.includes('flatbed')) ? '4w' : '2w';
     chip.setAttribute('data-mode-chip', targetMode);
-    chip.title = 'Click to switch platform to ' + targetMode.toUpperCase() + ' Mode';
     chip.onclick = () => window.switchGlobalVehicleMode(targetMode);
   });
 
-  // 1. Primary Context Navigation + Screenshot-Exact Hamburger Dropdown Menu (9 Items)
+  // 1. Top Navigation Bar (#nav)
   const navEl = document.getElementById('nav');
   if (navEl) {
     navEl.innerHTML =
@@ -664,44 +664,40 @@ function renderTopShell() {
       '<button type="button" class="' + (curMode === '2w' ? 'primary' : 'btn') + '" style="padding:7px 12px;min-height:36px;font-size:12.5px" onclick="window.switchGlobalVehicleMode(\'2w\')">🏍️ 2-Wheeler (100cc–2500cc)</button>' +
       '<button type="button" class="' + (curMode === '4w' ? 'primary' : 'btn') + '" style="padding:7px 12px;min-height:36px;font-size:12.5px" onclick="window.switchGlobalVehicleMode(\'4w\')">🚘 4-Wheeler (Car/SUV/Lorry)</button>' +
       '<a href="customer.html" class="btn gold" style="padding:7px 12px;min-height:36px;font-size:12.5px">⚡ Book Service</a>' +
-      '<a href="https://wa.me/918333007351" target="_blank" rel="noopener" class="btn green" style="padding:7px 12px;min-height:36px;font-size:12.5px">💬 WhatsApp</a>' +
+      '<a href="https://wa.me/' + CCM_CONFIG.WHATSAPP_NO + '" target="_blank" rel="noopener" class="btn green" style="padding:7px 12px;min-height:36px;font-size:12.5px">💬 WhatsApp</a>' +
       '<button type="button" class="btn" style="padding:7px 12px;min-height:36px;font-size:15px;font-weight:900;border-color:var(--cyan)" onclick="window.toggleMobileMenuDrawer()">☰ Menu</button>';
   }
 
-  // Inject Hamburger Drawer if not present
-  if (!document.getElementById('ccm-hamburger-drawer')) {
-    const drawer = document.createElement('div');
-    drawer.id = 'ccm-hamburger-drawer';
-    drawer.style.cssText = 'display:none;position:fixed;top:68px;right:16px;width:310px;max-width:92vw;background:#06101b;border:2px solid var(--cyan);border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,0.85);z-index:9999;padding:8px;overflow:hidden';
-    const menuItems = [
-      ['index.html', '1. 🏠 Home'],
-      ['customer.html', '2. ⚡ Digital Booking (2W / 4W / Urban)'],
-      ['index.html#portfolio-section', '3. 🖼️ Portfolio Gallery (47 Live Assets)'],
-      ['customer.html#service-pricing-table', '4. 💰 Services & Pricing (100cc–2500cc & 4W)'],
-      ['diagnosis.html', '5. 🧠 AI Engine Guide (30-Yr Master Bot)'],
-      ['customer.html#digital-warranty-card', '6. 🏅 Warranty (Up to 1-Yr / 10,000 KM)'],
-      ['customer.html#hyderabad-service-areas', '7. 📍 Hyderabad Service Areas (VIP 35–45m)'],
-      ['customer.html#contact-support-section', '8. 📞 Contact (+91 8333007351)'],
-      ['#lang', '9. 🌐 Language Switcher (EN / HI / TE / UR)']
-    ];
-    drawer.innerHTML = menuItems.map(function(it) {
-      if (it[0] === '#lang') {
-        return '<div style="padding:10px 12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center">' +
-          '<span style="color:#fff;font-size:13.5px;font-weight:600">9. 🌐 Language</span>' +
-          '<select class="lang-select" onchange="setPlatformLanguage(this.value)" style="padding:4px 8px"><option value="en">English</option><option value="hi">हिंदी / Hinglish</option><option value="te">తెలుగు</option><option value="ur">اردو</option></select>' +
-          '</div>';
-      }
-      return '<a href="' + it[0] + '" onclick="document.getElementById(\'ccm-hamburger-drawer\').style.display=\'none\'" style="display:block;padding:11px 14px;color:#fff;text-decoration:none;font-size:14px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07)">' + it[1] + '</a>';
-    }).join('') +
-    '<div style="padding:8px 12px;background:#091929;display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;border-radius:8px">' +
-      '<a href="garage.html" style="font-size:11px;color:var(--gold);text-decoration:none">🔧 Partner Hub (CC 1010)</a> · ' +
-      '<a href="admin.html" style="font-size:11px;color:var(--cyan);text-decoration:none">🏢 Ops Manager (CC 1005)</a> · ' +
-      '<a href="owner.html" style="font-size:11px;color:#ff8a8a;text-decoration:none">👑 Supreme Owner</a>' +
-    '</div>';
-    document.body.appendChild(drawer);
-  }
+  // Inject Clean Customer Hamburger Drawer (9 Items ONLY — ZERO Partner/Admin/Owner links on Customer App!)
+  const existingDrawer = document.getElementById('ccm-hamburger-drawer');
+  if (existingDrawer) existingDrawer.remove();
+  const drawer = document.createElement('div');
+  drawer.id = 'ccm-hamburger-drawer';
+  drawer.style.cssText = 'display:none;position:fixed;top:68px;right:16px;width:310px;max-width:92vw;background:#06101b;border:2px solid var(--cyan);border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,0.85);z-index:9999;padding:8px;overflow:hidden';
+  const menuItems = [
+    ['index.html', '1. 🏠 Home'],
+    ['customer.html', '2. ⚡ Digital Booking (2W / 4W)'],
+    ['index.html#portfolio-section', '3. 🖼️ Portfolio Gallery (47 Live Assets)'],
+    ['customer.html#service-pricing-table', '4. 💰 Services & Pricing (100cc–2500cc & 4W)'],
+    ['diagnosis.html', '5. 🧠 AI Engine Guide (30-Yr Master Bot)'],
+    ['customer.html#digital-warranty-card', '6. 🏅 Warranty (Up to 1-Yr / 10,000 KM)'],
+    ['customer.html#hyderabad-service-areas', '7. 📍 Hyderabad Service Areas (VIP 35–45m)'],
+    ['customer.html#contact-support-section', '8. 📞 Contact (' + CCM_CONFIG.WHATSAPP_DISPLAY + ')'],
+    ['#lang', '9. 🌐 Language Switcher (EN / HI / TE / UR)']
+  ];
+  drawer.innerHTML = menuItems.map(function(it) {
+    if (it[0] === '#lang') {
+      return '<div style="padding:10px 12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center">' +
+        '<span style="color:#fff;font-size:13.5px;font-weight:600">9. 🌐 Language</span>' +
+        '<select class="lang-select" onchange="setPlatformLanguage(this.value)" style="padding:4px 8px"><option value="en">English</option><option value="hi">हिंदी / Hinglish</option><option value="te">తెలుగు</option><option value="ur">اردو</option></select>' +
+        '</div>';
+    }
+    return '<a href="' + it[0] + '" onclick="document.getElementById(\'ccm-hamburger-drawer\').style.display=\'none\'" style="display:block;padding:11px 14px;color:#fff;text-decoration:none;font-size:14px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07)">' + it[1] + '</a>';
+  }).join('');
+  document.body.appendChild(drawer);
 
-  // 2. Role-Separated Switcher Bar (in #switcher)
+  // 2. Role-Separated Switcher Bar (#switcher)
+  // STRICT CUSTOMER ISOLATION: Customer pages NEVER show Partner App, Ops Manager, or Supreme Owner links!
   const swEl = document.getElementById('switcher');
   if (swEl) {
     const curLang = st.lang || 'en';
@@ -712,26 +708,32 @@ function renderTopShell() {
       '<option value="ur" ' + (curLang==='ur'?'selected':'') + '>🇮🇳 UR (اردو)</option>' +
       '</select>';
 
-    const suiteLinks = [
-      ['index.html', '🏠 Home'],
-      ['customer.html', '👤 Customer App (2W/4W)'],
-      ['diagnosis.html', '🧠 24/7 AI Chat & Voice Bot'],
+    const customerLinks = [
+      ['index.html', '🏠 Home & Services'],
+      ['customer.html', '⚡ Instant Booking & Live Bay'],
+      ['diagnosis.html', '🧠 24/7 AI Diagnostic Advisor'],
+      ['customer.html#digital-warranty-card', '🏅 1-Yr Digital Warranty']
+    ];
+    const internalStaffLinks = [
+      ['index.html', '🏠 Customer Website'],
+      ['customer.html', '👤 Customer App'],
       ['garage.html', '🔧 Partner App (CC 1010)'],
       ['admin.html', '🏢 Ops Manager (CC 1005)'],
-      ['owner.html', '👑 Supreme Owner']
+      ['owner.html', '👑 Supreme Owner Cockpit']
     ];
+    const activeLinks = isCustomerPage ? customerLinks : internalStaffLinks;
 
     swEl.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;width:100%;padding:4px 0">' +
       '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">' +
-      suiteLinks.map(function(item) {
+      activeLinks.map(function(item) {
         var href = item[0], label = item[1];
-        var isActive = file === href || (href === 'owner.html' && file === 'ceo.html');
+        var isActive = file === href.split('#')[0] || (href === 'owner.html' && file === 'ceo.html');
         return '<a class="' + (isActive ? 'active' : '') + '" href="' + href + '">' + label + '</a>';
       }).join('') +
       '</div>' +
       '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">' +
       langSel +
-      '<a href="tel:+918333007351" class="pill green" style="text-decoration:none"><span class="live-dot"></span> VIP FREE PICKUP IN SELECTED PINS · +91 8333007351</a>' +
+      '<a href="tel:+' + CCM_CONFIG.WHATSAPP_NO + '" class="pill green" style="text-decoration:none"><span class="live-dot"></span> VIP 35–45m FREE PICKUP · ' + CCM_CONFIG.WHATSAPP_DISPLAY + '</a>' +
       '</div>' +
       '</div>';
   }
@@ -776,10 +778,18 @@ function speakRepairGuidance(text) {
   try {
     if (!('speechSynthesis' in window)) return false;
     window.speechSynthesis.cancel();
-    const cleanText = String(text || '').replace(/[*#_`~]/g, '');
+    let cleanText = String(text || '')
+      .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, ' ')
+      .replace(/\b2-WHEELER\b/gi, 'Two Wheeler')
+      .replace(/\b4-WHEELER\b/gi, 'Four Wheeler')
+      .replace(/\b2W\b/g, 'Two Wheeler')
+      .replace(/\b4W\b/g, 'Four Wheeler')
+      .replace(/[*#_`~•]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
     const u = new SpeechSynthesisUtterance(cleanText);
     u.lang = 'en-IN';
-    u.rate = 0.98;
+    u.rate = 1.0;
     window.speechSynthesis.speak(u);
     return true;
   } catch (e) {
@@ -793,6 +803,13 @@ function setPlatformLanguage(lang) {
   saveState(st);
   const dict = CCM_I18N[st.lang] || CCM_I18N.en;
   document.querySelectorAll('[data-i18n-tagline]').forEach(el => { el.textContent = dict.tagline; });
+  const heroH1 = document.querySelector('.hero h1');
+  if (heroH1) {
+    if (st.lang === 'hi') heroH1.textContent = '🏍️ 2-व्हीलर और 🚘 4-व्हीलर मास्टर सर्विस + 35–45 मिनट VIP पिकअप और लाइव कैमरा ट्रैकिंग';
+    else if (st.lang === 'te') heroH1.textContent = '🏍️ 2-వీలర్ & 🚘 4-వీలర్ மாस్టర్ సర్వీస్ + 35–45 నిమిషాల్లో VIP పికప్ & లైవ్ కెమెరా ట్రాకింగ్';
+    else if (st.lang === 'ur') heroH1.textContent = '🏍️ ٹو وہیلر اور فور وہیلر ماسٹر سروس + 35 تا 45 منٹ وی آئی پی پک اپ اور لائیو کیمرہ ٹریکنگ';
+  }
+  renderTopShell();
 }
 
 
@@ -1030,3 +1047,74 @@ window.applyDynamicContactConfig = function() {
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(window.applyDynamicContactConfig, 20);
 });
+
+
+/* === ENTERPRISE UNIFIED HERO DIVISION GATE (2W vs 4W) & 9-POINT NAVIGATION ENGINE === */
+window.ccmTrackAdsConversion = function(eventName, meta) {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const gclid = urlParams.get('gclid') || sessionStorage.getItem('ccm_gclid') || 'organic_direct';
+    if (urlParams.get('gclid')) sessionStorage.setItem('ccm_gclid', urlParams.get('gclid'));
+    const evt = {
+      event: eventName || 'lead_conversion',
+      gclid: gclid,
+      meta: meta || {},
+      timestamp: new Date().toISOString()
+    };
+    const logs = JSON.parse(sessionStorage.getItem('ccm_ads_conversions') || '[]');
+    logs.unshift(evt);
+    sessionStorage.setItem('ccm_ads_conversions', JSON.stringify(logs.slice(0, 50)));
+  } catch (e) {}
+};
+
+window.selectDivisionGate = function(division) {
+  const div = (division === '4w') ? '4w' : '2w';
+  try {
+    sessionStorage.setItem('ccm_division_unlocked', div);
+  } catch (e) {}
+
+  // Unlock main catalog container on index.html / customer.html
+  const lockedBanner = document.getElementById('division-gate-locked-banner');
+  const unlockedCatalog = document.getElementById('division-unlocked-catalog');
+  const nav9Bar = document.getElementById('dedicated-9point-nav');
+  if (lockedBanner) lockedBanner.style.display = 'none';
+  if (unlockedCatalog) {
+    unlockedCatalog.style.display = 'block';
+    unlockedCatalog.style.opacity = '1';
+    unlockedCatalog.style.pointerEvents = 'auto';
+    unlockedCatalog.style.filter = 'none';
+  }
+  if (nav9Bar) nav9Bar.style.display = 'block';
+
+  // Update Division Context Banner & Express Form fields
+  const ctxBanner = document.getElementById('active-division-context-bar');
+  if (ctxBanner) {
+    ctxBanner.innerHTML = div === '2w'
+      ? `<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><span class="pill green"><span class="live-dot"></span> ACTIVE DIVISION: 🏍️ TWO-WHEELER (100cc COMMUTERS TO 2500cc SUPERBIKES)</span><span class="pill gold">🚐 Context: Mobile Diagnostic Unit-01 & Hydraulic Ramp Van Pickup</span><button type="button" class="btn" style="padding:5px 10px;min-height:30px;font-size:11.5px" onclick="window.selectDivisionGate('4w')">Switch to 4W Division →</button></div>`
+      : `<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><span class="pill"><span class="live-dot"></span> ACTIVE DIVISION: 🚘 FOUR-WHEELER (800cc CARS, LUXURY SUVS TO 6500cc & HEAVY FLEET)</span><span class="pill gold">🚛 Context: Zero-Angle Hydraulic Flatbed Lorry & Master Car Lab</span><button type="button" class="btn" style="padding:5px 10px;min-height:30px;font-size:11.5px" onclick="window.selectDivisionGate('2w')">Switch to 2W Division →</button></div>`;
+  }
+
+  // Highlight active division selector card
+  const c2w = document.getElementById('hero-div-card-2w');
+  const c4w = document.getElementById('hero-div-card-4w');
+  if (c2w) c2w.style.borderColor = div === '2w' ? 'var(--green)' : 'var(--line)';
+  if (c4w) c4w.style.borderColor = div === '4w' ? 'var(--cyan)' : 'var(--line)';
+
+  // Update Express Booking Form on index.html if present
+  const expVtype = document.getElementById('idx-exp-vtype');
+  const expModel = document.getElementById('idx-exp-model');
+  if (expVtype) expVtype.value = div;
+  if (expModel) {
+    expModel.value = div === '2w' ? 'KTM Duke 390 / Royal Enfield / Activa (2W)' : 'Hyundai Creta / Toyota Fortuner / Swift (4W)';
+  }
+
+  // Update In-Page Pricing & AI Guide on index.html
+  if (typeof window.renderDivisionPricingAndAi === 'function') {
+    window.renderDivisionPricingAndAi(div);
+  }
+
+  if (typeof window.switchGlobalVehicleMode === 'function') {
+    window.switchGlobalVehicleMode(div);
+  }
+  window.ccmTrackAdsConversion('division_selected', { division: div });
+};

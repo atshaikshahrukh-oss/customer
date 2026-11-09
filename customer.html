@@ -13,7 +13,7 @@
 <header class="top">
   <div class="wrap top-inner">
     <a class="brand" href="index.html">
-      <span class="brand-badge">CC</span>
+      <img src="cc-logo-3d.png" onerror="this.onerror=null;this.src='icon-192.png'" alt="CC Motocrafts Logo" style="width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--cyan)">
       <div>CC MOTOCRAFTS<small>CUSTOMER BOOKING & LIVE BAY APP</small></div>
     </a>
     <nav id="nav" class="nav"></nav>
@@ -337,32 +337,36 @@ let activeCategory = '2w';
 
 function renderDynamicVerticalTabs() {
   const st = loadState();
-  const verticals = (st.serviceVerticals || []).filter(v => v.active);
+  const verticals = (st.serviceVerticals || st.verticals || []).filter(v => v.active);
   const tabBox = document.getElementById('dynamic-vertical-tabs');
   if (tabBox && verticals.length) {
-    tabBox.innerHTML = verticals.map(v => `
-      <button type="button" id="cat-btn-${v.key}" class="${v.key === activeCategory ? 'primary' : ''}" onclick="setCustomerCategory('${v.key}')">
-        ${v.icon || '🛠️'} ${v.name}
-      </button>
-    `).join('');
+    tabBox.innerHTML = verticals.map(v => {
+      const k = v.key || v.code || v.id || '2w';
+      const lbl = v.shortName || v.shortLabel || v.name || k.toUpperCase();
+      return `<button type="button" id="cat-btn-${k}" class="${k === activeCategory ? 'primary' : ''}" onclick="setCustomerCategory('${k}')">${lbl}</button>`;
+    }).join('');
   }
   const expSel = document.getElementById('exp-vtype');
   if (expSel && verticals.length) {
-    expSel.innerHTML = verticals.map(v => `<option value="${v.key}" ${v.key === activeCategory ? 'selected' : ''}>${v.icon || '🛠️'} ${v.shortLabel || v.name} — From ₹${v.basePrice}</option>`).join('');
+    expSel.innerHTML = verticals.map(v => {
+      const k = v.key || v.code || v.id || '2w';
+      const lbl = v.shortName || v.shortLabel || v.name || k.toUpperCase();
+      return `<option value="${k}" ${k === activeCategory ? 'selected' : ''}>${lbl} — From ₹${v.basePrice || 999}</option>`;
+    }).join('');
   }
-  // Ensure SERVICE_CATALOG has entries for any dynamically enabled or newly created Owner verticals
   verticals.forEach(v => {
-    if (!SERVICE_CATALOG[v.key]) {
-      SERVICE_CATALOG[v.key] = {
-        title: `${v.icon || '🛠️'} ${v.name} — Doorstep Booking`,
+    const k = v.key || v.code || v.id || '2w';
+    if (!SERVICE_CATALOG[k]) {
+      SERVICE_CATALOG[k] = {
+        title: `${v.name || k.toUpperCase()} — Doorstep Booking`,
         warranty: v.warranty || '90-Day Written Service Warranty + Prior WhatsApp Video Approval',
-        brandLbl: v.brandLabel || 'Brand / Category Details *',
+        brandLbl: v.brandLabel || 'Brand / Appliance / Category *',
         brandPh: v.brandDefault || 'Enter Brand or Service Type',
         modelLbl: v.modelLabel || 'Model / Scope *',
         modelPh: v.modelDefault || 'Enter Model or Requirement',
         pickupTxt: v.pickupLabel || 'Request Express Doorstep Technician + Prior WhatsApp Video Quotation Approval',
-        advisorBadge: `30-YR ${v.key.toUpperCase()} MASTER SERVICE HEAD`,
-        advisorHeading: `${v.name} — 30-Yr Master Advisor`,
+        advisorBadge: `30-YR ${k.toUpperCase()} MASTER SERVICE HEAD`,
+        advisorHeading: `${v.name || k} — 30-Yr Master Advisor`,
         services: Array.isArray(v.services) && v.services.length ? v.services : [`${v.name} Complete Master Package (₹${v.basePrice || 499})`]
       };
     }
@@ -673,9 +677,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(location.search);
   setCustomerCategory(params.get('cat') || '2w');
 
-  document.getElementById('cat-btn-2w').onclick = () => setCustomerCategory('2w');
-  document.getElementById('cat-btn-4w').onclick = () => setCustomerCategory('4w');
-  document.getElementById('cat-btn-urban').onclick = () => setCustomerCategory('urban');
+  
 
   document.getElementById('btn-gps').onclick = () => {
     document.getElementById('f-addr').value = 'GPS Verified: Road No. 12, Banjara Hills, Hyderabad (17.4156° N, 78.4347° E)';
@@ -791,9 +793,11 @@ document.addEventListener('DOMContentLoaded', () => {
       saveState(st);
       renderParking();
       const n = document.getElementById('parking-reserve-notice');
+      const pkCode = 'PK-' + Math.floor(1000 + Math.random()*9000);
       n.style.display = 'block';
       n.className = 'notice good';
-      n.innerHTML = `✅ Reserved Parking Slot at <strong>${slot.title}</strong> (Passcode: <strong>PK-${Math.floor(1000 + Math.random()*9000)}</strong>). Rate: ₹${slot.hourly_rate}/hr.`;
+      n.innerHTML = `✅ <strong>Parking Slot Reserved at ${slot.title}!</strong> Gate Passcode: <strong>${pkCode}</strong> · Rate: ₹${slot.hourly_rate}/hr · Remaining Slots: ${slot.available}/${slot.capacity}. <a class="btn green" style="margin-left:8px;padding:4px 10px" href="https://wa.me/${CCM_CONFIG.WHATSAPP_NO}?text=${encodeURIComponent('Reserved Parking Slot ' + pkCode + ' at ' + slot.title)}" target="_blank" rel="noopener">📲 Send Passcode to WhatsApp</a>`;
+      n.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   });
 });
