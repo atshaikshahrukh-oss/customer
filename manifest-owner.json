@@ -1,26 +1,26 @@
 {
-  "id": "owner.html",
-  "name": "HTS Owner App \u2014 Shaik Mujahid",
-  "short_name": "HTS Owner App",
-  "description": "Supreme King Maker Control Panel for Shaik Mujahid (CC Motocrafts)",
-  "start_url": "owner.html",
+  "id": "./admin-ops.html",
+  "name": "CC Motocrafts Master Owner Command & AI Hub",
+  "short_name": "CCM Master",
+  "description": "Supreme Owner Command Center, Multi-Role Kill-Switches, Device Monitor & Dual-Gmail Router",
+  "start_url": "./admin-ops.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#050d16",
-  "theme_color": "#ffb84a",
-  "orientation": "portrait",
+  "theme_color": "#f5b700",
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }

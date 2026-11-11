@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#050d16">
+  <link rel="manifest" href="manifest-owner.json">
+  <link rel="icon" href="icon-192.png">
+  <link rel="stylesheet" href="app.css">
+  <title>CC Motocrafts | HTSYTS AI Voice & Diagnostic Intake Interface (hts-owner-app.html)</title>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-badge">CC</span>
+      <div>CC MOTOCRAFTS<small>HTS MASTER AI ENGINE & OBD-II BOT</small></div>
+    </a>
+    <nav id="nav" class="nav"></nav>
+    <span class="pill gold">STRICT 2W vs 4W ISOLATION</span>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="switcher" class="switcher"></div>
+
+  <div class="brand-ribbon">
+    <span class="brand-chip ktm">🏍️ 2W: 100cc Commuters → 2500cc Superbikes</span>
+    <span class="brand-chip ducati">🔥 Ducati · Triumph 2500cc · BMW · Benelli · KTM · RE</span>
+    <span class="brand-chip kawasaki">🛵 CVT Tuning · OBD-II · Tappet · Voice-Command Tech</span>
+    <span class="brand-chip bmw">🚘 4W: Cars · Luxury SUVs · Heavy Fleet</span>
+    <span class="brand-chip triumph">❄️ AC Overhaul · 3D Alignment · Auto Gearbox</span>
+    <span class="brand-chip fleet">🚛 Hydraulic Flatbed Ramp · Urban Home & Parking</span>
+  </div>
+
+
+  <section class="hero" style="padding-bottom:10px">
+    <div class="eyebrow">30+ YEARS MASTER TECHNICIAN, ADVISOR, SUPERVISOR & SERVICE HEAD PERSONAS</div>
+    <h1>Two Strictly Isolated Vehicle AI Brains — Zero Cross-Domain Mixing.</h1>
+    <p>Each AI Engine speaks as a <strong>30-Year Experienced Workshop Service Head, Supervisor & Technical Advisor</strong>: clearing every customer doubt, confirming written <strong>Warranty & Guarantee</strong>, capturing customer details + GPS location, and converting directly into a confirmed WhatsApp + SMS + Email booking.</p>
+    <div class="actions">
+      <button type="button" id="tab-2w" class="primary">🏍️ 2-Wheeler Master AI Brain (Benelli, KTM, RE, Yamaha, Suzuki, CVT)</button>
+      <button type="button" id="tab-4w">🚘 4-Wheeler Master AI Brain (Cars, SUVs, Commercial Fleet, AC, 3D Alignment)</button>
+    </div>
+  </section>
+
+  <div class="grid">
+    <section class="card wide">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+        <div>
+          <span class="pill green" id="diag-domain-pill">ACTIVE BRAIN: 2-WHEELER MASTER TECHNICIAN (30+ YRS EXP)</span>
+          <h2 id="diag-title" style="margin-top:6px">🏍️ 2-Wheeler Superbike, Commuter & Scooter Master AI Advisor</h2>
+        </div>
+        <span class="pill gold" id="diag-warranty-badge">6-Month / 5,000 KM Warranty Guaranteed</span>
+      </div>
+
+      <!-- Quick Technical Symptom Presets -->
+      <div class="field" style="margin-bottom:12px">
+        <label>Instant Technical Query Presets (Click to Test Domain Brain or Cross-Domain Firewall)</label>
+        <div id="preset-buttons" class="actions" style="margin-top:4px"></div>
+      </div>
+
+      <div class="form-grid" style="margin-bottom:12px">
+        <div class="field">
+          <label>Customer Name</label>
+          <input id="d-name" value="Ravi Kiran" placeholder="Your full name">
+        </div>
+        <div class="field">
+          <label>Customer Mobile (WhatsApp & SMS)</label>
+          <input id="d-phone" value="+91 9848055667" placeholder="+91 98480XXXXX">
+        </div>
+        <div class="field">
+          <label>Vehicle Make & Model</label>
+          <input id="d-vehicle" value="KTM Duke 390 BS6" placeholder="e.g. KTM Duke 390 / Hyundai Creta">
+        </div>
+        <div class="field">
+          <label>Hyderabad Location & PIN (VIP 35–45m vs All-Hyd 45–60m)</label>
+          <input id="d-location" value="Banjara Hills, Hyderabad - 500034" placeholder="Area & 6-digit PIN">
+        </div>
+        <div class="field full">
+          <label>Ask Any Technical Question, Doubt, or Warranty Query</label>
+          <textarea id="ai-question" placeholder="Describe tappet knock, CVT mileage drop, sensor calibration, AC cooling, gearbox jerk, or ask about warranty…">My KTM Duke 390 has a metallic tappet knock noise at idle and low mileage. Please explain the fix, confirm warranty & guarantee, and arrange pickup.</textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="check-ai" class="primary">🧠 Run 30-Yr Master AI Diagnosis & Clear Doubts</button>
+        <button type="button" id="voice-ai">🎙️ Hands-Free Voice Command (Grease-Free Tech Mode)</button>
+        <button type="button" id="speak-ai" class="gold">🔊 Read Repair Steps Aloud</button>
+        <button type="button" id="convert-wa-btn" class="green">📲 Confirm Booking & Trigger WhatsApp (+91 8333007351) + SMS + Email</button>
+      </div>
+      <div id="voice-status" class="notice" style="display:none"></div>
+
+      <div id="ai-result" class="result" style="margin-top:14px;border-color:var(--cyan)"></div>
+      <div id="diag-booking-trigger-out" style="display:none;margin-top:14px"></div>
+    </section>
+
+    <section class="card">
+      <h3>Strict Isolation Rules</h3>
+      <div class="item" style="margin-bottom:10px">
+        <span class="pill green">2-Wheeler AI Brain</span>
+        <strong style="margin-top:6px">Superbikes, Commuters & Scooters Only</strong>
+        <p class="muted" style="margin:4px 0 0">Programmed with 30+ years master expertise across Benelli, KTM, Royal Enfield, Yamaha VVA, Suzuki, Ducati Desmo, BMW ShiftCam, Triumph, Vespa/Aprilia CVT & Honda. Handles tappet knock, CVT mileage, sensor calibration, fork laser alignment & dyno tuning.</p>
+      </div>
+      <div class="item" style="margin-bottom:10px">
+        <span class="pill">4-Wheeler AI Brain</span>
+        <strong style="margin-top:6px">Cars, SUVs & Commercial Lorries Only</strong>
+        <p class="muted" style="margin:4px 0 0">Programmed separately for automatic/DCT transmissions, HVAC AC compressor & cooling coil overhaul, Hunter 3D wheel alignment, hydraulic winches, flatbed recovery & OBD-II fault codes.</p>
+      </div>
+      <div class="notice warn">
+        <strong>Cross-Logic Firewall Active:</strong> Asking a 4W car question in the 2W Brain (or a 2W bike question in the 4W Brain) is automatically detected and blocked.
+      </div>
+    </section>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="wrap">CC Motocrafts HTS Master AI Diagnostic Engine · WhatsApp Trigger: <a href="https://wa.me/918333007351">+91 8333007351</a> · Emails: <a href="mailto:info@ccmotocrafts.in">info@ccmotocrafts.in</a>, <a href="mailto:aisupport.on@gmail.com">aisupport.on@gmail.com</a></div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+let currentDomain = '2w';
+
+const PRESETS = {
+  '2w': [
+    { label: '🔧 KTM / RE Tappet Knock', vehicle: 'KTM Duke 390 / RE Classic 350', q: 'Metallic tappet knock noise at idle and low pickup. Explain fix, warranty & pickup.' },
+    { label: '🛵 Vespa / Activa CVT Mileage', vehicle: 'Vespa SXL 150 / Activa 6G', q: 'CVT belt vibration and mileage dropped below 30 kmpl. Confirm warranty and overhaul.' },
+    { label: '⚡ Benelli / Yamaha Sensor & ECU', vehicle: 'Benelli TNT 600i / Yamaha R15 V4', q: 'OBD check engine light on, VVA / O2 sensor calibration needed. Confirm guarantee.' },
+    { label: '🚫 Test 4W Cross-Block (Ask Car AC in 2W)', vehicle: 'Hyundai Creta', q: 'My car Hyundai Creta AC compressor is not cooling and needs 3D wheel alignment.' }
+  ],
+  '4w': [
+    { label: '❄️ Car / SUV AC Overhaul', vehicle: 'Hyundai Creta 1.5 DCT', q: 'Cabin AC cooling drops in afternoon traffic, compressor & cooling coil check + warranty?' },
+    { label: '⚙️ Automatic / DCT Gearbox Jerk', vehicle: 'Volkswagen Virtus / Toyota Fortuner AT', q: 'Automatic transmission jerking between D2 and D3 gears. Confirm overhaul warranty.' },
+    { label: '🎯 3D Alignment & Hydraulic Winch', vehicle: 'Tata Safari / Commercial Lorry', q: 'Steering pulling left, need Hunter 3D alignment and hydraulic flatbed ramp pickup.' },
+    { label: '🚫 Test 2W Cross-Block (Ask Bike Tappet in 4W)', vehicle: 'KTM Duke 390', q: 'My KTM motorcycle has tappet noise and chain sprocket play.' }
+  ]
+};
+
+function switchDiagDomain(dom) {
+  currentDomain = dom === '4w' ? '4w' : '2w';
+  document.getElementById('tab-2w').className = currentDomain === '2w' ? 'primary' : '';
+  document.getElementById('tab-4w').className = currentDomain === '4w' ? 'primary' : '';
+
+  if (currentDomain === '2w') {
+    document.getElementById('diag-domain-pill').textContent = 'ACTIVE BRAIN: 2-WHEELER MASTER TECHNICIAN (30+ YRS EXP)';
+    document.getElementById('diag-title').textContent = '🏍️ 2-Wheeler Superbike, Commuter & Scooter Master AI Advisor';
+    document.getElementById('diag-warranty-badge').textContent = '6-Month / 5,000 KM Warranty Guaranteed';
+    document.getElementById('d-vehicle').value = 'KTM Duke 390 BS6';
+    document.getElementById('ai-question').value = PRESETS['2w'][0].q;
+  } else {
+    document.getElementById('diag-domain-pill').textContent = 'ACTIVE BRAIN: 4-WHEELER & FLEET MASTER HEAD (30+ YRS EXP)';
+    document.getElementById('diag-title').textContent = '🚘 4-Wheeler Car, SUV & Commercial Fleet Master AI Advisor';
+    document.getElementById('diag-warranty-badge').textContent = '1-Year / 10,000 KM Warranty Guaranteed';
+    document.getElementById('d-vehicle').value = 'Hyundai Creta 1.5 DCT Automatic';
+    document.getElementById('ai-question').value = PRESETS['4w'][0].q;
+  }
+
+  const pBox = document.getElementById('preset-buttons');
+  pBox.innerHTML = PRESETS[currentDomain].map((p, idx) => `<button type="button" class="btn" data-preset="${idx}">${p.label}</button>`).join('');
+  runDiagNow();
+}
+
+function runDiagNow() {
+  const q = document.getElementById('ai-question').value;
+  const loc = document.getElementById('d-location').value;
+  const pinMatch = loc.match(/\b(500\d{3})\b/);
+  const res = runIsolatedMasterAI(currentDomain, q, {
+    pincode: pinMatch ? pinMatch[1] : '500034',
+    address: loc
+  });
+  const out = document.getElementById('ai-result');
+  out.style.borderColor = res.blocked ? 'var(--red)' : 'var(--cyan)';
+  out.innerHTML = `<strong>${res.title}</strong>\n\n${res.reply}`.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(location.search);
+  switchDiagDomain(params.get('domain') || '2w');
+
+  document.getElementById('tab-2w').onclick = () => switchDiagDomain('2w');
+  document.getElementById('tab-4w').onclick = () => switchDiagDomain('4w');
+  document.getElementById('check-ai').onclick = runDiagNow;
+  const spkBtn = document.getElementById('speak-ai'); if (spkBtn) spkBtn.onclick = () => speakRepairGuidance(document.getElementById('ai-result').innerText);
+
+  document.getElementById('preset-buttons').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-preset]');
+    if (!b) return;
+    const item = PRESETS[currentDomain][Number(b.dataset.preset)];
+    if (item) {
+      document.getElementById('d-vehicle').value = item.vehicle;
+      document.getElementById('ai-question').value = item.q;
+      runDiagNow();
+    }
+  });
+
+  document.getElementById('voice-ai').onclick = () => {
+    const vs = document.getElementById('voice-status');
+    vs.style.display = 'block';
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      vs.className = 'notice warn';
+      vs.textContent = 'Browser speech recognition is unavailable in this environment — use the preset buttons or type your symptom above.';
+      return;
+    }
+    const r = new SR();
+    r.lang = 'en-IN';
+    r.onresult = e => {
+      document.getElementById('ai-question').value += ' ' + e.results[0][0].transcript;
+      runDiagNow();
+    };
+    r.onerror = () => { vs.className = 'notice warn'; vs.textContent = 'Microphone permission declined.'; };
+    r.start();
+    vs.className = 'notice good';
+    vs.textContent = '🎙️ Listening for vehicle symptom (English / Hindi / Telugu)…';
+  };
+
+  document.getElementById('convert-wa-btn').onclick = () => {
+    const st = loadState();
+    const loc = document.getElementById('d-location').value || 'Banjara Hills, Hyderabad - 500034';
+    const pinMatch = loc.match(/\b(500\d{3})\b/);
+    const pincode = pinMatch ? pinMatch[1] : '500034';
+    const zone = classifyDispatchZone(pincode, loc);
+    const veh = (document.getElementById('d-vehicle').value || 'KTM Duke 390').split(' ');
+    const brand = veh[0] || 'KTM';
+    const model = veh.slice(1).join(' ') || 'Master Model';
+    const code = `CCM-AI-${currentDomain.toUpperCase()}${Math.floor(100 + Math.random()*899)}`;
+    const passcode = String(Math.floor(700000 + Math.random()*299999));
+
+    const b = {
+      id: Date.now(),
+      booking_code: code,
+      customer_name: document.getElementById('d-name').value || 'VIP Customer',
+      phone: document.getElementById('d-phone').value || '+91 9848055667',
+      email: 'customer@ccmotocrafts.in',
+      vehicle_type: currentDomain,
+      brand: brand,
+      model: model,
+      registration_no: 'TS09-AI',
+      service_type: `${currentDomain.toUpperCase()} AI Master Diagnosis + Doorstep Pickup`,
+      complaint: document.getElementById('ai-question').value,
+      pincode: pincode,
+      address: loc,
+      vip_dispatch: zone.isVip,
+      dispatch_eta: `${zone.eta} (${zone.badge})`,
+      assigned_garage_id: currentDomain === '4w' ? 2 : 1,
+      garage_name: currentDomain === '4w' ? 'CC Motocrafts 4W Hydraulic & AC Master Hub (Madhapur)' : 'CC Motocrafts Superbike & 2W Master Bay (Banjara Hills)',
+      stage: 'inspection',
+      status: 'assigned',
+      tracking_passcode: passcode,
+      camera_paused: false,
+      estimate: currentDomain === '4w' ? 4800 : 1950,
+      warranty: currentDomain === '4w' ? '1 Year / 10,000 KM Master Warranty' : '6 Months / 5,000 KM Master Warranty',
+      created_at: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) + ' IST'
+    };
+
+    st.bookings.unshift(b);
+    const links = buildDispatchLinks(b);
+    st.outboxLogs.unshift({
+      time: b.created_at,
+      channel: 'AI Advisor → WhatsApp + SMS + Email',
+      recipient: `${b.phone} · +91 8333007351 · info@ccmotocrafts.in · aisupport.on@gmail.com`,
+      detail: `${code} converted by 30-Yr ${currentDomain.toUpperCase()} AI Head: "${zone.message}"`
+    });
+    saveState(st);
+
+    const box = document.getElementById('diag-booking-trigger-out');
+    box.style.display = 'block';
+    box.innerHTML = `
+      <div class="notice good">
+        <strong>✅ AI Advisor Booking Confirmed (${code}) · Live Passcode: ${passcode}</strong><br>
+        📢 <em>"${zone.message}"</em>
+        <div class="actions">
+          <a class="btn green" href="${links.waUrl}" target="_blank" rel="noopener">📲 Open WhatsApp Trigger (+91 8333007351)</a>
+          <a class="btn primary" href="${links.smsUrl}">💬 Send Offline-Safe Text SMS</a>
+          <a class="btn gold" href="${links.mailUrl}">✉️ Send Email Trigger</a>
+        </div>
+      </div>
+    `;
+  };
+});
+</script>
+</body>
+</html>

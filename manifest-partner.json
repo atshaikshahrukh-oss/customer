@@ -1,26 +1,26 @@
 {
-  "id": "garage.html",
-  "name": "CC Motocrafts Partner Hub",
-  "short_name": "CC Motocrafts P",
-  "description": "CC Motocrafts Master Platform v1.0",
-  "start_url": "garage.html",
+  "id": "./partner-terminal.html",
+  "name": "CC Motocrafts Partner Garage Terminal (CC 1010)",
+  "short_name": "CCM Partner",
+  "description": "Garage Partner Dispatch, Online/Offline Toggle, Free 10km Flatbed Pickup & GST Invoice Engine",
+  "start_url": "./partner-terminal.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#050d16",
-  "theme_color": "#2ce0f5",
-  "orientation": "portrait",
+  "theme_color": "#f5b700",
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }

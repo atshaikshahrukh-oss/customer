@@ -1,26 +1,32 @@
 {
-  "id": "customer.html",
-  "name": "CC Motocrafts Customer App",
-  "short_name": "CC Motocrafts C",
-  "description": "CC Motocrafts Master Platform v1.0",
-  "start_url": "customer.html",
+  "id": "./index.html",
+  "name": "CC Motocrafts AI Engine Labs \u2014 Customer App",
+  "short_name": "CC Motocrafts",
+  "description": "2W & 4W AI Engine Labs Service, Free 10km VIP Pickup & Live Bay Telemetry \u2014 Hyderabad",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#050d16",
-  "theme_color": "#2ce0f5",
-  "orientation": "portrait",
+  "theme_color": "#00e5ff",
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

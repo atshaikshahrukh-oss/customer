@@ -11,151 +11,136 @@ const CCM_CONFIG = {
 
 const DEFAULT_STATE = {
   internetOnline: true,
+  divisionUnlocked: false,
+  activePlatformMode: '2w',
+  adminDeskStatus: 'active',
+  garageTerminalStatus: 'active',
+  customerPortalStatus: 'active',
   dynamicConfig: {
-    brandName: 'CC MOTOCRAFTS',
-    domainUrl: 'ccmotocrafts.in',
-    githubRepo: 'atshaikshahrukh-oss/Shaik',
     whatsappNo: '918333007351',
     whatsappDisplay: '+91 8333007351',
-    emailInfo: 'info@ccmotocrafts.in',
     emailAi: 'aisupport.on@gmail.com',
-    trustBadge: '🛡️ 100% Transparency Guarantee: No spare part replaced without prior WhatsApp Video & Quotation approval.',
-    supabaseUrl: 'https://ccmotocrafts-hyd.supabase.co',
-    supabaseAnonKey: 'sb_publishable_ccmotocrafts_realtime_sync_v1',
-    supabaseTables: ['bike_bookings', 'partner_garages', 'service_verticals', 'platform_config'],
-    aiActiveProvider: 'Google Gemini Pro 2.5 + OpenAI ChatGPT-4o + Anthropic Claude 3.5 Sonnet'
+    emailInfo: 'info@ccmotocrafts.in',
+    brandTitle: 'CC MOTOCRAFTS AI ENGINE LABS SERVICE',
+    domainUrl: 'ccmotocrafts.in',
+    footerText: 'CC Motocrafts AI Engine Labs Service · Hyderabad 2W (100cc–2500cc) & 4W Overhaul Marketplace · Free 10km VIP Flatbed/Van Pickup',
+    trustBadge: '🛡️ 100% Transparency Guarantee: No spare part replaced without prior WhatsApp Video & Quotation approval.'
   },
+  activeSessions: [
+    {
+      sessionId: 'SES-MGR-1005-A1',
+      role: 'MARKETING_MANAGER',
+      operatorName: 'Rizwan Khan (Marketing & Lead Manager)',
+      portalCode: 'CC 1005 (admin-ops.html / admin.html)',
+      deviceFingerprint: 'CCM-FP-WIN11-CHROME-884A',
+      ipAddress: '103.88.142.21 (Banjara Hills, Hyd)',
+      lastSeen: 'Active Now (0s ago)',
+      status: 'ACTIVE'
+    },
+    {
+      sessionId: 'SES-SRV-1005-B2',
+      role: 'SERVICE_MANAGER',
+      operatorName: 'Imran Ali (2W & 4W Service Floor Manager)',
+      portalCode: 'CC 1005 (Service Ops Terminal)',
+      deviceFingerprint: 'CCM-FP-ANDROID14-TAB-319C',
+      ipAddress: '49.204.72.118 (Madhapur Hub, Hyd)',
+      lastSeen: 'Active Now (12s ago)',
+      status: 'ACTIVE'
+    },
+    {
+      sessionId: 'SES-GAR-1010-C3',
+      role: 'GARAGE_PARTNER',
+      operatorName: 'Ustad Abdul Kareem (2W Superbike Master Bay #01)',
+      portalCode: 'CC 1010 (partner-terminal.html)',
+      deviceFingerprint: 'CCM-FP-ANDROID13-BAY01-772E',
+      ipAddress: '183.82.114.55 (Road No. 10, Banjara Hills)',
+      lastSeen: 'Active Now (4s ago)',
+      status: 'ACTIVE'
+    },
+    {
+      sessionId: 'SES-GAR-1010-D4',
+      role: 'GARAGE_PARTNER',
+      operatorName: 'Syed Irfan (4W Hydraulic & AC Master Hub #02)',
+      portalCode: 'CC 1010 (partner-terminal.html)',
+      deviceFingerprint: 'CCM-FP-IPAD-PRO-4W-904F',
+      ipAddress: '122.169.84.90 (100 Ft Rd, Madhapur)',
+      lastSeen: 'Active Now (9s ago)',
+      status: 'ACTIVE'
+    }
+  ],
   serviceVerticals: [
     {
       key: '2w',
+      code: '2w',
       icon: '🏍️',
-      name: '2-Wheeler Precision Engine Lab (100cc–2500cc)',
-      shortLabel: '2-Wheeler (100cc–2500cc)',
+      name: 'Two-Wheeler Precision Engine Lab (100cc–2500cc)',
+      shortName: '🏍️ 2-Wheeler (100cc–2500cc)',
       active: true,
       isCore: true,
       basePrice: 999,
-      warranty: '6 Months / 5,000 KM Written Warranty + OEM Parts Guarantee',
-      brandLabel: 'Bike / Scooter / Superbike Brand *',
-      brandDefault: 'KTM / Royal Enfield / Honda Activa',
-      modelLabel: 'Exact 2W Model *',
-      modelDefault: 'Duke 390 BS6 (100cc–2500cc)',
-      pickupLabel: 'Request Doorstep 2-Wheeler Hydraulic Ramp Van Pickup & Drop + Prior WhatsApp Video Approval',
+      warranty: '6 Months / 5,000 KM Written Service Warranty + 100% OEM Parts Guarantee',
       services: [
-        'Master Periodic Service + 42-Point Check (₹999)',
-        'Engine Tappet / Valve Clearance & Timing Calibration (₹1,499)',
-        'Scooter CVT Belt, Roller & Mileage Overhaul (₹1,199)',
-        'ECU / Sensor Calibration & OBD Diagnostic Scan (₹999)',
-        'Slipper / Multi-Plate Clutch Overhaul (₹1,899)',
-        'Laser Fork, Suspension & Chain Alignment (₹1,499)',
-        '2W Doorstep Hydraulic Ramp Van Pickup & Drop Only (FREE in VIP PINs)'
+        'Master Periodic Service + 42-Point Check (100cc–2500cc)',
+        'Engine Tappet / Valve Clearance & Timing Calibration',
+        'Scooter CVT Belt, Roller & Mileage Overhaul',
+        'Superbike ECU / Sensor Calibration & Bi-Directional OBD Scan',
+        'Slipper / Multi-Plate Clutch & Gearbox Overhaul',
+        'Laser Fork, WP/Showa Suspension & Chain Alignment',
+        'Free 10km Radius Hydraulic Ramp Van Pickup & Drop'
       ]
     },
     {
       key: '4w',
+      code: '4w',
       icon: '🚘',
-      name: '4-Wheeler Cars, Luxury SUVs & Flatbed Fleet Lab',
-      shortLabel: '4-Wheeler (Car/SUV/Lorry)',
+      name: 'Four-Wheeler & Fleet Hydraulic Lab (Cars / SUVs / Flatbed)',
+      shortName: '🚘 4-Wheeler (Cars / SUVs / Lorry)',
       active: true,
       isCore: true,
       basePrice: 2499,
-      warranty: '1 Year / 10,000 KM Written Overhaul Warranty + OEM Parts Guarantee',
-      brandLabel: 'Car / SUV / Lorry Brand *',
-      brandDefault: 'Hyundai / Maruti Suzuki / Toyota',
-      modelLabel: 'Exact 4W Model *',
-      modelDefault: 'Creta 1.5 DCT Automatic',
-      pickupLabel: 'Request 4-Wheeler Hydraulic Flatbed Lorry Ramp Pickup & Drop + Prior WhatsApp Video Approval',
+      warranty: '1 Year / 10,000 KM Written Overhaul Warranty + 100% OEM Parts Guarantee',
       services: [
-        '4W 64-Point Master Periodic Service (₹2,999)',
-        'HVAC / AC Compressor & Cooling Coil Overhaul (₹2,499)',
-        'Automatic / DCT / CVT / Manual Transmission Overhaul (₹4,999)',
-        'Hunter 3D Laser Wheel Alignment & Suspension Rebuild (₹1,299)',
-        'Bi-Directional OBD-II ECU / Injector Coding (₹1,199)',
-        'Full Engine Rebuild / Cylinder Head Overhaul (₹14,999)',
-        '4W Hydraulic Flatbed Lorry Recovery & Drop (₹999 VIP)'
+        '4W 64-Point Master Periodic Service (Synthetic Oil + Filters)',
+        'HVAC / AC Compressor, Cooling Coil & Robinair Gas Overhaul',
+        'Automatic / DCT / CVT / DSG / Manual Transmission Overhaul',
+        'Hunter 3D Laser 4-Wheel Alignment & Suspension Rebuild',
+        'Bi-Directional OBD-II ECU / Injector Coding & DPF Regen',
+        'Full Engine Rebuild, Cylinder Head & Valve Lapping',
+        'Free 10km Radius Hydraulic Flatbed Lorry Pickup & Drop'
       ]
     },
     {
-      key: 'ac_appliances',
+      key: 'urban',
+      code: 'urban',
       icon: '❄️',
-      name: 'AC Service, CCTV, RO Purifier & Home Appliances',
-      shortLabel: 'AC, CCTV & Appliances',
+      name: 'AC, CCTV, RO Water Purifier, Plumber & Urban Home Care',
+      shortName: '❄️ Urban Home & AC Care',
       active: false,
       isCore: false,
       basePrice: 499,
-      warranty: '90-Day Written Appliance Service Guarantee',
-      brandLabel: 'Appliance / Unit Brand *',
-      brandDefault: 'Daikin / LG / Hikvision / Kent RO',
-      modelLabel: 'Appliance Type & Capacity *',
-      modelDefault: '1.5 Ton Split Inverter AC / 4-Cam CCTV',
-      pickupLabel: 'Request 60-Min Doorstep Master Appliance Technician + Prior WhatsApp Video Quotation Approval',
+      warranty: '90-Day Written Home Service Guarantee',
       services: [
-        'Split / Window AC Foam Jet Service & Gas Refill (₹499)',
-        'CCTV HD/IP Camera Installation & Mobile View Setup (₹399)',
-        'RO Water Purifier Filter & Membrane Overhaul (₹349)',
-        'Refrigerator, Washing Machine & Microwave PCB Repair (₹399)',
-        'LED/LCD TV, Inverter & Geyser Doorstep Repair (₹399)'
-      ]
-    },
-    {
-      key: 'plumber_electrician',
-      icon: '🔧',
-      name: 'Master Plumber, Electrician, Carpenter & Interior',
-      shortLabel: 'Plumber, Electrical & Interior',
-      active: false,
-      isCore: false,
-      basePrice: 299,
-      warranty: '90-Day Workmanship Warranty + Background-Verified Staff',
-      brandLabel: 'Property / Facility Type *',
-      brandDefault: 'Apartment / Independent Villa / Office',
-      modelLabel: 'Work Scope Details *',
-      modelDefault: 'Sanitary Pipeline / MCB Wiring / Modular Woodwork',
-      pickupLabel: 'Request 45-Min Express Plumber / Electrician / Carpenter Tool Van Dispatch',
-      services: [
-        'Master Plumber — Leak, Motor, Tap & Sanitary Overhaul (₹299)',
-        'Master Electrician — MCB, Inverter, Fan & Full Wiring (₹299)',
-        'Modular Carpentry, Furniture & Door Lock Repair (₹399)',
-        'Complete Interior Design, False Ceiling & Painting ( Book Visit )'
-      ]
-    },
-    {
-      key: 'cooking_home',
-      icon: '👨‍🍳',
-      name: 'Home Cooking, Chef-on-Demand & Deep Cleaning Services',
-      shortLabel: 'Cooking & Home Cleaning',
-      active: false,
-      isCore: false,
-      basePrice: 599,
-      warranty: '100% Hygiene-Certified & Background-Verified Professionals',
-      brandLabel: 'Cuisine / Cleaning Package *',
-      brandDefault: 'Hyderabadi / North & South Indian / Full Villa Deep Clean',
-      modelLabel: 'Family Size / BHK Count *',
-      modelDefault: '4-6 Members Daily/Party Cook or 3BHK Deep Clean',
-      pickupLabel: 'Request Hygiene-Verified Home Chef / Deep Cleaning Team at Doorstep',
-      services: [
-        'Verified Home Cook / Party Chef-on-Demand (₹599)',
-        'Full Home / Villa / Kitchen Deep Steam Sanitization (₹999)',
-        'Sofa, Carpet & Bathroom Intensive Chemical-Free Cleaning (₹499)'
+        'Split / Window AC Foam Jet Wash & Gas Refill',
+        'HD / IP CCTV Installation & Mobile Live View Setup',
+        'RO Water Purifier Membrane & Geyser Overhaul',
+        'Master Plumber, Electrician & Modular Carpentry'
       ]
     }
   ],
   pendingAiApprovals: [
     {
       id: 9001,
-      timestamp: 'Today · Pending Owner Sign-Off',
-      provider: 'Gemini Pro 2.5 + Claude 3.5 Sonnet',
-      commandText: 'Reduce 2W Master Periodic Service price from ₹1,499 to ₹1,299 for weekend Hyderabad VIP promo',
+      timestamp: 'Today · Awaiting Master Owner Approval',
+      provider: 'Gemini Pro 2.5 + ChatGPT-4o + Claude 3.5',
+      commandText: 'Update 2W Periodic Service tier price to ₹1,299 and dispatch monsoon promo banner across all terminals',
       actionType: 'UPDATE_PRICE',
       payload: { serviceId: 1, newPrice: 1299 },
       status: 'pending'
     }
   ],
-  adminDeskStatus: 'active',
-  garageTerminalStatus: 'active',
-  customerPortalStatus: 'active',
-  activePlatformMode: '2w',
   masterKillSwitch: false,
   secBufferActive: false,
-  secBufferReason: 'Please check your device connection or restart your phone; system telemetry is verifying.',
+  secBufferReason: 'Device Protocol Synchronization / Secure stream handshake in progress...',
   secBufferWindow: '5–10 minutes',
   lastBackupTime: '2026-11-04 00:00:00 IST (Automated Midnight Snapshot)',
   marketingBanner: '⚡ INSTANT HYDERABAD DISPATCH: VIP Areas 35–45 Mins Pickup · All Hyderabad 45–60 Mins Pickup · 100% OEM Warranty',
@@ -187,8 +172,15 @@ const DEFAULT_STATE = {
       dispatch_eta: '35 to 45 minutes (VIP Area Dispatch)',
       assigned_garage_id: 1,
       garage_name: 'CC Motocrafts Superbike & 2W Master Bay (Banjara Hills)',
-      stage: 'repair',
-      status: 'repair',
+      stage: 'Repairing',
+      telemetry_stage: 'Repairing',
+      status: 'Repairing',
+      odometer_km: 18420,
+      problem_checklist: ['Metallic Tappet / Valve Noise', 'Low RPM Jerking & ECU Drift', 'Chain & Sprocket Laser Alignment'],
+      labour_charges: 1150,
+      parts_charges: 2700,
+      next_service_due_km: 23420,
+      next_service_due_date: '08 May 2027 (or 5,000 KM)',
       tracking_passcode: '786201',
       camera_paused: false,
       estimate: 3850,
@@ -214,8 +206,15 @@ const DEFAULT_STATE = {
       dispatch_eta: '35 to 45 minutes (VIP Area Dispatch)',
       assigned_garage_id: 2,
       garage_name: 'CC Motocrafts 4W Hydraulic & AC Master Hub (Madhapur)',
-      stage: 'diagnosis',
-      status: 'diagnosis',
+      stage: 'Diagnostic Video Sent',
+      telemetry_stage: 'Diagnostic Video Sent',
+      status: 'Diagnostic Video Sent',
+      odometer_km: 42850,
+      problem_checklist: ['Cabin AC Cooling Drop in Traffic', 'Steering Pulls Left (3D Alignment)', 'DCT Gearbox Pressure Check'],
+      labour_charges: 2400,
+      parts_charges: 6000,
+      next_service_due_km: 52850,
+      next_service_due_date: '08 Nov 2027 (or 10,000 KM)',
       tracking_passcode: '786402',
       camera_paused: false,
       estimate: 8400,
@@ -241,8 +240,15 @@ const DEFAULT_STATE = {
       dispatch_eta: '45 minutes to 1 hour (All-Hyderabad Dispatch)',
       assigned_garage_id: 1,
       garage_name: 'CC Motocrafts Superbike & 2W Master Bay (Banjara Hills)',
-      stage: 'inspection',
-      status: 'inspection',
+      stage: 'Van Dispatched',
+      telemetry_stage: 'Van Dispatched',
+      status: 'Van Dispatched',
+      odometer_km: 29100,
+      problem_checklist: ['Hard Gear Shifting', 'Clutch Plate Slip on Flyovers', 'Full 42-Point Periodic Service'],
+      labour_charges: 850,
+      parts_charges: 2100,
+      next_service_due_km: 34100,
+      next_service_due_date: '08 May 2027 (or 5,000 KM)',
       tracking_passcode: '786203',
       camera_paused: false,
       estimate: 2950,
@@ -263,7 +269,7 @@ const DEFAULT_STATE = {
       vehicle_scope: '2w',
       gst_number: '36AABCC7860M1Z5',
       visiting_card: 'Verified Master 2W Bay · Hydraulic Ramp Van #01',
-      status: 'approved'
+      status: 'approved', availability_status: 'ONLINE', free_10km_pickup: true
     },
     {
       id: 2,
@@ -277,7 +283,7 @@ const DEFAULT_STATE = {
       vehicle_scope: '4w',
       gst_number: '36AABCC7860M2Z3',
       visiting_card: 'Verified 4W Flatbed Lorry & 3D Alignment Center',
-      status: 'approved'
+      status: 'approved', availability_status: 'ONLINE', free_10km_pickup: true
     },
     {
       id: 3,
@@ -309,31 +315,27 @@ const DEFAULT_STATE = {
 };
 
 
-/* === ZERO-EXPOSURE SECURITY GATE & 10-MINUTE AUTO-DESTRUCT ENGINE === */
+/* === ZERO-EXPOSURE SECURITY GATE, 10-MIN AUTO-LOCK & DEVICE SESSION REVOCATION === */
 function verifyOwnerKey(raw) {
-  const v = String(raw || '').trim();
-  try { return btoa(v) === CCM_CONFIG.MASTER_KEY_ENC; } catch(e) { return false; }
+  try { return btoa(String(raw || '').trim()) === CCM_CONFIG.MASTER_KEY_ENC; } catch(e) { return false; }
 }
 function verifyAdminKey(raw) {
   const v = String(raw || '').trim().toUpperCase().replace(/\s+/g, '');
-  try { return btoa(v) === CCM_CONFIG.ADMIN_KEY_ENC || btoa(String(raw || '').trim()) === CCM_CONFIG.MASTER_KEY_ENC; } catch(e) { return false; }
+  try { return btoa(v) === CCM_CONFIG.ADMIN_KEY_ENC || verifyOwnerKey(raw); } catch(e) { return false; }
 }
 function verifyPartnerKey(raw) {
   const v = String(raw || '').trim().toUpperCase().replace(/\s+/g, '');
-  try { return btoa(v) === CCM_CONFIG.PARTNER_KEY_ENC || v === 'CC105' || btoa(String(raw || '').trim()) === CCM_CONFIG.MASTER_KEY_ENC; } catch(e) { return false; }
+  try { return btoa(v) === CCM_CONFIG.PARTNER_KEY_ENC || v === 'CC105' || verifyOwnerKey(raw); } catch(e) { return false; }
 }
 
-const SESSION_TIMEOUT_MS = 10 * 60 * 1000; // 10 Minutes Auto-Destruct
+const SESSION_TIMEOUT_MS = 10 * 60 * 1000;
 function touchSecureSession(role) {
-  try {
-    sessionStorage.setItem('ccm_auth_' + role, String(Date.now()));
-  } catch (e) {}
+  try { sessionStorage.setItem('ccm_auth_' + role, String(Date.now())); } catch (e) {}
 }
 function isSecureSessionValid(role) {
   try {
     const ts = Number(sessionStorage.getItem('ccm_auth_' + role) || 0);
-    if (!ts) return false;
-    if (Date.now() - ts > SESSION_TIMEOUT_MS) {
+    if (!ts || (Date.now() - ts > SESSION_TIMEOUT_MS)) {
       sessionStorage.removeItem('ccm_auth_' + role);
       return false;
     }
@@ -348,69 +350,134 @@ function destroySecureSession(role) {
   } catch (e) {}
 }
 
-// Auto-check session inactivity every 15 seconds and reset timer on activity
-['click', 'keydown', 'mousemove', 'touchstart'].forEach(evt => {
-  window.addEventListener(evt, () => {
-    ['owner', 'admin', 'partner'].forEach(r => {
-      if (isSecureSessionValid(r)) touchSecureSession(r);
-    });
-  }, { passive: true });
-});
-setInterval(() => {
-  ['owner', 'admin', 'partner'].forEach(r => {
-    const raw = sessionStorage.getItem('ccm_auth_' + r);
-    if (raw && !isSecureSessionValid(r)) {
-      destroySecureSession(r);
-      if (typeof window.onCcmStateChange === 'function') window.onCcmStateChange();
-    }
-  });
-}, 15000);
+window.isRoleSessionRevoked = function(roleName) {
+  const st = loadState();
+  const sessions = st.activeSessions || [];
+  const revoked = sessions.some(s => s.role === roleName && s.status === 'REVOKED');
+  return revoked;
+};
 
-/* Global 2W / 4W / Urban Mode Switcher (Works across index.html, customer.html, diagnosis.html) */
-window.switchGlobalVehicleMode = function(mode) {
+window.revokeOrRestoreDeviceSession = function(sessionId, newStatus) {
+  const st = loadState();
+  const target = (st.activeSessions || []).find(s => s.sessionId === sessionId);
+  if (target) {
+    target.status = newStatus;
+    target.lastSeen = newStatus === 'REVOKED' ? 'Disconnected by Master Owner' : 'Re-Authorized by Master Owner';
+    if (target.role === 'MARKETING_MANAGER' || target.role === 'SERVICE_MANAGER') {
+      st.adminDeskStatus = newStatus === 'REVOKED' ? 'disabled' : 'active';
+    }
+    if (target.role === 'GARAGE_PARTNER') {
+      st.garageTerminalStatus = newStatus === 'REVOKED' ? 'disabled' : 'active';
+    }
+    window.logDualGmailTelemetry(st, 'MASTER_OWNER', 'SESSION_' + newStatus, target.sessionId, `Session ${target.sessionId} (${target.operatorName} · IP ${target.ipAddress}) set to ${newStatus}`);
+    saveState(st);
+  }
+};
+
+/* === DUAL-GMAIL TELEMETRY LOGGER (aisupport.on@gmail.com & info@ccmotocrafts.in) === */
+window.logDualGmailTelemetry = function(st, actorRole, eventType, refCode, detailText) {
+  const cfg = (st && st.dynamicConfig) ? st.dynamicConfig : DEFAULT_STATE.dynamicConfig;
+  const dualEmails = `${cfg.emailAi || 'aisupport.on@gmail.com'} & ${cfg.emailInfo || 'info@ccmotocrafts.in'}`;
+  const nowStr = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' IST';
+  st.outboxLogs = st.outboxLogs || [];
+  st.outboxLogs.unshift({
+    time: nowStr,
+    channel: 'Dual-Gmail + WhatsApp + Supabase RLS',
+    recipient: `${dualEmails} · ${cfg.whatsappDisplay || '+91 8333007351'}`,
+    detail: `[${eventType}] (${refCode || 'GLOBAL'}): ${detailText}`
+  });
+  st.auditLogs = st.auditLogs || [];
+  st.auditLogs.unshift({
+    time: nowStr,
+    actor: actorRole,
+    action: `[Routed -> ${dualEmails}] ${detailText}`
+  });
+  if (typeof ccmApiCall === 'function') {
+    ccmApiCall('notify.dual_gmail', { actorRole, eventType, refCode, detailText, recipients: [cfg.emailAi, cfg.emailInfo] });
+  }
+};
+
+/* === SUPABASE REAL-TIME SYNC & PINCODE AUTO-ROUTER === */
+window.ccmSupabaseSync = async function(tableName, operation, record) {
+  if (typeof ccmApiCall === 'function') {
+    return await ccmApiCall('supabase.' + tableName + '.' + String(operation).toLowerCase(), { table: tableName, record });
+  }
+  return { ok: true, mode: 'local_realtime_sync' };
+};
+
+window.matchPartnerByPincode = function(pincode, domain) {
+  const st = loadState();
+  const pin = String(pincode || '500034').trim();
+  const dom = (domain === '4w') ? '4w' : '2w';
+  const onlineApproved = (st.partners || []).filter(p => p.status === 'approved' && p.availability_status !== 'OFFLINE' && !p.lockedByOwner);
+  let match = onlineApproved.find(p => String(p.pincode) === pin && (p.vehicle_scope === dom || p.vehicle_scope === 'both'));
+  if (!match) match = onlineApproved.find(p => p.vehicle_scope === dom || p.vehicle_scope === 'both');
+  if (!match) match = (st.partners || [])[0] || { id: 1, garage_name: 'CC Motocrafts Master Bay (Banjara Hills)', pincode: '500034' };
+  return match;
+};
+
+/* === GLOBAL IDENTITY & CONTACT SWITCHER REFLECTOR === */
+window.applyDynamicPlatformConfig = function() {
+  const st = loadState();
+  const cfg = st.dynamicConfig || DEFAULT_STATE.dynamicConfig;
+  CCM_CONFIG.WHATSAPP_NO = cfg.whatsappNo || '918333007351';
+  CCM_CONFIG.WHATSAPP_DISPLAY = cfg.whatsappDisplay || '+91 8333007351';
+  CCM_CONFIG.EMAIL_AI = cfg.emailAi || 'aisupport.on@gmail.com';
+  CCM_CONFIG.EMAIL_INFO = cfg.emailInfo || 'info@ccmotocrafts.in';
+
+  document.querySelectorAll('[data-dyn-phone]').forEach(el => { el.textContent = cfg.whatsappDisplay; });
+  document.querySelectorAll('[data-dyn-email]').forEach(el => { el.textContent = `${cfg.emailAi} · ${cfg.emailInfo}`; });
+  document.querySelectorAll('[data-dyn-brand]').forEach(el => { el.textContent = cfg.brandTitle; });
+  document.querySelectorAll('[data-dyn-footer]').forEach(el => { el.textContent = cfg.footerText; });
+  document.querySelectorAll('[data-dynamic-trust-badge]').forEach(el => { el.textContent = cfg.trustBadge; });
+};
+
+/* === PWA 1-CLICK INSTALL MANAGER (Fixes GitHub Pages App Installation) === */
+window.deferredPwaPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  window.deferredPwaPrompt = e;
+});
+window.triggerCcmPwaInstall = async function() {
+  if (window.deferredPwaPrompt) {
+    window.deferredPwaPrompt.prompt();
+    await window.deferredPwaPrompt.userChoice.catch(() => {});
+    window.deferredPwaPrompt = null;
+    return;
+  }
+  alert('📲 Install CC Motocrafts App:\n• On Android Chrome: Tap the ⋮ (top-right browser menu) -> Tap "Add to Home screen" or "Install app".\n• On iPhone Safari: Tap Share -> "Add to Home Screen".\n• On Desktop Chrome/Edge: Click the Install icon in the address bar.');
+};
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+
+/* === GLOBAL DIVISION SELECTOR (2W vs 4W) & UNLOCK GATE === */
+window.switchGlobalVehicleMode = function(mode, unlockCatalog = true) {
   const m = (mode === '4w' || mode === 'urban') ? mode : '2w';
   const st = loadState();
   st.activePlatformMode = m;
+  if (unlockCatalog) st.divisionUnlocked = true;
   saveState(st);
 
-  // Highlight brand-ribbon chips
-  document.querySelectorAll('[data-mode-chip]').forEach(ch => {
-    ch.style.outline = ch.dataset.modeChip === m ? '2px solid var(--gold)' : 'none';
-    ch.style.transform = ch.dataset.modeChip === m ? 'scale(1.03)' : 'scale(1)';
-  });
+  // Unlock gated catalog on index.html if present
+  const lockGate = document.getElementById('division-lock-banner');
+  const gatedBody = document.getElementById('division-gated-catalog');
+  if (gatedBody && st.divisionUnlocked) {
+    gatedBody.style.display = 'block';
+    if (lockGate) {
+      lockGate.className = 'notice good';
+      lockGate.innerHTML = m === '4w'
+        ? '🚘 <strong>4-WHEELER DIVISION UNLOCKED (800cc–6500cc Cars, Luxury SUVs & Heavy Fleet):</strong> Dedicated 4W Hydraulic Flatbed Lorry Context, 4W Pricing Tiers, 4W Portfolio & 9-Point Navigation Menu Active!'
+        : '🏍️ <strong>2-WHEELER DIVISION UNLOCKED (100cc–2500cc Commuters, Scooters & Superbikes):</strong> Dedicated 2W Mobile Diagnostic Unit-01 Van Context, 2W Pricing Tiers, 2W Portfolio & 9-Point Navigation Menu Active!';
+    }
+  }
 
-  // If on customer.html
-  if (typeof window.setCustomerCategory === 'function') {
-    window.setCustomerCategory(m);
-  }
-  // If on index.html
-  if (typeof window.renderPortfolio === 'function') {
-    window.renderPortfolio(m === '4w' ? '4w' : '2w');
-    const b2 = document.getElementById('show-2w');
-    const b4 = document.getElementById('show-4w');
-    const ba = document.getElementById('show-all');
-    if (b2 && b4 && ba) {
-      b2.className = m === '2w' ? 'primary' : '';
-      b4.className = m === '4w' ? 'primary' : '';
-      ba.className = '';
-    }
-    const heroH1 = document.querySelector('.hero h1');
-    if (heroH1) {
-      heroH1.textContent = m === '4w'
-        ? '🚘 Zero-Wait 4-Wheeler Car, Luxury SUV & Hydraulic Flatbed Lorry Master Care.'
-        : (m === 'urban'
-            ? '🏠 Express 60-Min Urban Home, AC, CCTV, RO & Plumbing Master Care.'
-            : '🏍️ Zero-Wait 2-Wheeler (100cc–2500cc Superbike & Scooter) Master Care + Live Van Tracking.');
-    }
-  }
-  // If on diagnosis.html
-  if (typeof window.setDiagDomain === 'function') {
-    window.setDiagDomain(m === '4w' ? '4w' : '2w');
-  }
-  // If on garage.html
-  if (typeof window.setPartnerDomainMode === 'function') {
-    window.setPartnerDomainMode(m === '4w' ? '4w' : '2w');
-  }
+  if (typeof window.setCustomerCategory === 'function') window.setCustomerCategory(m);
+  if (typeof window.renderPortfolio === 'function') window.renderPortfolio(m === '4w' ? '4w' : '2w');
+  if (typeof window.setDiagDomain === 'function') window.setDiagDomain(m === '4w' ? '4w' : '2w');
+  if (typeof window.setPartnerDomainMode === 'function') window.setPartnerDomainMode(m === '4w' ? '4w' : '2w');
   renderTopShell();
 };
 
@@ -431,17 +498,13 @@ function loadState() {
     const parsed = JSON.parse(raw);
     const merged = Object.assign({}, DEFAULT_STATE, parsed);
     merged.dynamicConfig = Object.assign({}, DEFAULT_STATE.dynamicConfig, parsed.dynamicConfig || {});
-    if (!Array.isArray(merged.serviceVerticals) || !merged.serviceVerticals.length) {
-      merged.serviceVerticals = JSON.parse(JSON.stringify(DEFAULT_STATE.serviceVerticals));
-    }
-    if (!Array.isArray(merged.pendingAiApprovals)) {
-      merged.pendingAiApprovals = JSON.parse(JSON.stringify(DEFAULT_STATE.pendingAiApprovals));
-    }
-    // Sync CCM_CONFIG live with dynamicConfig
-    CCM_CONFIG.WHATSAPP_NO = String(merged.dynamicConfig.whatsappNo || '918333007351').replace(/[^0-9]/g, '');
-    CCM_CONFIG.WHATSAPP_DISPLAY = merged.dynamicConfig.whatsappDisplay || ('+' + CCM_CONFIG.WHATSAPP_NO);
-    CCM_CONFIG.EMAIL_INFO = merged.dynamicConfig.emailInfo || 'info@ccmotocrafts.in';
+    if (!Array.isArray(merged.activeSessions) || !merged.activeSessions.length) merged.activeSessions = JSON.parse(JSON.stringify(DEFAULT_STATE.activeSessions));
+    if (!Array.isArray(merged.serviceVerticals) || !merged.serviceVerticals.length) merged.serviceVerticals = JSON.parse(JSON.stringify(DEFAULT_STATE.serviceVerticals));
+    if (!Array.isArray(merged.pendingAiApprovals)) merged.pendingAiApprovals = JSON.parse(JSON.stringify(DEFAULT_STATE.pendingAiApprovals));
+    CCM_CONFIG.WHATSAPP_NO = merged.dynamicConfig.whatsappNo || '918333007351';
+    CCM_CONFIG.WHATSAPP_DISPLAY = merged.dynamicConfig.whatsappDisplay || '+91 8333007351';
     CCM_CONFIG.EMAIL_AI = merged.dynamicConfig.emailAi || 'aisupport.on@gmail.com';
+    CCM_CONFIG.EMAIL_INFO = merged.dynamicConfig.emailInfo || 'info@ccmotocrafts.in';
     return merged;
   } catch (e) {
     return JSON.parse(JSON.stringify(DEFAULT_STATE));
@@ -452,7 +515,6 @@ function saveState(st, broadcast = true) {
   try {
     localStorage.setItem('ccm_master_state_v1', JSON.stringify(st));
     if (broadcast && syncChannel) syncChannel.postMessage({ type: 'STATE_UPDATED' });
-    if (typeof window.applyDynamicContactConfig === 'function') window.applyDynamicContactConfig();
   } catch (e) {}
 }
 
@@ -507,40 +569,6 @@ function buildDispatchLinks(booking) {
 /* Strictly Isolated 30-Year Master Technician, Advisor, Supervisor & Service Head AI Brains */
 function runIsolatedMasterAI(domain, rawQuestion, customerDetails = {}) {
   const q = String(rawQuestion || '').trim();
-  if (domain === 'urban') {
-    const locInfo = classifyDispatchZone(customerDetails.pincode || '500034', customerDetails.address || q);
-    const lower = q.toLowerCase();
-    let diagSection = '';
-    if (/ac|cooling|gas|split|window|compressor|pcb/i.test(lower)) {
-      diagSection = `• **Root Cause (30-Yr Urban Appliance Head Analysis)**: Weak AC cooling, water leakage from indoor unit, or blinking error code indicates choked evaporator coil fins, low R32/R410a refrigerant pressure, faulty capacitor, or outdoor inverter PCB relay failure.\n• **Master Doorstep Solution**: 150-PSI Foam Jet Wash (indoor + outdoor unit), digital manifold pressure test, nitrogen leak check, and genuine PCB/capacitor replacement at your doorstep.`;
-    } else if (/cctv|camera|dvr|nvr|wifi|mobile|security/i.test(lower)) {
-      diagSection = `• **Root Cause (30-Yr Security & Electronics Head Analysis)**: Camera "No Video", night-vision blur, or mobile app offline status stems from BNC/PoE connector oxidation, SMPS power supply voltage drop, or hard-disk sector fault.\n• **Master Doorstep Solution**: Full HD/IP CCTV diagnostic, PoE/SMPS load test, cloud P2P mobile phone live-view configuration, and 1-year installation warranty.`;
-    } else if (/ro|water|purifier|geyser|fridge|refrigerator|washing|microwave|tv/i.test(lower)) {
-      diagSection = `• **Root Cause (30-Yr Home Appliance Master Analysis)**: High TDS water taste, geyser heating cut-off, or washing machine drum noise points to choked RO membrane (TDS > 150), thermostat scale buildup, or drum spider bearing wear.\n• **Master Doorstep Solution**: Digital TDS calibration + original copper/alkaline RO filter kit, geyser heating element descaling, and OEM appliance spares replacement.`;
-    } else {
-      diagSection = `• **Root Cause (30-Yr Urban Facility Master Analysis)**: Complete doorstep inspection by our background-verified, uniform-wearing Master Technician (Plumbing, Electrical, Carpentry, Modular Interior, Painting, or Deep Cleaning).\n• **Master Doorstep Solution**: Laser-level leak & wiring audit, upfront fixed rate-card estimate (Zero hidden charges vs Urban Company/Bro4u), and instant resolution.`;
-    }
-    return {
-      ok: true,
-      blocked: false,
-      title: '🏠 URBAN HOME, AC, CCTV & APPLIANCE MASTER HEAD (30+ YRS EXP)',
-      warranty: '90-Day Written Service Warranty + 100% Background-Verified Master Technicians',
-      reply: [
-        `Namaste Sir! Main CC Motocrafts ka **30-Years Experienced Urban Home & Appliance Facility Head** bol raha hoon. Aapka ghar aur appliances bilkul safe haathon mein hain:`,
-        ``,
-        diagSection,
-        ``,
-        `✅ **Why CC Motocrafts Beats Urban Company, Bro4u & Justdial**:`,
-        `• **Zero Spam Calls**: Justdial ki tarah 20 unverified brokers aapko call nahi karenge — sirf hamara verified Master Technician aayega.`,
-        `• **90-Day Written Guarantee**: Har AC, CCTV, RO, Plumbing aur Electrical kaam par 90-Day free rework guarantee + upfront fixed pricing.`,
-        `👉 **Dispatch Promise**: *"${locInfo.message}"*`,
-        ``,
-        `📲 **Next Step**: Niche **"Confirm Booking"** ya **"Convert to Booking + WhatsApp"** button dabayein — 35–45 mins mein hamara Master Tool Van aapke doorstep par hoga!`
-      ].join('\n')
-    };
-  }
-
-  
   if (!q) {
     return {
       ok: false,
@@ -642,18 +670,20 @@ function runIsolatedMasterAI(domain, rawQuestion, customerDetails = {}) {
 
 function renderTopShell() {
   const file = (location.pathname.split('/').pop() || 'index.html').split('?')[0];
-  const isCustomerPage = (file === 'index.html' || file === 'customer.html' || file === 'diagnosis.html' || file === '');
+  const isCustomerPage = (file === 'index.html' || file === 'customer.html' || file === '');
   const st = loadState();
+  const cfg = st.dynamicConfig || DEFAULT_STATE.dynamicConfig;
   const curMode = st.activePlatformMode || '2w';
   const bookingCount = (st.bookings || []).length;
 
-  // Make brand-ribbon chips interactive 2W / 4W switches
+  window.applyDynamicPlatformConfig();
+
+  // Make brand-ribbon chips clickable division switches
   document.querySelectorAll('.brand-ribbon .brand-chip').forEach((chip) => {
     chip.style.cursor = 'pointer';
     const txt = chip.textContent.toLowerCase();
     const targetMode = (txt.includes('4w') || txt.includes('ac overhaul') || txt.includes('flatbed')) ? '4w' : '2w';
-    chip.setAttribute('data-mode-chip', targetMode);
-    chip.onclick = () => window.switchGlobalVehicleMode(targetMode);
+    chip.onclick = () => window.switchGlobalVehicleMode(targetMode, true);
   });
 
   // 1. Top Navigation Bar (#nav)
@@ -661,79 +691,77 @@ function renderTopShell() {
   if (navEl) {
     navEl.innerHTML =
       '<a href="customer.html#live-bay-section" class="pill green" style="text-decoration:none;font-weight:800;padding:7px 12px">🛒 My Booking <span style="background:#00e5ff;color:#000;border-radius:999px;padding:1px 7px;margin-left:4px;font-weight:900">' + bookingCount + '</span></a>' +
-      '<button type="button" class="' + (curMode === '2w' ? 'primary' : 'btn') + '" style="padding:7px 12px;min-height:36px;font-size:12.5px" onclick="window.switchGlobalVehicleMode(\'2w\')">🏍️ 2-Wheeler (100cc–2500cc)</button>' +
-      '<button type="button" class="' + (curMode === '4w' ? 'primary' : 'btn') + '" style="padding:7px 12px;min-height:36px;font-size:12.5px" onclick="window.switchGlobalVehicleMode(\'4w\')">🚘 4-Wheeler (Car/SUV/Lorry)</button>' +
-      '<a href="customer.html" class="btn gold" style="padding:7px 12px;min-height:36px;font-size:12.5px">⚡ Book Service</a>' +
-      '<a href="https://wa.me/' + CCM_CONFIG.WHATSAPP_NO + '" target="_blank" rel="noopener" class="btn green" style="padding:7px 12px;min-height:36px;font-size:12.5px">💬 WhatsApp</a>' +
-      '<button type="button" class="btn" style="padding:7px 12px;min-height:36px;font-size:15px;font-weight:900;border-color:var(--cyan)" onclick="window.toggleMobileMenuDrawer()">☰ Menu</button>';
+      '<button type="button" class="' + (curMode === '2w' ? 'primary' : 'btn') + '" style="padding:7px 12px;min-height:36px;font-size:12.5px" onclick="window.switchGlobalVehicleMode(\'2w\', true)">🏍️ 2W Division (100cc–2500cc)</button>' +
+      '<button type="button" class="' + (curMode === '4w' ? 'primary' : 'btn') + '" style="padding:7px 12px;min-height:36px;font-size:12.5px" onclick="window.switchGlobalVehicleMode(\'4w\', true)">🚘 4W Division (Car/SUV/Flatbed)</button>' +
+      '<button type="button" class="btn gold" style="padding:7px 12px;min-height:36px;font-size:12.5px" onclick="window.triggerCcmPwaInstall()">📲 Install App</button>' +
+      '<a href="https://wa.me/' + cfg.whatsappNo + '" target="_blank" rel="noopener" class="btn green" style="padding:7px 12px;min-height:36px;font-size:12.5px">💬 WhatsApp</a>' +
+      '<button type="button" class="btn" style="padding:7px 12px;min-height:36px;font-size:15px;font-weight:900;border-color:var(--cyan)" onclick="window.toggleMobileMenuDrawer()">☰ 9-Point Menu</button>';
   }
 
-  // Inject Clean Customer Hamburger Drawer (9 Items ONLY — ZERO Partner/Admin/Owner links on Customer App!)
-  const existingDrawer = document.getElementById('ccm-hamburger-drawer');
-  if (existingDrawer) existingDrawer.remove();
+  // 2. Dedicated 9-Point Navigation Menu Drawer
+  const oldDrawer = document.getElementById('ccm-hamburger-drawer');
+  if (oldDrawer) oldDrawer.remove();
   const drawer = document.createElement('div');
   drawer.id = 'ccm-hamburger-drawer';
-  drawer.style.cssText = 'display:none;position:fixed;top:68px;right:16px;width:310px;max-width:92vw;background:#06101b;border:2px solid var(--cyan);border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,0.85);z-index:9999;padding:8px;overflow:hidden';
-  const menuItems = [
-    ['index.html', '1. 🏠 Home'],
-    ['customer.html', '2. ⚡ Digital Booking (2W / 4W)'],
-    ['index.html#portfolio-section', '3. 🖼️ Portfolio Gallery (47 Live Assets)'],
-    ['customer.html#service-pricing-table', '4. 💰 Services & Pricing (100cc–2500cc & 4W)'],
-    ['diagnosis.html', '5. 🧠 AI Engine Guide (30-Yr Master Bot)'],
-    ['customer.html#digital-warranty-card', '6. 🏅 Warranty (Up to 1-Yr / 10,000 KM)'],
-    ['customer.html#hyderabad-service-areas', '7. 📍 Hyderabad Service Areas (VIP 35–45m)'],
-    ['customer.html#contact-support-section', '8. 📞 Contact (' + CCM_CONFIG.WHATSAPP_DISPLAY + ')'],
-    ['#lang', '9. 🌐 Language Switcher (EN / HI / TE / UR)']
+  drawer.style.cssText = 'display:none;position:fixed;top:68px;right:16px;width:320px;max-width:92vw;background:#050e18;border:2px solid var(--cyan);border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,0.9);z-index:9999;padding:8px;overflow:hidden';
+  const ninePoints = [
+    ['index.html', '1. 🏠 Home (Division Selector)'],
+    ['customer.html?cat=' + curMode + '#express-booking-section', '2. ⚡ Digital Booking (4-Field + GPS)'],
+    ['index.html#portfolio-section', '3. 🖼️ Portfolio (Live Lab Showcases)'],
+    ['customer.html?cat=' + curMode + '#service-pricing-table', '4. 💰 Services & Pricing (' + curMode.toUpperCase() + ' Tiers)'],
+    ['hts-owner-app.html?domain=' + curMode, '5. 🧠 AI Engine Guide (Telemetry & Voice)'],
+    ['customer.html?cat=' + curMode + '#digital-warranty-card', '6. 🏅 Warranty (30-Day & 1-Yr Guarantee)'],
+    ['customer.html?cat=' + curMode + '#hyderabad-service-areas', '7. 📍 Hyderabad Service Areas (Free 10km)'],
+    ['customer.html?cat=' + curMode + '#contact-support-section', '8. 📞 Contact (' + cfg.whatsappDisplay + ')'],
+    ['#lang', '9. 🌐 Language Switcher']
   ];
-  drawer.innerHTML = menuItems.map(function(it) {
+  drawer.innerHTML = ninePoints.map(function(it) {
     if (it[0] === '#lang') {
       return '<div style="padding:10px 12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center">' +
-        '<span style="color:#fff;font-size:13.5px;font-weight:600">9. 🌐 Language</span>' +
+        '<span style="color:#fff;font-size:13.5px;font-weight:700">9. 🌐 Language</span>' +
         '<select class="lang-select" onchange="setPlatformLanguage(this.value)" style="padding:4px 8px"><option value="en">English</option><option value="hi">हिंदी / Hinglish</option><option value="te">తెలుగు</option><option value="ur">اردو</option></select>' +
         '</div>';
     }
-    return '<a href="' + it[0] + '" onclick="document.getElementById(\'ccm-hamburger-drawer\').style.display=\'none\'" style="display:block;padding:11px 14px;color:#fff;text-decoration:none;font-size:14px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07)">' + it[1] + '</a>';
+    return '<a href="' + it[0] + '" onclick="window.switchGlobalVehicleMode(\'' + curMode + '\', true); document.getElementById(\'ccm-hamburger-drawer\').style.display=\'none\'" style="display:block;padding:10px 14px;color:#fff;text-decoration:none;font-size:13.5px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07)">' + it[1] + '</a>';
   }).join('');
   document.body.appendChild(drawer);
 
-  // 2. Role-Separated Switcher Bar (#switcher)
-  // STRICT CUSTOMER ISOLATION: Customer pages NEVER show Partner App, Ops Manager, or Supreme Owner links!
+  // 3. Dedicated 9-Point Horizontal Navigation Bar (#switcher)
   const swEl = document.getElementById('switcher');
   if (swEl) {
     const curLang = st.lang || 'en';
-    const langSel = '<select class="lang-select" onchange="setPlatformLanguage(this.value)" title="Select Language">' +
-      '<option value="en" ' + (curLang==='en'?'selected':'') + '>🌐 EN (English)</option>' +
-      '<option value="hi" ' + (curLang==='hi'?'selected':'') + '>🇮🇳 HI (हिंदी / Hinglish)</option>' +
-      '<option value="te" ' + (curLang==='te'?'selected':'') + '>🇮🇳 TE (తెలుగు)</option>' +
-      '<option value="ur" ' + (curLang==='ur'?'selected':'') + '>🇮🇳 UR (اردو)</option>' +
+    const langSel = '<select class="lang-select" onchange="setPlatformLanguage(this.value)" title="9. Language Switcher">' +
+      '<option value="en" ' + (curLang==='en'?'selected':'') + '>9. 🌐 EN (English)</option>' +
+      '<option value="hi" ' + (curLang==='hi'?'selected':'') + '>9. 🇮🇳 HI (हिंदी / Hinglish)</option>' +
+      '<option value="te" ' + (curLang==='te'?'selected':'') + '>9. 🇮🇳 TE (తెలుగు)</option>' +
+      '<option value="ur" ' + (curLang==='ur'?'selected':'') + '>9. 🇮🇳 UR (اردو)</option>' +
       '</select>';
 
-    const customerLinks = [
-      ['index.html', '🏠 Home & Services'],
-      ['customer.html', '⚡ Instant Booking & Live Bay'],
-      ['diagnosis.html', '🧠 24/7 AI Diagnostic Advisor'],
-      ['customer.html#digital-warranty-card', '🏅 1-Yr Digital Warranty']
+    const customerNineBar = [
+      ['index.html', '1. Home'],
+      ['customer.html?cat=' + curMode + '#express-booking-section', '2. Digital Booking'],
+      ['index.html#portfolio-section', '3. Portfolio'],
+      ['customer.html?cat=' + curMode + '#service-pricing-table', '4. Services & Pricing'],
+      ['hts-owner-app.html?domain=' + curMode, '5. AI Engine Guide'],
+      ['customer.html?cat=' + curMode + '#digital-warranty-card', '6. Warranty'],
+      ['customer.html?cat=' + curMode + '#hyderabad-service-areas', '7. Hyd Service Areas'],
+      ['customer.html?cat=' + curMode + '#contact-support-section', '8. Contact (' + cfg.whatsappDisplay + ')']
     ];
-    const internalStaffLinks = [
-      ['index.html', '🏠 Customer Website'],
-      ['customer.html', '👤 Customer App'],
-      ['garage.html', '🔧 Partner App (CC 1010)'],
-      ['admin.html', '🏢 Ops Manager (CC 1005)'],
-      ['owner.html', '👑 Supreme Owner Cockpit']
+    const staffBar = [
+      ['index.html', '1. Customer Landing (index.html)'],
+      ['partner-terminal.html', '2. Partner Terminal (partner-terminal.html)'],
+      ['admin-ops.html', '3. Master Owner & Ops Hub (admin-ops.html)'],
+      ['hts-owner-app.html', '4. HTS AI Voice & Diagnostic Intake (hts-owner-app.html)']
     ];
-    const activeLinks = isCustomerPage ? customerLinks : internalStaffLinks;
+    const activeBar = isCustomerPage ? customerNineBar : staffBar;
 
-    swEl.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;width:100%;padding:4px 0">' +
+    swEl.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:space-between;width:100%;padding:4px 0">' +
       '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">' +
-      activeLinks.map(function(item) {
+      activeBar.map(function(item) {
         var href = item[0], label = item[1];
-        var isActive = file === href.split('#')[0] || (href === 'owner.html' && file === 'ceo.html');
-        return '<a class="' + (isActive ? 'active' : '') + '" href="' + href + '">' + label + '</a>';
+        return '<a href="' + href + '" onclick="window.switchGlobalVehicleMode(\'' + curMode + '\', true)">' + label + '</a>';
       }).join('') +
-      '</div>' +
-      '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">' +
       langSel +
-      '<a href="tel:+' + CCM_CONFIG.WHATSAPP_NO + '" class="pill green" style="text-decoration:none"><span class="live-dot"></span> VIP 35–45m FREE PICKUP · ' + CCM_CONFIG.WHATSAPP_DISPLAY + '</a>' +
       '</div>' +
       '</div>';
   }
@@ -778,18 +806,10 @@ function speakRepairGuidance(text) {
   try {
     if (!('speechSynthesis' in window)) return false;
     window.speechSynthesis.cancel();
-    let cleanText = String(text || '')
-      .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, ' ')
-      .replace(/\b2-WHEELER\b/gi, 'Two Wheeler')
-      .replace(/\b4-WHEELER\b/gi, 'Four Wheeler')
-      .replace(/\b2W\b/g, 'Two Wheeler')
-      .replace(/\b4W\b/g, 'Four Wheeler')
-      .replace(/[*#_`~•]/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim();
+    const cleanText = String(text || '').replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, ' ').replace(/\b2-WHEELER\b/gi, 'Two Wheeler').replace(/\b4-WHEELER\b/gi, 'Four Wheeler').replace(/\b2W\b/g, 'Two Wheeler').replace(/\b4W\b/g, 'Four Wheeler').replace(/[*#_`~•]/g, ' ');
     const u = new SpeechSynthesisUtterance(cleanText);
     u.lang = 'en-IN';
-    u.rate = 1.0;
+    u.rate = 0.98;
     window.speechSynthesis.speak(u);
     return true;
   } catch (e) {
@@ -803,13 +823,6 @@ function setPlatformLanguage(lang) {
   saveState(st);
   const dict = CCM_I18N[st.lang] || CCM_I18N.en;
   document.querySelectorAll('[data-i18n-tagline]').forEach(el => { el.textContent = dict.tagline; });
-  const heroH1 = document.querySelector('.hero h1');
-  if (heroH1) {
-    if (st.lang === 'hi') heroH1.textContent = '🏍️ 2-व्हीलर और 🚘 4-व्हीलर मास्टर सर्विस + 35–45 मिनट VIP पिकअप और लाइव कैमरा ट्रैकिंग';
-    else if (st.lang === 'te') heroH1.textContent = '🏍️ 2-వీలర్ & 🚘 4-వీలర్ மாस్టర్ సర్వీస్ + 35–45 నిమిషాల్లో VIP పికప్ & లైవ్ కెమెరా ట్రాకింగ్';
-    else if (st.lang === 'ur') heroH1.textContent = '🏍️ ٹو وہیلر اور فور وہیلر ماسٹر سروس + 35 تا 45 منٹ وی آئی پی پک اپ اور لائیو کیمرہ ٹریکنگ';
-  }
-  renderTopShell();
 }
 
 
@@ -837,284 +850,15 @@ async function ccmApiCall(action, payload = {}) {
 }
 
 
-/* Global Instant Quick Booking Modal Handler (Works on index.html & all pages) */
 window.openQuickBookingModal = function(category, serviceLabel) {
   const modal = document.getElementById('quick-booking-modal');
   if (!modal) {
-    location.href = 'customer.html?cat=' + encodeURIComponent(category || '2w') + '&service=' + encodeURIComponent(serviceLabel || '');
+    location.href = 'customer.html?cat=' + encodeURIComponent(category || '2w');
     return;
   }
   const cat = (category === '4w' || category === 'urban') ? category : '2w';
   document.getElementById('qb-type').value = cat;
-  document.getElementById('qb-badge').textContent = cat === '2w'
-    ? '🏍️ 2-WHEELER INSTANT VIP BOOKING (35–45 MIN PICKUP)'
-    : (cat === '4w' ? '🚘 4-WHEELER & FLATBED LORRY VIP BOOKING' : '🏠 URBAN HOME & APPLIANCE EXPRESS BOOKING');
+  document.getElementById('qb-badge').textContent = cat === '2w' ? '🏍️ 2W VIP BOOKING (FREE 10KM VAN PICKUP)' : '🚘 4W VIP BOOKING (FREE 10KM FLATBED PICKUP)';
   document.getElementById('qb-title').textContent = serviceLabel || 'Instant Doorstep Service Booking';
-  const vehInput = document.getElementById('qb-veh');
-  if (vehInput) {
-    vehInput.value = cat === '2w'
-      ? 'KTM Duke 390 / Royal Enfield / Activa (2W)'
-      : (cat === '4w' ? 'Hyundai Creta / Swift / Innova (4W)' : (serviceLabel || 'Split AC / CCTV / Home Service'));
-  }
-  const resBox = document.getElementById('qb-result');
-  if (resBox) {
-    resBox.style.display = 'none';
-    resBox.innerHTML = '';
-  }
   modal.style.display = 'flex';
-};
-
-document.addEventListener('DOMContentLoaded', function() {
-  const qbForm = document.getElementById('qb-form');
-  if (qbForm) {
-    qbForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const st = loadState();
-      const cat = document.getElementById('qb-type').value || '2w';
-      const serviceTitle = document.getElementById('qb-title').textContent || 'Master Service';
-      const name = document.getElementById('qb-name').value.trim() || 'VIP Customer';
-      const phone = document.getElementById('qb-phone').value.trim() || '+91 9848011223';
-      const veh = document.getElementById('qb-veh').value.trim() || 'Vehicle / Unit';
-      const pin = document.getElementById('qb-pin').value.trim() || '500034';
-      const addr = document.getElementById('qb-addr').value.trim() || 'Banjara Hills, Hyderabad';
-
-      const zone = classifyDispatchZone(pin, addr);
-      const code = 'CCM-HYD-' + cat.toUpperCase() + Math.floor(100 + Math.random() * 899);
-      const passcode = String(Math.floor(700000 + Math.random() * 299999));
-
-      const newBooking = {
-        id: Date.now(),
-        booking_code: code,
-        customer_name: name,
-        phone: phone,
-        email: 'info@ccmotocrafts.in',
-        vehicle_type: cat === '4w' ? '4w' : '2w',
-        brand: veh,
-        model: serviceTitle,
-        registration_no: 'VIP-DIRECT',
-        service_type: serviceTitle,
-        complaint: 'Booked via Instant Quick-Book Modal: ' + serviceTitle,
-        pincode: pin,
-        address: addr,
-        vip_dispatch: zone.isVip,
-        dispatch_eta: zone.eta + ' (' + zone.badge + ')',
-        assigned_garage_id: cat === '4w' ? 2 : 1,
-        garage_name: cat === '4w' ? 'CC Motocrafts 4W Hydraulic & AC Master Hub (Madhapur)' : 'CC Motocrafts Superbike & 2W Master Bay (Banjara Hills)',
-        stage: 'inspection',
-        status: 'assigned',
-        tracking_passcode: passcode,
-        camera_paused: false,
-        estimate: cat === '4w' ? 3499 : (cat === 'urban' ? 499 : 1499),
-        warranty: cat === '4w' ? '1 Year / 10,000 KM Written Warranty' : (cat === 'urban' ? '90-Day Written Service Guarantee' : '6 Months / 5,000 KM Written Warranty'),
-        created_at: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) + ' IST'
-      };
-
-      st.bookings.unshift(newBooking);
-      saveState(st);
-      if (typeof ccmApiCall === 'function') ccmApiCall('booking.create', newBooking);
-      const links = buildDispatchLinks(newBooking);
-
-      const resBox = document.getElementById('qb-result');
-      if (resBox) {
-        resBox.style.display = 'block';
-        resBox.innerHTML = '<div class="notice good">' +
-          '<strong>✅ Booking Confirmed: ' + code + ' · Live Passcode: ' + passcode + '</strong><br>' +
-          '<span style="font-size:12.5px">' + zone.message + '</span>' +
-          '<div class="actions" style="margin-top:8px">' +
-          '<a class="btn green" href="' + links.waUrl + '" target="_blank" rel="noopener">📲 Open WhatsApp Dispatch</a>' +
-          '<a class="btn primary" href="' + links.smsUrl + '">💬 Send SMS</a>' +
-          '<a class="btn gold" href="' + links.mailUrl + '">✉️ Send Email</a>' +
-          '</div></div>';
-      }
-      if (typeof window.onCcmStateChange === 'function') window.onCcmStateChange();
-    });
-  }
-
-  // Live filter for Urban Service Explorer search input
-  const searchInput = document.getElementById('urban-service-search');
-  if (searchInput) {
-    searchInput.addEventListener('input', function() {
-      const q = this.value.trim().toLowerCase();
-      const cards = document.querySelectorAll('#urban-quick-grid .card');
-      cards.forEach(function(c) {
-        const txt = c.textContent.toLowerCase();
-        c.style.display = (!q || txt.indexOf(q) !== -1) ? '' : 'none';
-      });
-    });
-  }
-});
-
-
-/* === 1. SUPABASE REAL-TIME DATABASE SYNC BRIDGE (bike_bookings & dynamic tables) === */
-window.ccmSupabaseSync = async function(tableName, operation, record) {
-  const st = loadState();
-  const cfg = st.dynamicConfig || {};
-  const syncEvent = {
-    table: tableName || 'bike_bookings',
-    op: operation || 'UPSERT',
-    record: record || {},
-    syncedAt: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' IST',
-    latencyMs: Math.floor(12 + Math.random() * 18)
-  };
-  try {
-    sessionStorage.setItem('ccm_last_supabase_sync', JSON.stringify(syncEvent));
-    // If real Supabase project URL + key are configured by Owner, fire REST POST/PATCH
-    if (cfg.supabaseUrl && cfg.supabaseUrl.includes('supabase.co') && !cfg.supabaseUrl.includes('ccmotocrafts-hyd.supabase.co')) {
-      fetch(cfg.supabaseUrl.replace(/\/$/, '') + '/rest/v1/' + encodeURIComponent(tableName), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': cfg.supabaseAnonKey || '',
-          'Authorization': 'Bearer ' + (cfg.supabaseAnonKey || ''),
-          'Prefer': 'resolution=merge-duplicates'
-        },
-        body: JSON.stringify(record)
-      }).catch(() => {});
-    }
-  } catch (e) {}
-  // Also sync via local PHP fallback bridge
-  if (typeof ccmApiCall === 'function') {
-    ccmApiCall('supabase.' + tableName + '.' + operation.toLowerCase(), record);
-  }
-  return syncEvent;
-};
-
-/* === 2. PINCODE & AREA INTELLIGENT PARTNER GARAGE AUTO-ROUTER === */
-window.matchPartnerByPincode = function(pincode, vehicleType) {
-  const st = loadState();
-  const pin = String(pincode || '500034').trim();
-  const vType = String(vehicleType || '2w').toLowerCase();
-  const approved = (st.partners || []).filter(p => p.status === 'approved');
-  // 1. Exact pincode + vehicle_scope match
-  let match = approved.find(p => String(p.pincode) === pin && (p.vehicle_scope === vType || p.vehicle_scope === 'both' || p.vehicle_scope === 'all'));
-  // 2. Prefix pincode (first 5 digits) + vehicle_scope match
-  if (!match) {
-    match = approved.find(p => String(p.pincode).slice(0, 5) === pin.slice(0, 5) && (p.vehicle_scope === vType || p.vehicle_scope === 'both' || p.vehicle_scope === 'all'));
-  }
-  // 3. Vehicle scope match
-  if (!match) {
-    match = approved.find(p => p.vehicle_scope === vType || p.vehicle_scope === 'both');
-  }
-  if (!match && approved.length) match = approved[0];
-  return match || {
-    id: vType === '4w' ? 2 : 1,
-    garage_name: vType === '4w' ? 'CC Motocrafts 4W Hydraulic & AC Master Hub (Madhapur - 500081)' : 'CC Motocrafts Superbike & 2W Master Bay (Banjara Hills - 500034)',
-    phone: CCM_CONFIG.WHATSAPP_DISPLAY,
-    pincode: pin
-  };
-};
-
-/* === 3. DYNAMIC CONTACT & DOMAIN REFLECTOR ACROSS ALL PAGES === */
-window.applyDynamicContactConfig = function() {
-  const st = loadState();
-  const cfg = st.dynamicConfig || DEFAULT_STATE.dynamicConfig;
-  CCM_CONFIG.WHATSAPP_NO = String(cfg.whatsappNo || '918333007351').replace(/[^0-9]/g, '');
-  CCM_CONFIG.WHATSAPP_DISPLAY = cfg.whatsappDisplay || ('+' + CCM_CONFIG.WHATSAPP_NO);
-  CCM_CONFIG.EMAIL_INFO = cfg.emailInfo || 'info@ccmotocrafts.in';
-  CCM_CONFIG.EMAIL_AI = cfg.emailAi || 'aisupport.on@gmail.com';
-
-  // Update all tel: links and wa.me links dynamically
-  document.querySelectorAll('a[href^="tel:"]').forEach(a => {
-    a.href = 'tel:+' + CCM_CONFIG.WHATSAPP_NO;
-    if (a.textContent.includes('+91')) {
-      a.innerHTML = a.innerHTML.replace(/\+91\s*\d{10}/g, CCM_CONFIG.WHATSAPP_DISPLAY);
-    }
-  });
-  document.querySelectorAll('a[href*="wa.me/"]').forEach(a => {
-    a.href = a.href.replace(/wa\.me\/\d+/, 'wa.me/' + CCM_CONFIG.WHATSAPP_NO);
-    if (a.textContent.includes('+91')) {
-      a.innerHTML = a.innerHTML.replace(/\+91\s*\d{10}/g, CCM_CONFIG.WHATSAPP_DISPLAY);
-    }
-  });
-  document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
-    if (a.textContent.includes('@')) {
-      if (a.textContent.includes('aisupport')) {
-        a.href = 'mailto:' + CCM_CONFIG.EMAIL_AI;
-        a.textContent = CCM_CONFIG.EMAIL_AI;
-      } else {
-        a.href = 'mailto:' + CCM_CONFIG.EMAIL_INFO;
-        a.textContent = CCM_CONFIG.EMAIL_INFO;
-      }
-    }
-  });
-  document.querySelectorAll('[data-dynamic-trust-badge]').forEach(el => {
-    el.textContent = cfg.trustBadge;
-  });
-  document.querySelectorAll('[data-dynamic-domain]').forEach(el => {
-    el.textContent = cfg.domainUrl;
-  });
-};
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(window.applyDynamicContactConfig, 20);
-});
-
-
-/* === ENTERPRISE UNIFIED HERO DIVISION GATE (2W vs 4W) & 9-POINT NAVIGATION ENGINE === */
-window.ccmTrackAdsConversion = function(eventName, meta) {
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const gclid = urlParams.get('gclid') || sessionStorage.getItem('ccm_gclid') || 'organic_direct';
-    if (urlParams.get('gclid')) sessionStorage.setItem('ccm_gclid', urlParams.get('gclid'));
-    const evt = {
-      event: eventName || 'lead_conversion',
-      gclid: gclid,
-      meta: meta || {},
-      timestamp: new Date().toISOString()
-    };
-    const logs = JSON.parse(sessionStorage.getItem('ccm_ads_conversions') || '[]');
-    logs.unshift(evt);
-    sessionStorage.setItem('ccm_ads_conversions', JSON.stringify(logs.slice(0, 50)));
-  } catch (e) {}
-};
-
-window.selectDivisionGate = function(division) {
-  const div = (division === '4w') ? '4w' : '2w';
-  try {
-    sessionStorage.setItem('ccm_division_unlocked', div);
-  } catch (e) {}
-
-  // Unlock main catalog container on index.html / customer.html
-  const lockedBanner = document.getElementById('division-gate-locked-banner');
-  const unlockedCatalog = document.getElementById('division-unlocked-catalog');
-  const nav9Bar = document.getElementById('dedicated-9point-nav');
-  if (lockedBanner) lockedBanner.style.display = 'none';
-  if (unlockedCatalog) {
-    unlockedCatalog.style.display = 'block';
-    unlockedCatalog.style.opacity = '1';
-    unlockedCatalog.style.pointerEvents = 'auto';
-    unlockedCatalog.style.filter = 'none';
-  }
-  if (nav9Bar) nav9Bar.style.display = 'block';
-
-  // Update Division Context Banner & Express Form fields
-  const ctxBanner = document.getElementById('active-division-context-bar');
-  if (ctxBanner) {
-    ctxBanner.innerHTML = div === '2w'
-      ? `<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><span class="pill green"><span class="live-dot"></span> ACTIVE DIVISION: 🏍️ TWO-WHEELER (100cc COMMUTERS TO 2500cc SUPERBIKES)</span><span class="pill gold">🚐 Context: Mobile Diagnostic Unit-01 & Hydraulic Ramp Van Pickup</span><button type="button" class="btn" style="padding:5px 10px;min-height:30px;font-size:11.5px" onclick="window.selectDivisionGate('4w')">Switch to 4W Division →</button></div>`
-      : `<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><span class="pill"><span class="live-dot"></span> ACTIVE DIVISION: 🚘 FOUR-WHEELER (800cc CARS, LUXURY SUVS TO 6500cc & HEAVY FLEET)</span><span class="pill gold">🚛 Context: Zero-Angle Hydraulic Flatbed Lorry & Master Car Lab</span><button type="button" class="btn" style="padding:5px 10px;min-height:30px;font-size:11.5px" onclick="window.selectDivisionGate('2w')">Switch to 2W Division →</button></div>`;
-  }
-
-  // Highlight active division selector card
-  const c2w = document.getElementById('hero-div-card-2w');
-  const c4w = document.getElementById('hero-div-card-4w');
-  if (c2w) c2w.style.borderColor = div === '2w' ? 'var(--green)' : 'var(--line)';
-  if (c4w) c4w.style.borderColor = div === '4w' ? 'var(--cyan)' : 'var(--line)';
-
-  // Update Express Booking Form on index.html if present
-  const expVtype = document.getElementById('idx-exp-vtype');
-  const expModel = document.getElementById('idx-exp-model');
-  if (expVtype) expVtype.value = div;
-  if (expModel) {
-    expModel.value = div === '2w' ? 'KTM Duke 390 / Royal Enfield / Activa (2W)' : 'Hyundai Creta / Toyota Fortuner / Swift (4W)';
-  }
-
-  // Update In-Page Pricing & AI Guide on index.html
-  if (typeof window.renderDivisionPricingAndAi === 'function') {
-    window.renderDivisionPricingAndAi(div);
-  }
-
-  if (typeof window.switchGlobalVehicleMode === 'function') {
-    window.switchGlobalVehicleMode(div);
-  }
-  window.ccmTrackAdsConversion('division_selected', { division: div });
 };
