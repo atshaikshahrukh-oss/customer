@@ -1,8 +1,9 @@
 /* CC Motocrafts Master Platform v1.0 — Zero-Latency Production Core */
 const CCM_CONFIG = {
-  MASTER_KEY_ENC: 'MDAwNzg2MDAw', ADMIN_KEY_ENC: 'Q0MxMDA1', PARTNER_KEY_ENC: 'Q0MxMDEw',
-  WHATSAPP_NO: '918333007351',
-  WHATSAPP_DISPLAY: '+91 8333007351',
+  SUPABASE_URL: 'https://xrrlbqxbgxmetrwgiwvk.supabase.co',
+  WORKER_API: 'https://api.ccmotocrafts.in',
+  WHATSAPP_NO: '918333084261',
+  WHATSAPP_DISPLAY: '+91 8333084261',
   EMAIL_INFO: 'info@ccmotocrafts.in',
   EMAIL_AI: 'aisupport.on@gmail.com',
   VIP_PINCODES: ['500033', '500034', '500081', '500032', '500084', '500016', '500082'],
@@ -17,8 +18,8 @@ const DEFAULT_STATE = {
   garageTerminalStatus: 'active',
   customerPortalStatus: 'active',
   dynamicConfig: {
-    whatsappNo: '918333007351',
-    whatsappDisplay: '+91 8333007351',
+    whatsappNo: '918333084261',
+    whatsappDisplay: '+91 8333084261',
     emailAi: 'aisupport.on@gmail.com',
     emailInfo: 'info@ccmotocrafts.in',
     brandTitle: 'CC MOTOCRAFTS AI ENGINE LABS SERVICE',
@@ -316,17 +317,9 @@ const DEFAULT_STATE = {
 
 
 /* === ZERO-EXPOSURE SECURITY GATE, 10-MIN AUTO-LOCK & DEVICE SESSION REVOCATION === */
-function verifyOwnerKey(raw) {
-  try { return btoa(String(raw || '').trim()) === CCM_CONFIG.MASTER_KEY_ENC; } catch(e) { return false; }
-}
-function verifyAdminKey(raw) {
-  const v = String(raw || '').trim().toUpperCase().replace(/\s+/g, '');
-  try { return btoa(v) === CCM_CONFIG.ADMIN_KEY_ENC || verifyOwnerKey(raw); } catch(e) { return false; }
-}
-function verifyPartnerKey(raw) {
-  const v = String(raw || '').trim().toUpperCase().replace(/\s+/g, '');
-  try { return btoa(v) === CCM_CONFIG.PARTNER_KEY_ENC || v === 'CC105' || verifyOwnerKey(raw); } catch(e) { return false; }
-}
+async function verifyOwnerKey(raw) { try { const r = await fetch(CCM_CONFIG.WORKER_API + '/api/owner/verify-pin', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ pin: String(raw||'').trim() }) }); const d = await r.json(); return !!d.ok; } catch(e) { return false; } }
+async function verifyAdminKey(raw, id) { try { const r = await fetch(CCM_CONFIG.WORKER_API + '/api/staff/login', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ identifier: id || 'manager', passcode: String(raw||'').trim(), deviceId: localStorage.getItem('ccm_device_id') || 'web' }) }); const d = await r.json(); return !!d.ok; } catch(e) { return false; } }
+async function verifyPartnerKey(raw, id) { try { const r = await fetch(CCM_CONFIG.WORKER_API + '/api/staff/login', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ identifier: id || 'partner', passcode: String(raw||'').trim(), deviceId: localStorage.getItem('ccm_device_id') || 'web' }) }); const d = await r.json(); return !!d.ok; } catch(e) { return false; } }
 
 const SESSION_TIMEOUT_MS = 10 * 60 * 1000;
 function touchSecureSession(role) {
@@ -478,6 +471,7 @@ window.switchGlobalVehicleMode = function(mode, unlockCatalog = true) {
   if (typeof window.renderPortfolio === 'function') window.renderPortfolio(m === '4w' ? '4w' : '2w');
   if (typeof window.setDiagDomain === 'function') window.setDiagDomain(m === '4w' ? '4w' : '2w');
   if (typeof window.setPartnerDomainMode === 'function') window.setPartnerDomainMode(m === '4w' ? '4w' : '2w');
+  try { const bTitle = document.querySelector('.brand-name, .brand-title, #dynamic-brand-title'); if (bTitle) bTitle.textContent = (m === '4w') ? 'CC Cars Motocrafts AI Engine Labs Service' : 'CC Motocrafts AI Engine Labs Service'; } catch(e){}
   renderTopShell();
 };
 
@@ -767,15 +761,19 @@ function renderTopShell() {
   }
 }
 
-window.addEventListener('online', () => { renderTopShell(); if (typeof window.onCcmStateChange === 'function') window.onCcmStateChange(); });
-window.addEventListener('offline', () => { renderTopShell(); if (typeof window.onCcmStateChange === 'function') window.onCcmStateChange(); });
+window.addEventListener('online', () => { try { const bTitle = document.querySelector('.brand-name, .brand-title, #dynamic-brand-title'); if (bTitle) bTitle.textContent = (m === '4w') ? 'CC Cars Motocrafts AI Engine Labs Service' : 'CC Motocrafts AI Engine Labs Service'; } catch(e){}
+  renderTopShell(); if (typeof window.onCcmStateChange === 'function') window.onCcmStateChange(); });
+window.addEventListener('offline', () => { try { const bTitle = document.querySelector('.brand-name, .brand-title, #dynamic-brand-title'); if (bTitle) bTitle.textContent = (m === '4w') ? 'CC Cars Motocrafts AI Engine Labs Service' : 'CC Motocrafts AI Engine Labs Service'; } catch(e){}
+  renderTopShell(); if (typeof window.onCcmStateChange === 'function') window.onCcmStateChange(); });
 if (syncChannel) {
   syncChannel.onmessage = () => {
-    renderTopShell();
+    try { const bTitle = document.querySelector('.brand-name, .brand-title, #dynamic-brand-title'); if (bTitle) bTitle.textContent = (m === '4w') ? 'CC Cars Motocrafts AI Engine Labs Service' : 'CC Motocrafts AI Engine Labs Service'; } catch(e){}
+  renderTopShell();
     if (typeof window.onCcmStateChange === 'function') window.onCcmStateChange();
   };
 }
 window.addEventListener('storage', () => {
+  try { const bTitle = document.querySelector('.brand-name, .brand-title, #dynamic-brand-title'); if (bTitle) bTitle.textContent = (m === '4w') ? 'CC Cars Motocrafts AI Engine Labs Service' : 'CC Motocrafts AI Engine Labs Service'; } catch(e){}
   renderTopShell();
   if (typeof window.onCcmStateChange === 'function') window.onCcmStateChange();
 });

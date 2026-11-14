@@ -1,146 +1,239 @@
--- =====================================================================================
--- CC MOTOCRAFTS AI ENGINE LABS SERVICE — PRODUCTION SUPABASE SCHEMA (WITH STRICT RLS)
--- Founder & Master Owner: Mr. Shaik Mujahid | Hotline: +91 8333007351
--- Dual Gmail Telemetry: aisupport.on@gmail.com & info@ccmotocrafts.in
--- =====================================================================================
+-- ============================================================================
+-- CC MOTOCRAFTS & CC CARS MOTOCRAFTS AI ENGINE LABS SERVICE
+-- SUPABASE PRODUCTION SCHEMA (Project: xrrlbqxbgxmetrwgiwvk)
+-- Includes: Server-Side Owner Vault, 1-Device Lock, Masked Telephony Logs,
+--           4W CC Tiers, Dual-Gmail Recovery & Realtime Kill-Switches
+-- ============================================================================
 
-create extension if not exists "pgcrypto";
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
--- 1. GLOBAL SYSTEM SETTINGS TABLE (Dynamic Identity, Contact Switcher, Branding & Footer)
-create table if not exists public.system_settings (
-  id int primary key default 1,
-  primary_phone text not null default '+91 8333007351',
-  whatsapp_digits text not null default '918333007351',
-  email_ai_support text not null default 'aisupport.on@gmail.com',
-  email_official_info text not null default 'info@ccmotocrafts.in',
-  brand_title text not null default 'CC MOTOCRAFTS AI ENGINE LABS SERVICE',
-  footer_tagline text not null default 'CC Motocrafts AI Engine Labs Service · Hyderabad 2W (100cc–2500cc) & 4W Overhaul Marketplace · Free 10km VIP Flatbed/Van Pickup',
-  trust_badge text not null default 'No spare part replaced without prior WhatsApp Video & Quotation approval',
-  master_kill_switch boolean not null default false,
-  sec_buffer_active boolean not null default false,
-  updated_at timestamptz not null default now()
+-- 1. SERVER-SIDE OWNER VAULT (ZERO FRONTEND PASSWORDS)
+CREATE TABLE IF NOT EXISTS public.owner_vault (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  owner_name TEXT NOT NULL DEFAULT 'Shaik Mujahid',
+  primary_business_email TEXT NOT NULL DEFAULT 'info@ccmotocrafts.in',
+  telemetry_gmail TEXT NOT NULL DEFAULT 'aisupport.on@gmail.com',
+  backup_personal_gmail TEXT,
+  pin_hash TEXT NOT NULL,
+  otp_code_hash TEXT,
+  otp_expires_at TIMESTAMPTZ,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-insert into public.system_settings (id) values (1) on conflict (id) do nothing;
+-- Secure RPC: Verify Master Owner PIN server-side (never exposed to frontend)
+CREATE OR REPLACE FUNCTION public.verify_owner_pin(input_pin TEXT)
+RETURNS JSONB
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+  v_row public.owner_vault%ROWTYPE;
+BEGIN
+  SELECT * INTO v_row FROM public.owner_vault LIMIT 1;
+  IF NOT FOUND THEN
+    RETURN jsonb_build_object('ok', false, 'error', 'Owner vault not initialized');
+  END IF;
+  IF v_row.pin_hash = crypt(input_pin, v_row.pin_hash) THEN
+    RETURN jsonb_build_object(
+      'ok', true,
+      'owner_name', v_row.owner_name,
+      'primary_email', v_row.primary_business_email,
+      'telemetry_gmail', v_row.telemetry_gmail,
+      'backup_gmail', v_row.backup_personal_gmail
+    );
+  END IF;
+  RETURN jsonb_build_object('ok', false, 'error', 'Invalid Master PIN');
+END;
+$$;
 
--- 2. DYNAMIC SERVICES & PRICING CATALOG (2W 100cc-2500cc, 4W & Future Verticals CRUD)
-create table if not exists public.services_catalog (
-  id bigserial primary key,
-  service_code text unique not null,
-  domain text not null check (domain in ('2w', '4w', 'urban')),
-  tier_name text not null,
-  title text not null,
-  description text not null,
-  base_price numeric(10,2) not null default 999.00,
-  eta_sla text not null default '35–45 Mins VIP Pickup (Free 10km Radius)',
-  warranty_label text not null default '6 Months / 5,000 KM Written Warranty',
-  is_available boolean not null default true,
-  updated_by_role text not null default 'MASTER_OWNER',
-  updated_at timestamptz not null default now()
+-- Secure RPC: Change Master Owner Password/PIN
+CREATE OR REPLACE FUNCTION public.update_owner_pin(current_pin TEXT, new_pin TEXT)
+RETURNS JSONB
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+  v_row public.owner_vault%ROWTYPE;
+BEGIN
+  SELECT * INTO v_row FROM public.owner_vault LIMIT 1;
+  IF NOT FOUND OR v_row.pin_hash <> crypt(current_pin, v_row.pin_hash) THEN
+    RETURN jsonb_build_object('ok', false, 'error', 'Current PIN verification failed');
+  END IF;
+  UPDATE public.owner_vault
+    SET pin_hash = crypt(new_pin, gen_salt('bf', 10)),
+        updated_at = NOW()
+    WHERE id = v_row.id;
+  RETURN jsonb_build_object('ok', true, 'message', 'Master Owner PIN updated securely');
+END;
+$$;
+
+-- 2. STAFF & PARTNER ACCESS (1 USER = 1 ACCOUNT = 1 DEVICE LOCK)
+CREATE TABLE IF NOT EXISTS public.staff_access (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  full_name TEXT NOT NULL,
+  role TEXT NOT NULL CHECK (role IN ('partner_2w', 'partner_4w', 'service_manager', 'marketing_manager', 'advisor')),
+  email TEXT NOT NULL UNIQUE,
+  phone TEXT NOT NULL UNIQUE,
+  passcode_hash TEXT NOT NULL,
+  device_id TEXT,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  is_profile_locked BOOLEAN NOT NULL DEFAULT FALSE,
+  workshop_name TEXT,
+  workshop_address TEXT,
+  gps_coords TEXT,
+  id_proof_url TEXT,
+  gst_number TEXT,
+  trade_license TEXT,
+  last_ip TEXT,
+  last_seen TIMESTAMPTZ DEFAULT NOW(),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 3. MULTI-ROLE ACTIVE DEVICE SESSIONS & REMOTE KILL-SWITCH TABLE
-create table if not exists public.active_sessions (
-  session_id uuid primary key default gen_random_uuid(),
-  role_name text not null check (role_name in ('SERVICE_MANAGER', 'MARKETING_MANAGER', 'GARAGE_PARTNER', 'MASTER_OWNER')),
-  operator_name text not null,
-  portal_code text not null,
-  device_fingerprint text not null,
-  ip_address text not null,
-  location_area text not null default 'Hyderabad, TS',
-  auth_token_status text not null default 'ACTIVE' check (auth_token_status in ('ACTIVE', 'REVOKED')),
-  revoked_reason text,
-  last_seen_at timestamptz not null default now(),
-  created_at timestamptz not null default now()
+-- Secure RPC: Verify Staff/Partner Login & Enforce 1-Device Lock + Kill-Switch
+CREATE OR REPLACE FUNCTION public.verify_staff_login(
+  p_identifier TEXT,
+  p_passcode TEXT,
+  p_device_id TEXT,
+  p_expected_role_group TEXT DEFAULT NULL
+)
+RETURNS JSONB
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+  v_staff public.staff_access%ROWTYPE;
+BEGIN
+  SELECT * INTO v_staff
+  FROM public.staff_access
+  WHERE email = p_identifier OR phone = p_identifier
+  LIMIT 1;
+
+  IF NOT FOUND THEN
+    RETURN jsonb_build_object('ok', false, 'code', 'NOT_FOUND', 'error', 'Account not registered');
+  END IF;
+
+  IF v_staff.is_active = FALSE THEN
+    RETURN jsonb_build_object('ok', false, 'code', 'SUSPENDED', 'error', 'Your device has an issue. Access suspended — contact CC Motocrafts Admin.');
+  END IF;
+
+  IF v_staff.passcode_hash <> crypt(p_passcode, v_staff.passcode_hash) THEN
+    RETURN jsonb_build_object('ok', false, 'code', 'BAD_CREDENTIALS', 'error', 'Invalid credentials');
+  END IF;
+
+  -- Enforce 1 User = 1 Account = 1 Device Lock
+  IF v_staff.device_id IS NULL OR v_staff.device_id = '' THEN
+    UPDATE public.staff_access SET device_id = p_device_id, last_seen = NOW() WHERE id = v_staff.id;
+  ELSIF v_staff.device_id <> p_device_id THEN
+    RETURN jsonb_build_object('ok', false, 'code', 'DEVICE_LOCKED', 'error', 'Account locked to another registered device. Ask Master Owner to click Reset Device.');
+  ELSE
+    UPDATE public.staff_access SET last_seen = NOW() WHERE id = v_staff.id;
+  END IF;
+
+  RETURN jsonb_build_object(
+    'ok', true,
+    'id', v_staff.id,
+    'full_name', v_staff.full_name,
+    'role', v_staff.role,
+    'is_profile_locked', v_staff.is_profile_locked,
+    'workshop_name', v_staff.workshop_name
+  );
+END;
+$$;
+
+-- 3. GLOBAL SYSTEM SETTINGS & MULTI-AI API CONNECTORS
+CREATE TABLE IF NOT EXISTS public.system_settings (
+  id INT PRIMARY KEY DEFAULT 1,
+  hotline_display TEXT NOT NULL DEFAULT '+91 8333084261',
+  whatsapp_digits TEXT NOT NULL DEFAULT '918333084261',
+  primary_email TEXT NOT NULL DEFAULT 'info@ccmotocrafts.in',
+  telemetry_gmail TEXT NOT NULL DEFAULT 'aisupport.on@gmail.com',
+  backup_gmail TEXT DEFAULT '',
+  brand_2w_name TEXT NOT NULL DEFAULT 'CC Motocrafts AI Engine Labs Service',
+  brand_4w_name TEXT NOT NULL DEFAULT 'CC Cars Motocrafts AI Engine Labs Service',
+  active_ai_provider TEXT NOT NULL DEFAULT 'gemini',
+  gemini_api_key TEXT DEFAULT '',
+  openai_api_key TEXT DEFAULT '',
+  claude_api_key TEXT DEFAULT '',
+  promo_banner TEXT NOT NULL DEFAULT 'CC MOTOCRAFTS | HYDERABAD 2W (100cc-2500cc) & 4W (800cc-6500cc) PETROL/DIESEL/CNG LABS · NO EV · FREE 10KM PICKUP IN VIP PINCODES',
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 4. PARTNER GARAGES & FREE 10KM FLATBED/VAN DISPATCH AVAILABILITY
-create table if not exists public.partner_garages (
-  id bigserial primary key,
-  partner_code text unique not null,
-  garage_name text not null,
-  owner_name text not null,
-  phone text not null,
-  email text not null,
-  pincode text not null,
-  address text not null,
-  vehicle_scope text not null default 'both' check (vehicle_scope in ('2w', '4w', 'both')),
-  availability_status text not null default 'ONLINE' check (availability_status in ('ONLINE', 'OFFLINE')),
-  free_10km_pickup_active boolean not null default true,
-  gst_number text,
-  trade_license_no text,
-  aadhaar_kyc text,
-  pan_card_no text,
-  approval_status text not null default 'approved' check (approval_status in ('approved', 'pending', 'temp_blocked', 'perm_blocked')),
-  locked_by_owner boolean not null default false,
-  ip_camera_stream_url text default 'rtsp://bay01.ccmotocrafts.in:554/live/ch01',
-  updated_at timestamptz not null default now()
+-- 4. DYNAMIC SERVICES & 4W CC DISPLACEMENT CATALOG
+CREATE TABLE IF NOT EXISTS public.services_catalog (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  division TEXT NOT NULL CHECK (division IN ('2w', '4w', 'home', 'ac')),
+  cc_tier TEXT NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  price_inr NUMERIC(10,2) NOT NULL,
+  is_live BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 5. CUSTOMER BOOKINGS, 6-STAGE LIVE TELEMETRY & SERVICE HISTORY LEDGER (bike_bookings)
-create table if not exists public.bike_bookings (
-  id bigserial primary key,
-  booking_code text unique not null,
-  customer_name text not null,
-  phone text not null,
-  email text default 'info@ccmotocrafts.in',
-  vehicle_type text not null check (vehicle_type in ('2w', '4w', 'urban')),
-  brand text not null,
-  model text not null,
-  registration_no text,
-  odometer_km int not null default 12500,
-  service_type text not null,
-  problem_checklist jsonb not null default '[]'::jsonb,
-  complaint text,
-  pincode text not null,
-  address text not null,
-  free_10km_pickup boolean not null default true,
-  dispatch_eta text not null default '35 to 45 minutes (VIP 10km Free Pickup)',
-  assigned_garage_id bigint references public.partner_garages(id),
-  garage_name text not null,
-  telemetry_stage text not null default 'Booked' check (telemetry_stage in ('Booked', 'Van Dispatched', 'Reached Workshop', 'Diagnostic Video Sent', 'Repairing', 'Delivered')),
-  tracking_passcode text not null,
-  labour_charges numeric(10,2) not null default 650.00,
-  parts_charges numeric(10,2) not null default 1200.00,
-  estimate numeric(10,2) not null default 1850.00,
-  next_service_due_km int not null default 15500,
-  next_service_due_date text not null default '90 Days from Delivery',
-  warranty text not null default '6 Months / 5,000 KM Written Warranty',
-  camera_paused boolean not null default false,
-  locked_by_owner boolean not null default false,
-  created_at timestamptz not null default now()
+-- 5. BOOKINGS & GOOGLE MAPS UTM TRACKING
+CREATE TABLE IF NOT EXISTS public.bookings (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  booking_code TEXT NOT NULL UNIQUE,
+  customer_name TEXT NOT NULL,
+  customer_phone TEXT NOT NULL,
+  division TEXT NOT NULL CHECK (division IN ('2w', '4w')),
+  brand TEXT NOT NULL,
+  fuel_type TEXT NOT NULL CHECK (fuel_type IN ('Petrol', 'Diesel', 'CNG-LPG Gas')),
+  cc_tier TEXT NOT NULL,
+  vehicle_model TEXT NOT NULL,
+  odometer_km INTEGER,
+  symptoms TEXT,
+  pincode TEXT,
+  gps_lat DOUBLE PRECISION,
+  gps_lng DOUBLE PRECISION,
+  utm_source TEXT DEFAULT 'direct',
+  promo_code TEXT DEFAULT '',
+  status TEXT NOT NULL DEFAULT 'BOOKED' CHECK (status IN ('BOOKED', 'VAN_DISPATCHED', 'REACHED_WORKSHOP', 'DIAGNOSTIC_VIDEO_SENT', 'REPAIRING', 'DELIVERED')),
+  quotation_approved BOOLEAN NOT NULL DEFAULT FALSE,
+  media_proof_uploaded BOOLEAN NOT NULL DEFAULT FALSE,
+  assigned_partner_id UUID REFERENCES public.staff_access(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 6. DUAL-GMAIL & DATABASE AUDIT LOGS TABLE
-create table if not exists public.audit_logs (
-  id bigserial primary key,
-  event_time timestamptz not null default now(),
-  actor_role text not null,
-  event_type text not null,
-  booking_code text,
-  dual_gmail_routed text not null default 'aisupport.on@gmail.com, info@ccmotocrafts.in',
-  detail text not null
+-- 6. JOB TRACKING, EMERGENCY VIDEO/TRACKING KILL-SWITCH & MASKED TELEPHONY LOGS
+CREATE TABLE IF NOT EXISTS public.job_tracking (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  booking_id UUID NOT NULL REFERENCES public.bookings(id) ON DELETE CASCADE,
+  live_video_enabled BOOLEAN NOT NULL DEFAULT TRUE,
+  gps_tracking_enabled BOOLEAN NOT NULL DEFAULT TRUE,
+  call_timestamp TIMESTAMPTZ,
+  call_duration_sec INTEGER DEFAULT 0,
+  call_recording_url TEXT,
+  updated_by TEXT,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- =====================================================================================
--- STRICT ROW-LEVEL SECURITY (RLS) POLICIES
--- =====================================================================================
-alter table public.system_settings enable row level security;
-alter table public.services_catalog enable row level security;
-alter table public.active_sessions enable row level security;
-alter table public.partner_garages enable row level security;
-alter table public.bike_bookings enable row level security;
-alter table public.audit_logs enable row level security;
+-- 7. AUDIT LOGS
+CREATE TABLE IF NOT EXISTS public.audit_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  actor_role TEXT NOT NULL,
+  action TEXT NOT NULL,
+  target_id TEXT,
+  details JSONB,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
 
-create policy "Public read system_settings" on public.system_settings for select using (true);
-create policy "Owner update system_settings" on public.system_settings for all using (true) with check (true);
+-- ENABLE ROW LEVEL SECURITY
+ALTER TABLE public.owner_vault ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.staff_access ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.system_settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.services_catalog ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.bookings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.job_tracking ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.audit_logs ENABLE ROW LEVEL SECURITY;
 
-create policy "Public read services_catalog" on public.services_catalog for select using (true);
-create policy "Authorized staff CRUD services_catalog" on public.services_catalog for all using (true) with check (true);
+-- Public read-only access to live catalog & non-sensitive settings
+CREATE POLICY "Public read live services" ON public.services_catalog FOR SELECT USING (is_live = TRUE);
+CREATE POLICY "Public insert bookings" ON public.bookings FOR INSERT WITH CHECK (TRUE);
 
-create policy "Master Owner manage active_sessions" on public.active_sessions for all using (true) with check (true);
-create policy "Public read approved partner_garages" on public.partner_garages for select using (true);
-create policy "Authorized manage partner_garages" on public.partner_garages for all using (true) with check (true);
-
-create policy "Customer & Staff sync bike_bookings" on public.bike_bookings for all using (true) with check (true);
-create policy "Append & read audit_logs" on public.audit_logs for all using (true) with check (true);
+-- Enable Supabase Realtime for 2-second Staff Kill-Switch & Incident Hold
+ALTER PUBLICATION supabase_realtime ADD TABLE public.staff_access;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.job_tracking;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.bookings;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.services_catalog;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.system_settings;

@@ -62,7 +62,7 @@
   <section class="hero" style="border:2px solid var(--cyan);background:linear-gradient(135deg,rgba(0,229,255,0.08) 0%,rgba(5,13,22,0.98) 100%)">
     <div class="eyebrow"><span class="live-dot"></span> CC MOTOCRAFTS AI ENGINE LABS SERVICE · URBAN COMPANY / BRO4U STANDARD MARKETPLACE</div>
     <h1>Select Your Vehicle Division (2W or 4W) to Unlock Your Dedicated Service & Booking Suite</h1>
-    <p>100% In-House Precision Engine Overhaul & Diagnostic Labs in Hyderabad — Free 10km Radius Hydraulic Van / Flatbed Lorry Pickup & Drop · Hotline: <strong data-dyn-phone>+91 8333007351</strong></p>
+    <p>100% In-House Precision Engine Overhaul & Diagnostic Labs in Hyderabad — Free 10km Radius Hydraulic Van / Flatbed Lorry Pickup & Drop · Hotline: <strong data-dyn-phone>+91 8333084261</strong></p>
 
     <div class="notice good" style="margin:10px 0;border:2px solid var(--gold);background:rgba(245,183,0,0.12);color:#fff;font-weight:800" data-dynamic-trust-badge>
       🛡️ 100% Transparency Guarantee: "No spare part replaced without prior WhatsApp Video & Quotation approval."
@@ -109,6 +109,146 @@
   </section>
 
   <div id="division-gated-catalog">
+
+  <!-- VISUAL BRAND LOGO BOOKING + FUEL FILTER (NO EV) + GPS + GMB UTM -->
+  <section id="visual-brand-booking" class="card full" style="border: 2px solid #00f0ff; background: linear-gradient(180deg, rgba(0,240,255,0.06) 0%, rgba(10,16,30,0.98) 100%); margin-bottom: 24px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+      <div>
+        <div class="eyebrow" style="color:#00f0ff;font-weight:800;" id="dynamic-brand-subtitle">CC MOTOCRAFTS AI ENGINE LABS SERVICE · PETROL ONLY (100cc–2500cc) · STRICTLY NO EV</div>
+        <h2 style="margin:4px 0;color:#fff;" id="dynamic-brand-title">CC Motocrafts AI Engine Labs Service — Instant Brand & GPS Booking</h2>
+      </div>
+      <span class="pill" style="background:rgba(239,68,68,0.18);color:#fca5a5;border:1px solid #ef4444;">🚫 STRICTLY NO EV · INTERNAL COMBUSTION SPECIALISTS</span>
+    </div>
+
+    <!-- FUEL FILTER -->
+    <div style="margin-bottom:14px;">
+      <label style="display:block;font-size:12.5px;color:#94a3b8;margin-bottom:6px;font-weight:700;">1. Select Fuel Type (Strictly No Electric Vehicles):</label>
+      <div id="fuel-filter-group" style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button type="button" class="btn primary fuel-btn" data-fuel="Petrol" onclick="selectFuelType('Petrol', this)">⛽ Petrol (2W & 4W)</button>
+        <button type="button" class="btn fuel-btn 4w-fuel-only" data-fuel="Diesel" onclick="selectFuelType('Diesel', this)">🛢️ Diesel (4W Only)</button>
+        <button type="button" class="btn fuel-btn 4w-fuel-only" data-fuel="CNG-LPG Gas" onclick="selectFuelType('CNG-LPG Gas', this)">🔥 CNG / LPG Gas (4W Only)</button>
+      </div>
+    </div>
+
+    <!-- VISUAL BRAND LOGO GRID -->
+    <div style="margin-bottom:16px;">
+      <label style="display:block;font-size:12.5px;color:#94a3b8;margin-bottom:6px;font-weight:700;">2. Tap Your Vehicle Brand Logo:</label>
+      <div id="visual-brand-grid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(115px, 1fr));gap:10px;"></div>
+    </div>
+
+    <!-- CC / REPAIR + GPS + EXPRESS SUBMIT -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:12px;margin-bottom:14px;">
+      <div>
+        <label style="display:block;font-size:12px;color:#94a3b8;margin-bottom:4px;">Selected Brand & Model</label>
+        <input type="text" id="vb-model" placeholder="e.g. KTM Duke 390 / Hyundai Creta" style="width:100%;padding:10px;border-radius:8px;border:1px solid #334155;background:#070d17;color:#fff;">
+      </div>
+      <div>
+        <label style="display:block;font-size:12px;color:#94a3b8;margin-bottom:4px;">Engine CC / Repair Tier</label>
+        <select id="vb-cc-tier" style="width:100%;padding:10px;border-radius:8px;border:1px solid #334155;background:#070d17;color:#fff;">
+          <option value="2W: 100cc-250cc Commuter/Scooter">2W: 100cc–250cc Commuter / Scooter</option>
+          <option value="2W: 250cc-650cc Performance">2W: 250cc–650cc Performance</option>
+          <option value="2W: 650cc-2500cc Superbike">2W: 650cc–2500cc Superbike</option>
+          <option value="4W Tier 1: 800cc-1200cc Hatchback">4W Tier 1: 800cc–1200cc Compact / Hatchback</option>
+          <option value="4W Tier 2: 1200cc-2000cc Sedan/SUV">4W Tier 2: 1200cc–2000cc Sedan / Compact SUV</option>
+          <option value="4W Tier 3: 2000cc-4000cc Luxury SUV">4W Tier 3: 2000cc–4000cc Full-Size SUV / Luxury</option>
+          <option value="4W Tier 4: 4000cc-6500cc+ V6/V8/V12">4W Tier 4: 4000cc–6500cc+ V6/V8/V12 Supercar</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-size:12px;color:#94a3b8;margin-bottom:4px;">Customer Name & Mobile</label>
+        <input type="text" id="vb-customer" placeholder="Name & +91 Mobile" style="width:100%;padding:10px;border-radius:8px;border:1px solid #334155;background:#070d17;color:#fff;">
+      </div>
+      <div>
+        <label style="display:block;font-size:12px;color:#94a3b8;margin-bottom:4px;">GPS Pickup Location</label>
+        <div style="display:flex;gap:6px;">
+          <input type="text" id="vb-gps" placeholder="Tap GPS button ->" readonly style="flex:1;padding:10px;border-radius:8px;border:1px solid #334155;background:#070d17;color:#00f0ff;font-size:12px;">
+          <button type="button" class="btn primary" onclick="captureCustomerGPS()" style="white-space:nowrap;padding:8px 12px;">📍 Use Current GPS Location</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+      <button type="button" class="btn gold" onclick="submitVisualBrandBooking()" style="font-weight:800;padding:12px 20px;">⚡ Confirm & Alert Nitish Kumar (+91 8333084261)</button>
+      <span id="vb-utm-badge" style="font-size:12px;color:#94a3b8;">Source: Direct</span>
+    </div>
+  </section>
+
+  <!-- EMERGENCY INCIDENT HOLD OVERLAY FOR LIVE VIDEO / TRACKING -->
+  <div id="customer-incident-hold-banner" style="display:none;background:#1f0a0d;border:2px solid #ef4444;border-radius:12px;padding:18px;margin-bottom:18px;text-align:center;">
+    <div style="font-size:1.5rem;margin-bottom:6px;">⚠️</div>
+    <strong style="color:#fca5a5;font-size:1rem;">Your device has a temporary connection issue. Please hold while we reconnect.</strong>
+  </div>
+
+
+  <!-- 4-WHEELER (4W) OPERATIONAL ENGINE DISPLACEMENT TIERS -->
+  <section id="4w-displacement-tiers" class="card full" style="border: 2px solid #f59e0b; background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(15, 23, 42, 0.95) 100%); margin-bottom: 24px;">
+    <div class="eyebrow" style="color: #f59e0b; font-weight: 800;">4-WHEELER (4W) ENGINE DISPLACEMENT ARCHITECTURE · 4 OPERATIONAL TIERS</div>
+    <h2 style="margin-top: 4px; margin-bottom: 12px; color: #fff;">4W Operational Service & Flatbed Recovery Matrix (800cc to 6500cc+)</h2>
+    <p class="muted" style="margin-bottom: 20px; font-size: 14px;">Select your vehicle displacement class below to view dedicated periodic maintenance packages, Hunter 3D laser alignment, automatic transmission overhaul, and hydraulic flatbed dispatch protocols.</p>
+
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+      <!-- TIER 1 -->
+      <div class="card" style="border: 1px solid rgba(56, 189, 248, 0.3); background: #0b1120;">
+        <span class="pill" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; font-weight: 700;">TIER 1 · 800cc – 1200cc</span>
+        <h3 style="margin: 10px 0 6px 0; color: #f8fafc; font-size: 1.15rem;">Compact & Hatchbacks</h3>
+        <p style="font-size: 12.5px; color: #94a3b8; margin-bottom: 12px;">Swift · Grand i10 · Baleno · Tiago · WagonR · Altroz · Ignis</p>
+        <div style="font-size: 1.35rem; font-weight: 800; color: #10b981; margin-bottom: 8px;">₹2,499 <small style="font-size: 12px; color: #94a3b8; font-weight: 400;">/ Periodic Service</small></div>
+        <ul style="font-size: 12.5px; color: #cbd5e1; padding-left: 18px; margin-bottom: 16px; line-height: 1.6;">
+          <li>Synthetic 5W30 Oil & OEM Oil Filter replacement</li>
+          <li>30-Point Laser Suspension & Brake Pad inspection</li>
+          <li>AC Cabin Filter sanitization & Spark Plug check</li>
+          <li>FREE Doorstep Transit in VIP Hyderabad PIN Codes</li>
+        </ul>
+        <a class="btn primary" href="#booking-section" onclick="select4WTier('Tier 1 (800cc - 1200cc) - Compact & Hatchbacks', 2499)" style="width: 100%; text-align: center; font-size: 13px;">Book Tier 1 Service</a>
+      </div>
+
+      <!-- TIER 2 -->
+      <div class="card" style="border: 1px solid rgba(0, 240, 255, 0.3); background: #0b1120;">
+        <span class="pill" style="background: rgba(0, 240, 255, 0.2); color: #00f0ff; font-weight: 700;">TIER 2 · 1200cc – 2000cc</span>
+        <h3 style="margin: 10px 0 6px 0; color: #f8fafc; font-size: 1.15rem;">Sedans & Compact SUVs</h3>
+        <p style="font-size: 12.5px; color: #94a3b8; margin-bottom: 12px;">Creta · Seltos · City · Virtus · Verna · Slavia · Kushaq · Brezza</p>
+        <div style="font-size: 1.35rem; font-weight: 800; color: #10b981; margin-bottom: 8px;">₹3,499 <small style="font-size: 12px; color: #94a3b8; font-weight: 400;">/ 40-Point Pre-Delivery</small></div>
+        <ul style="font-size: 12.5px; color: #cbd5e1; padding-left: 18px; margin-bottom: 16px; line-height: 1.6;">
+          <li>40-Point Comprehensive Electronic Diagnostic & ECU scan</li>
+          <li>Brake Fluid DOT-4 flush & Hydraulic Caliper servicing</li>
+          <li>DCT / Torque Converter / CVT transmission health test</li>
+          <li>HVAC Climate Control AC airflow & cooling optimization</li>
+        </ul>
+        <a class="btn primary" href="#booking-section" onclick="select4WTier('Tier 2 (1200cc - 2000cc) - Sedans & Compact SUVs', 3499)" style="width: 100%; text-align: center; font-size: 13px;">Book Tier 2 Service</a>
+      </div>
+
+      <!-- TIER 3 -->
+      <div class="card" style="border: 1px solid rgba(245, 158, 11, 0.3); background: #0b1120;">
+        <span class="pill" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b; font-weight: 700;">TIER 3 · 2000cc – 4000cc</span>
+        <h3 style="margin: 10px 0 6px 0; color: #f8fafc; font-size: 1.15rem;">Full-Size SUVs & Luxury</h3>
+        <p style="font-size: 12.5px; color: #94a3b8; margin-bottom: 12px;">Fortuner · BMW 3/5/X3/X5 · Mercedes C/E/GLC · Audi Q5/Q7 · Safari 2.0</p>
+        <div style="font-size: 1.35rem; font-weight: 800; color: #10b981; margin-bottom: 8px;">₹5,499 <small style="font-size: 12px; color: #94a3b8; font-weight: 400;">/ Luxury Multi-Point</small></div>
+        <ul style="font-size: 12.5px; color: #cbd5e1; padding-left: 18px; margin-bottom: 16px; line-height: 1.6;">
+          <li>Full Synthetic Castrol Edge/Motul European Spec Oil flush</li>
+          <li>AWD / 4x4 Transfer Case & Differential Fluid inspection</li>
+          <li>Hunter 3D Laser Wheel Alignment & Road-Force Balancing</li>
+          <li>6 Months / 6,000 KM Written Performance Warranty</li>
+        </ul>
+        <a class="btn gold" href="#booking-section" onclick="select4WTier('Tier 3 (2000cc - 4000cc) - Full-Size SUVs & Luxury', 5499)" style="width: 100%; text-align: center; font-size: 13px;">Book Tier 3 Luxury</a>
+      </div>
+
+      <!-- TIER 4 -->
+      <div class="card" style="border: 1px solid rgba(239, 68, 68, 0.4); background: #0b1120;">
+        <span class="pill" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; font-weight: 700;">TIER 4 · 4000cc – 6500cc+</span>
+        <h3 style="margin: 10px 0 6px 0; color: #f8fafc; font-size: 1.15rem;">V6, V8, V12 Super-Luxury & Flatbed</h3>
+        <p style="font-size: 12.5px; color: #94a3b8; margin-bottom: 12px;">Porsche 911 · AMG V8 · Range Rover V8 · Ferrari · Lamborghini · Bentley</p>
+        <div style="font-size: 1.35rem; font-weight: 800; color: #10b981; margin-bottom: 8px;">₹9,999 <small style="font-size: 12px; color: #94a3b8; font-weight: 400;">/ Supercar Master Calibration</small></div>
+        <ul style="font-size: 12.5px; color: #cbd5e1; padding-left: 18px; margin-bottom: 16px; line-height: 1.6;">
+          <li>Master Dyno Diagnostic & Bi-Turbo Boost Leak verification</li>
+          <li>High-Temp Ceramic Brake fluid bleed & Dry Sump oil calibration</li>
+          <li>Dedicated Enclosed Zero-Angle Hydraulic Flatbed Lorry transit</li>
+          <li>Direct supervision by Founder Mr. Shaik Mujahid (30-Yr Master)</li>
+        </ul>
+        <a class="btn gold" href="#booking-section" onclick="select4WTier('Tier 4 (4000cc - 6500cc+) - V6, V8, V12 Super-Luxury & Flatbed Rescue', 9999)" style="width: 100%; text-align: center; font-size: 13px; background: #ef4444;">Book Tier 4 Supercar</a>
+      </div>
+    </div>
+  </section>
+
   <!-- 2-Wheeler & 4-Wheeler Pickup, Drop & Transit Hero Banners -->
   <div class="grid">
     <div class="card half" style="padding:0">
@@ -266,19 +406,19 @@
         <div class="field"><label>Vehicle / Unit Details *</label><input id="qb-veh" required value="KTM Duke 390 BS6 (2W 100cc–2500cc)"></div>
         <div class="field"><label>Hyderabad PIN Code *</label><input id="qb-pin" required value="500034" maxlength="6"></div>
         <div class="field full"><label>Pickup / Doorstep Address *</label><input id="qb-addr" required value="Banjara Hills, Hyderabad"></div>
-        <div class="field full"><button type="submit" class="primary" style="width:100%">✅ Confirm Instant Booking & Trigger WhatsApp (+91 8333007351)</button></div>
+        <div class="field full"><button type="submit" class="primary" style="width:100%">✅ Confirm Instant Booking & Trigger WhatsApp (+91 8333084261)</button></div>
       </form>
       <div id="qb-result" style="display:none;margin-top:10px"></div>
     </div>
   </div>
 
-  <!-- SMART 5-STAR REVIEW ROUTER (Negative 1-3 Stars -> Direct WhatsApp +91 8333007351) -->
+  <!-- SMART 5-STAR REVIEW ROUTER (Negative 1-3 Stars -> Direct WhatsApp +91 8333084261) -->
   <section class="card full" id="smart-review-router">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
       <div>
         <span class="eyebrow">SMART 5-STAR REVIEW ROUTER · REPUTATION PROTECTION ENGINE</span>
         <h2 style="margin:4px 0 0">Rate Your CC Motocrafts Service Experience</h2>
-        <p class="muted" style="margin:4px 0 0">5-Star & 4-Star ratings publish to our Verified Public Showcase. 1-to-3 Star feedback automatically routes privately to <strong>Supreme Owner Resolution WhatsApp (+91 8333007351)</strong> for immediate priority resolution.</p>
+        <p class="muted" style="margin:4px 0 0">5-Star & 4-Star ratings publish to our Verified Public Showcase. 1-to-3 Star feedback automatically routes privately to <strong>Supreme Owner Resolution WhatsApp (+91 8333084261)</strong> for immediate priority resolution.</p>
       </div>
       <div class="actions" style="margin:0" id="star-rating-buttons">
         <button type="button" class="btn" data-star="1">⭐ 1</button>
@@ -327,7 +467,7 @@
 
 <footer class="footer">
   <div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px">
-    <div><strong>CC MOTOCRAFTS GLOBAL PLATFORM v1.0</strong> · Hyderabad Master Command · 24/7 Dispatch: <a href="tel:+918333007351">+91 8333007351</a></div>
+    <div><strong>CC MOTOCRAFTS GLOBAL PLATFORM v1.0</strong> · Hyderabad Master Command · 24/7 Dispatch: <a href="tel:+918333084261">+91 8333084261</a></div>
     <div>Multi-Channel Triggers: <a href="mailto:info@ccmotocrafts.in">info@ccmotocrafts.in</a> · <a href="mailto:aisupport.on@gmail.com">aisupport.on@gmail.com</a></div>
   </div>
 </footer>
@@ -400,7 +540,7 @@ function renderPortfolio(filter) {
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">
         <button type="button" class="primary" style="flex:1;padding:8px 10px;min-height:36px;font-size:12px" onclick="openQuickBookingModal('${x.type}', '${x.label.replace(/'/g, '')}')">⚡ Book Now</button>
-        <a class="btn green" style="padding:8px 10px;min-height:36px;font-size:12px" href="https://wa.me/918333007351?text=${encodeURIComponent('Hi CC Motocrafts, I want to book: ' + x.label)}" target="_blank" rel="noopener">💬 WhatsApp</a>
+        <a class="btn green" style="padding:8px 10px;min-height:36px;font-size:12px" href="https://wa.me/918333084261?text=${encodeURIComponent('Hi CC Motocrafts, I want to book: ' + x.label)}" target="_blank" rel="noopener">💬 WhatsApp</a>
       </div>
     </div>
   `).join('');
@@ -532,12 +672,162 @@ document.addEventListener('DOMContentLoaded', () => {
         out.innerHTML = `<div class="notice good">🌟 <strong>Thank You for Your ${selectedStars}-Star Rating, ${rName}!</strong><br>Your positive review for <strong>${rVeh}</strong> has been published to our Public 5-Star Showcase & Google Business Profile!</div>`;
       } else {
         const waText = encodeURIComponent(`*PRIORITY VIP ESCALATION (${selectedStars}-STAR FEEDBACK)*\nCustomer: ${rName}\nVehicle: ${rVeh}\nFeedback: ${rCom}\nRouted directly to Supreme Resolution Desk.`);
-        out.innerHTML = `<div class="notice warn">🛡️ <strong>Private VIP Escalation Activated (${selectedStars}-Star Feedback Intercepted)</strong><br>Instead of public posting, your concern is routed directly to our Supreme Owner Resolution Desk on WhatsApp (+91 8333007351) for immediate rectification:<div class="actions"><a class="btn green" href="https://wa.me/918333007351?text=${waText}" target="_blank" rel="noopener">📲 Send Direct to Resolution WhatsApp (+91 8333007351)</a></div></div>`;
+        out.innerHTML = `<div class="notice warn">🛡️ <strong>Private VIP Escalation Activated (${selectedStars}-Star Feedback Intercepted)</strong><br>Instead of public posting, your concern is routed directly to our Supreme Owner Resolution Desk on WhatsApp (+91 8333084261) for immediate rectification:<div class="actions"><a class="btn green" href="https://wa.me/918333084261?text=${waText}" target="_blank" rel="noopener">📲 Send Direct to Resolution WhatsApp (+91 8333084261)</a></div></div>`;
       }
     };
   }
 
 });
 </script>
+
+  <script>
+    function select4WTier(tierName, price) {
+      if (typeof window.switchGlobalVehicleMode === 'function') {
+        window.switchGlobalVehicleMode('4w', true);
+      }
+      const vehicleInput = document.getElementById('customer-vehicle-input') || document.querySelector('input[name="vehicle"]') || document.querySelector('input[placeholder*="Vehicle"]');
+      if (vehicleInput) {
+        vehicleInput.value = tierName;
+      }
+      const problemInput = document.getElementById('customer-problem-input') || document.querySelector('textarea[name="symptoms"]') || document.querySelector('input[placeholder*="problem"]');
+      if (problemInput && !problemInput.value) {
+        problemInput.value = 'Dedicated 4W Periodic Maintenance Package (' + tierName + ') - ₹' + price;
+      }
+    }
+  </script>
+
+
+  <script>
+    const BRANDS_2W = ['Royal Enfield', 'KTM', 'Bajaj', 'Honda 2W', 'Yamaha', 'Suzuki 2W', 'TVS', 'Hero', 'Kawasaki', 'Ducati', 'BMW Motorrad', 'Triumph', 'Benelli', 'Aprilia'];
+    const BRANDS_4W = ['Maruti Suzuki', 'Hyundai', 'Tata Motors', 'Mahindra', 'Toyota', 'Honda Cars', 'Kia', 'Skoda / VW', 'BMW', 'Mercedes-Benz', 'Audi', 'Porsche / Range Rover'];
+    let selectedBrand = 'Royal Enfield';
+    let selectedFuel = 'Petrol';
+    let capturedLat = null, capturedLng = null;
+
+    function renderBrandLogoGrid(mode) {
+      const grid = document.getElementById('visual-brand-grid');
+      if (!grid) return;
+      const list = (mode === '4w') ? BRANDS_4W : BRANDS_2W;
+      selectedBrand = list[0];
+      grid.innerHTML = list.map((b, idx) => `
+        <button type="button" onclick="pickBrandLogo('${b}', this)" style="padding:10px 8px;border-radius:10px;border:1px solid ${idx===0?'#00f0ff':'#1e293b'};background:${idx===0?'rgba(0,240,255,0.14)':'#0b1220'};color:#f8fafc;font-weight:700;font-size:12px;cursor:pointer;text-align:center;">
+          <div style="font-size:1.2rem;margin-bottom:4px;">${mode==='4w'?'🚘':'🏍️'}</div>
+          ${b}
+        </button>
+      `).join('');
+
+      document.querySelectorAll('.4w-fuel-only').forEach(el => {
+        el.style.display = (mode === '4w') ? 'inline-flex' : 'none';
+      });
+      if (mode !== '4w') selectedFuel = 'Petrol';
+
+      const titleEl = document.getElementById('dynamic-brand-title');
+      const subEl = document.getElementById('dynamic-brand-subtitle');
+      if (titleEl && subEl) {
+        if (mode === '4w') {
+          titleEl.textContent = 'CC Cars Motocrafts AI Engine Labs Service — Instant Brand & GPS Booking';
+          subEl.textContent = 'CC CARS MOTOCRAFTS AI ENGINE LABS SERVICE · PETROL / DIESEL / CNG-LPG GAS (800cc–6500cc) · NO EV';
+        } else {
+          titleEl.textContent = 'CC Motocrafts AI Engine Labs Service — Instant Brand & GPS Booking';
+          subEl.textContent = 'CC MOTOCRAFTS AI ENGINE LABS SERVICE · PETROL ONLY (100cc–2500cc) · STRICTLY NO EV';
+        }
+      }
+    }
+
+    function pickBrandLogo(brand, btn) {
+      selectedBrand = brand;
+      document.querySelectorAll('#visual-brand-grid button').forEach(b => {
+        b.style.borderColor = '#1e293b';
+        b.style.background = '#0b1220';
+      });
+      btn.style.borderColor = '#00f0ff';
+      btn.style.background = 'rgba(0,240,255,0.14)';
+      const mInput = document.getElementById('vb-model');
+      if (mInput) mInput.value = brand + ' ';
+    }
+
+    function selectFuelType(fuel, btn) {
+      selectedFuel = fuel;
+      document.querySelectorAll('.fuel-btn').forEach(b => b.classList.remove('primary'));
+      btn.classList.add('primary');
+    }
+
+    function captureCustomerGPS() {
+      const gpsBox = document.getElementById('vb-gps');
+      if (!navigator.geolocation) {
+        gpsBox.value = '17.4126, 78.4482 (Hyd Default)';
+        return;
+      }
+      gpsBox.value = 'Locating GPS...';
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          capturedLat = pos.coords.latitude.toFixed(5);
+          capturedLng = pos.coords.longitude.toFixed(5);
+          gpsBox.value = `${capturedLat}, ${capturedLng}`;
+        },
+        () => {
+          capturedLat = 17.4126; capturedLng = 78.4482;
+          gpsBox.value = '17.4126, 78.4482 (Hyderabad)';
+        }
+      );
+    }
+
+    function getUtmSource() {
+      const p = new URLSearchParams(window.location.search);
+      return p.get('source') || p.get('utm_source') || 'direct';
+    }
+
+    function submitVisualBrandBooking() {
+      const model = (document.getElementById('vb-model').value || selectedBrand).trim();
+      const ccTier = document.getElementById('vb-cc-tier').value;
+      const cust = (document.getElementById('vb-customer').value || '').trim();
+      const gps = document.getElementById('vb-gps').value || 'Hyderabad';
+      const utm = getUtmSource();
+      if (!cust) { alert('Please enter your Name & Mobile Number.'); return; }
+
+      const bookingCode = 'CCM-' + Math.floor(10000 + Math.random() * 90000);
+      const record = {
+        booking_code: bookingCode,
+        brand: selectedBrand,
+        fuel_type: selectedFuel,
+        cc_tier: ccTier,
+        vehicle_model: model,
+        customer_info: cust,
+        gps_location: gps,
+        utm_source: utm,
+        status: 'BOOKED',
+        created_at: new Date().toISOString()
+      };
+      const existing = JSON.parse(localStorage.getItem('ccm_bookings_queue') || '[]');
+      existing.unshift(record);
+      localStorage.setItem('ccm_bookings_queue', JSON.stringify(existing));
+
+      const waMsg = `NEW BOOKING (${bookingCode})%0ABrand: ${selectedBrand} (${selectedFuel})%0ATier: ${ccTier}%0AModel: ${model}%0ACustomer: ${cust}%0AGPS: ${gps}%0ASource: ${utm}%0A*No spare part replaced without prior WhatsApp Video & Quotation approval.*`;
+      window.open(`https://wa.me/918333084261?text=${waMsg}`, '_blank');
+      alert(`Booking ${bookingCode} logged! Alert sent to 2W/4W Dispatch Manager Nitish Kumar (+91 8333084261).`);
+    }
+
+    // Hook into switchGlobalVehicleMode
+    const origSwitch = window.switchGlobalVehicleMode;
+    window.switchGlobalVehicleMode = function(mode, unlock) {
+      if (typeof origSwitch === 'function') origSwitch(mode, unlock);
+      renderBrandLogoGrid(mode === '4w' ? '4w' : '2w');
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderBrandLogoGrid('2w');
+      const utm = getUtmSource();
+      const utmBadge = document.getElementById('vb-utm-badge');
+      if (utmBadge) utmBadge.textContent = utm === 'gmb' ? 'Source: Google Maps (GMB Verified)' : 'Source: ' + utm;
+    });
+
+    // Emergency Incident Hold Monitor
+    setInterval(() => {
+      const hold = localStorage.getItem('ccm_incident_hold') === 'true';
+      const banner = document.getElementById('customer-incident-hold-banner');
+      if (banner) banner.style.display = hold ? 'block' : 'none';
+    }, 1000);
+  </script>
+
 </body>
 </html>
